@@ -46,12 +46,18 @@ class HttpService {
   }
 
   static void postHost(final Member member) async {
-    final response = await post(
-        Uri.parse('http://localhost:8082/standup/v1/host'),
-        headers: {"content-type": "application/json"},
-        body: jsonEncode({"nickName": member.name, "key": member.key}));
+    final response =
+        await post(Uri.parse('http://localhost:8082/standup/v1/host'),
+            headers: {"content-type": "application/json"},
+            body: jsonEncode({
+              "nickName": member.name,
+              "image": member.avatar,
+              "key": member.key,
+              "end": member.endDate,
+              "start": member.startDate
+            }));
 
-    if (response.statusCode != 200) {
+    if (response.statusCode != 200 && response.statusCode != 201) {
       throw Exception('Failed to load current host');
     }
   }

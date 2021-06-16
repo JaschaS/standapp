@@ -2,18 +2,24 @@ class Member {
   String name;
   String avatar;
   String key;
+  String? startDate;
+  String? endDate;
 
-  Member({name = "", avatar = "", key = ""})
+  Member({name = "", avatar = "", key = "", String? start, String? end})
       : this.name = name,
         this.avatar = avatar,
-        this.key = key;
+        this.key = key,
+        this.startDate = start,
+        this.endDate = end;
 
   factory Member.fromJson(Map<String, dynamic> json) {
     final String? name = json["nickName"] ?? "";
     final String? avatar = json["image"] ?? "";
     final String? key = json["key"] ?? "";
+    final String? end = json["end"];
+    final String? start = json["start"];
 
-    return Member(name: name, avatar: avatar, key: key);
+    return Member(name: name, avatar: avatar, key: key, start: start, end: end);
   }
 
   bool isEmpty() {

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:standapp/standapp/host_screen/services/http_service.dart';
 import 'package:standapp/standapp/host_screen/web/web_board_button.dart';
@@ -8,7 +6,6 @@ import 'package:standapp/standapp/host_screen/web/web_dialog.dart';
 import '../../standapp_colors.dart';
 import '../member_bar.dart';
 import '../member_model.dart';
-import 'package:http/http.dart' as http;
 
 typedef StringCallback = void Function(String);
 typedef MemberListCallback = void Function(Future<List<Member>>);

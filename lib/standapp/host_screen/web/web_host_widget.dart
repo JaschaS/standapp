@@ -39,6 +39,20 @@ class WebNoHostWidget extends _WebHost {
           ]),
         ]);
   }
+
+  @override
+  String _from() {
+    final DateTime now = DateTime.now();
+    final DateFormat formatter = DateFormat('dd-MM-yyyy');
+    return formatter.format(now);
+  }
+
+  @override
+  String _until() {
+    final DateTime now = DateTime.now().add(const Duration(days: 7));
+    final DateFormat formatter = DateFormat('dd-MM-yyyy');
+    return formatter.format(now);
+  }
 }
 
 class WebHostWidget extends _WebHost {
@@ -74,6 +88,16 @@ class WebHostWidget extends _WebHost {
       ],
     );
   }
+
+  @override
+  String _from() {
+    return _member.startDate ?? "xx-xx-xxxx";
+  }
+
+  @override
+  String _until() {
+    return _member.endDate ?? "xx-xx-xxxx";
+  }
 }
 
 abstract class _WebHost extends StatelessWidget {
@@ -104,6 +128,8 @@ abstract class _WebHost extends StatelessWidget {
   }
 
   List<Widget> _hostWidget();
+  String _from();
+  String _until();
 
   Widget _buttonBar() {
     return Align(
@@ -123,18 +149,6 @@ abstract class _WebHost extends StatelessWidget {
         const SizedBox(width: 285),
       ]),
     );
-  }
-
-  String _from() {
-    final DateTime now = DateTime.now();
-    final DateFormat formatter = DateFormat('dd-MM-yyyy');
-    return formatter.format(now);
-  }
-
-  String _until() {
-    final DateTime now = DateTime.now().add(const Duration(days: 7));
-    final DateFormat formatter = DateFormat('dd-MM-yyyy');
-    return formatter.format(now);
   }
 }
 
