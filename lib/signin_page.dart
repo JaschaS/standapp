@@ -22,6 +22,10 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(final BuildContext context) {
+    if (user != null) {
+      return HostScreenWidget(user!);
+    }
+
     return Scaffold(
       body: Center(
         child: SizedBox(
