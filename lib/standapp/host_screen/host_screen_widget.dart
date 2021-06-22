@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:standapp/standapp/host_screen/background_widget.dart';
 import 'package:standapp/standapp/host_screen/services/http_service.dart';
@@ -7,16 +8,11 @@ import 'package:standapp/standapp/host_screen/web/web_member_widget.dart';
 import '../standapp_avatars.dart';
 import 'member_model.dart';
 
-/*
- todo: 
- + current host avatar sollte sich nicht aendern, wenn ein neuer member hinzugefügt wird
- + delete member hinzufügen
- + update member soltle auch current host beeinflussen
- + delete member sollte nicht gespeichehrten host nicht speichern können
- - update member save sollte nicht clickbar sein, wenn auch daten geändert worden sind
-*/
-
 class HostScreenWidget extends StatefulWidget {
+  final User _user;
+
+  HostScreenWidget(this._user);
+
   @override
   State<StatefulWidget> createState() => _HostScreenState();
 }
@@ -31,12 +27,12 @@ class _HostScreenState extends State<HostScreenWidget> {
   void initState() {
     super.initState();
 
-    _futureMembers = HttpService.getMembers();
-    _currentHost = HttpService.getCurrentHost();
+    _futureMembers = HttpService.getMembers(widget._user);
+    _currentHost = HttpService.getCurrentHost(widget._user);
   }
 
   void _findHost() {
-    final member = HttpService.getRecommendation();
+    final member = HttpService.getRecommendation(widget._user);
     setState(() {
       this._canSave = true;
       this._currentHost = member;
@@ -52,7 +48,7 @@ class _HostScreenState extends State<HostScreenWidget> {
   }
 
   void _saveHost(final Member member) {
-    HttpService.postHost(member);
+    HttpService.postHost(widget._user, member);
     setState(() {
       _canSave = false;
     });
@@ -61,8 +57,9 @@ class _HostScreenState extends State<HostScreenWidget> {
   void _onInfo(final Member? oldMember, final Member newMember) {
     if (oldMember == null) return;
     if (oldMember != newMember) {
-      final members = HttpService.patchMember(oldMember, newMember);
-      final currentHost = HttpService.getCurrentHost();
+      final members =
+          HttpService.patchMember(widget._user, oldMember, newMember);
+      final currentHost = HttpService.getCurrentHost(widget._user);
       setState(() {
         _canSave = false;
         _futureMembers = members;
@@ -71,13 +68,13 @@ class _HostScreenState extends State<HostScreenWidget> {
     }
   }
 
-  void _onRemove(final String member) async {
-    final members = HttpService.deleteMember(member);
+  void _onRemove(final Member member) async {
+    final members = HttpService.deleteMember(widget._user, member);
     final host = await _currentHost;
-    Future<Member>? newHost = null;
+    Future<Member>? newHost;
 
-    if (member == host.name) {
-      newHost = HttpService.getCurrentHost();
+    if (member.name == host.name) {
+      newHost = HttpService.getCurrentHost(widget._user);
     }
 
     setState(() {
@@ -102,6 +99,7 @@ class _HostScreenState extends State<HostScreenWidget> {
                 children: [
                   _webHost(context, snapshot.data),
                   WebMemberWidget(
+                    widget._user,
                     members: snapshot.data,
                     callback: (members) {
                       setState(() {
@@ -118,7 +116,9 @@ class _HostScreenState extends State<HostScreenWidget> {
                 child: Text("${snapshot.error}"),
               );
             }
-            return CircularProgressIndicator();
+            return Center(
+              child: CircularProgressIndicator(),
+            );
           },
         ),
       ),

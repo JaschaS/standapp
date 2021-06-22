@@ -72,7 +72,6 @@ class _WebDialogState extends State<WebDialog> {
     return Member(
       name: this._controller.text,
       avatar: _currentAvatar,
-      key: this._controller.text,
     );
   }
 

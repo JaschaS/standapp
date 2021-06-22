@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:standapp/standapp/host_screen/services/http_service.dart';
 import 'package:standapp/standapp/host_screen/web/web_board_button.dart';
@@ -10,22 +11,25 @@ import '../member_model.dart';
 typedef StringCallback = void Function(String);
 typedef MemberListCallback = void Function(Future<List<Member>>);
 typedef OldNewCallback = void Function(Member?, Member);
+typedef MemberCallback = void Function(Member);
 
 class WebMemberWidget extends StatefulWidget {
+  final User _user;
   final List<Member>? _members;
   final MemberListCallback? _callback;
   final OldNewCallback? _onInfo;
-  final StringCallback? _onRemove;
+  final MemberCallback? _onRemove;
 
-  WebMemberWidget(
+  WebMemberWidget(User user,
       {List<Member>? members,
       MemberListCallback? callback,
       OldNewCallback? onInfo,
-      StringCallback? onRemove})
+      MemberCallback? onRemove})
       : _members = members,
         _callback = callback,
         _onInfo = onInfo,
-        _onRemove = onRemove;
+        _onRemove = onRemove,
+        _user = user;
 
   @override
   State<StatefulWidget> createState() => _MemberState();
@@ -42,7 +46,7 @@ class _MemberState extends State<WebMemberWidget> {
         builder: (BuildContext context) {
           return WebDialog(
             callback: (_, member) {
-              final members = HttpService.addMember(member);
+              final members = HttpService.addMember(widget._user, member);
               if (widget._members != null) widget._callback!(members);
             },
             okText: "  add ",
@@ -105,7 +109,7 @@ class _MemberState extends State<WebMemberWidget> {
                 _onMemberInfo(context, entry);
               },
               onRemove: () {
-                if (widget._onRemove != null) widget._onRemove!(entry.name);
+                if (widget._onRemove != null) widget._onRemove!(entry);
               },
             ))
         .toList();

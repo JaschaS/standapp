@@ -1,25 +1,43 @@
+import 'package:intl/intl.dart';
+
 class Member {
   String name;
   String avatar;
-  String key;
+  String userId;
+  String memberId;
   String? startDate;
   String? endDate;
 
-  Member({name = "", avatar = "", key = "", String? start, String? end})
+  Member(
+      {name = "",
+      avatar = "",
+      memberId = "",
+      userId = "",
+      String? start,
+      String? end})
       : this.name = name,
         this.avatar = avatar,
-        this.key = key,
+        this.memberId = memberId,
+        this.userId = userId,
         this.startDate = start,
         this.endDate = end;
 
   factory Member.fromJson(Map<String, dynamic> json) {
     final String? name = json["nickName"] ?? "";
     final String? avatar = json["image"] ?? "";
-    final String? key = json["key"] ?? "";
-    final String? end = json["end"];
-    final String? start = json["start"];
+    final String? memberId = json["memberId"] ?? "";
+    final String? userId = json["userId"] ?? "";
+    final String? end = mapTimeToDate(json["end"]);
+    final String? start = mapTimeToDate(json["start"]);
 
-    return Member(name: name, avatar: avatar, key: key, start: start, end: end);
+    return Member(
+      name: name,
+      avatar: avatar,
+      start: start,
+      end: end,
+      memberId: memberId,
+      userId: userId,
+    );
   }
 
   bool isEmpty() {
@@ -31,11 +49,20 @@ class Member {
     if (identical(this, other)) return true;
     if (!(other is Member)) return false;
 
-    return this.key == other.key &&
-        this.name == other.name &&
-        this.avatar == other.avatar;
+    return this.memberId == other.memberId;
   }
 
   @override
-  int get hashCode => name.hashCode ^ avatar.hashCode ^ key.hashCode;
+  int get hashCode => memberId.hashCode ^ userId.hashCode;
+
+  static String? mapTimeToDate(final String? date) {
+    if (date == null) return null;
+
+    final int time = int.parse("1624050132627");
+
+    final DateTime convertedDate = DateTime.fromMillisecondsSinceEpoch(time);
+    final DateFormat formatter = DateFormat('dd-MM-yyyy');
+
+    return formatter.format(convertedDate);
+  }
 }

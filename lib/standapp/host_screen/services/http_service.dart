@@ -1,61 +1,85 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart';
 
 import '../member_model.dart';
 
 class HttpService {
-  static Future<List<Member>> addMember(final Member member) async {
+  static final String APP_ID = "zuh9ilv52f";
+
+  static Future<List<Member>> addMember(
+      final User user, final Member member) async {
     final response = await post(
-        Uri.parse('http://localhost:8082/standup/v1/member'),
-        headers: {"content-type": "application/json"},
+        Uri.parse(
+            'https://$APP_ID.execute-api.eu-west-1.amazonaws.com/dev/member'),
+        headers: {
+          "content-type": "application/json",
+          "Authorization": "Bearer ${await user.getIdToken()}"
+        },
         body: jsonEncode({"nickName": member.name, "image": member.avatar}));
 
     return _evaluateMembers(response);
   }
 
-  static Future<Member> getCurrentHost() async {
-    final response =
-        await get(Uri.parse('http://localhost:8082/standup/v1/current'));
+  static Future<Member> getCurrentHost(final User user) async {
+    final response = await get(
+      Uri.parse(
+          'https://$APP_ID.execute-api.eu-west-1.amazonaws.com/dev/host/current'),
+      headers: {"Authorization": "Bearer ${await user.getIdToken()}"},
+    );
 
     return _evaluateMember(response);
   }
 
-  static Future<Member> getRecommendation() async {
-    final response =
-        await get(Uri.parse('http://localhost:8082/standup/v1/recommend'));
+  static Future<Member> getRecommendation(final User user) async {
+    final response = await get(
+        Uri.parse(
+            'https://$APP_ID.execute-api.eu-west-1.amazonaws.com/dev/host/find'),
+        headers: {"Authorization": "Bearer ${await user.getIdToken()}"});
 
     return _evaluateMember(response);
   }
 
-  static Future<List<Member>> getMembers() async {
-    final response =
-        await get(Uri.parse('http://localhost:8082/standup/v1/members'));
+  static Future<List<Member>> getMembers(final User user) async {
+    final response = await get(
+        Uri.parse(
+            'https://$APP_ID.execute-api.eu-west-1.amazonaws.com/dev/member'),
+        headers: {"Authorization": "Bearer ${await user.getIdToken()}"});
 
     return _evaluateMembers(response);
   }
 
-  static Future<List<Member>> deleteMember(final String name) async {
+  static Future<List<Member>> deleteMember(
+      final User user, final Member member) async {
     final response = await delete(
-      Uri.parse('http://localhost:8082/standup/v1/member'),
-      headers: {"content-type": "application/json"},
-      body: jsonEncode({"nickName": name}),
+      Uri.parse(
+          'https://$APP_ID.execute-api.eu-west-1.amazonaws.com/dev/member'),
+      headers: {
+        "content-type": "application/json",
+        "Authorization": "Bearer ${await user.getIdToken()}"
+      },
+      body: jsonEncode({"memberId": member.memberId}),
     );
 
     return _evaluateMembers(response);
   }
 
-  static void postHost(final Member member) async {
-    final response =
-        await post(Uri.parse('http://localhost:8082/standup/v1/host'),
-            headers: {"content-type": "application/json"},
-            body: jsonEncode({
-              "nickName": member.name,
-              "image": member.avatar,
-              "key": member.key,
-              "end": member.endDate,
-              "start": member.startDate
-            }));
+  static void postHost(final User user, final Member member) async {
+    final response = await post(
+        Uri.parse(
+            'https://zuh9ilv52f.execute-api.eu-west-1.amazonaws.com/dev/host/save'),
+        headers: {
+          "content-type": "application/json",
+          "Authorization": "Bearer ${await user.getIdToken()}"
+        },
+        body: jsonEncode({
+          "nickName": member.name,
+          "image": member.avatar,
+          "end": member.endDate,
+          "start": member.startDate,
+          "memberId": member.memberId
+        }));
 
     if (response.statusCode != 200 && response.statusCode != 201) {
       throw Exception('Failed to load current host');
@@ -63,7 +87,7 @@ class HttpService {
   }
 
   static Future<List<Member>> patchMember(
-      final Member oldMember, final Member newMember) async {
+      final User user, final Member oldMember, final Member newMember) async {
     final bodyMap = {};
     if (oldMember.avatar != newMember.avatar)
       bodyMap.putIfAbsent("image", () => newMember.avatar);
@@ -71,8 +95,12 @@ class HttpService {
       bodyMap.putIfAbsent("nickName", () => newMember.name);
 
     final response = await patch(
-      Uri.parse('http://localhost:8082/standup/v1/member/${oldMember.name}'),
-      headers: {"content-type": "application/json"},
+      Uri.parse(
+          'https://$APP_ID.execute-api.eu-west-1.amazonaws.com/dev/member/${oldMember.memberId}'),
+      headers: {
+        "content-type": "application/json",
+        "Authorization": "Bearer ${await user.getIdToken()}"
+      },
       body: jsonEncode(bodyMap),
     );
 
