@@ -3,7 +3,6 @@ import 'package:standapp/standapp/standapp_avatars.dart';
 
 import '../date_widget.dart';
 import '../host_button.dart';
-import '../host_title.dart';
 import 'package:intl/intl.dart';
 
 import '../member_model.dart';
@@ -14,31 +13,6 @@ class WebNoHostWidget extends _WebHost {
   WebNoHostWidget({String? noHostAvatar, VoidCallback? findHost})
       : this._noHostAvatar = noHostAvatar ?? AvatarsImages.randomBlackAvatar(),
         super(findHost: findHost);
-
-  @override
-  List<Widget> _hostWidget() {
-    return [_noHostDescription(), _Avatar(image: _noHostAvatar)];
-  }
-
-  Widget _noHostDescription() {
-    final String from = _from();
-    final String until = _until();
-
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-            child: HostTitle("You don't have a host yet"),
-          ),
-          Row(children: [
-            DateWidget("Find a new host from ", "$from"),
-            const SizedBox(width: 5),
-            DateWidget("until  ", "$until"),
-          ]),
-        ]);
-  }
 
   @override
   String _from() {
@@ -53,6 +27,21 @@ class WebNoHostWidget extends _WebHost {
     final DateFormat formatter = DateFormat('dd-MM-yyyy');
     return formatter.format(now);
   }
+
+  @override
+  String _fromTitle() {
+    return "Find a new host from ";
+  }
+
+  @override
+  String _hostName() {
+    return "You don't have a host yet";
+  }
+
+  @override
+  String _avatar() {
+    return _noHostAvatar;
+  }
 }
 
 class WebHostWidget extends _WebHost {
@@ -63,33 +52,6 @@ class WebHostWidget extends _WebHost {
         super(findHost: findHost, saveHost: saveHost);
 
   @override
-  List<Widget> _hostWidget() =>
-      [_description(_member), _Avatar(image: _member.avatar)];
-
-  Widget _description(final Member member) {
-    final String from = _from();
-    final String until = _until();
-
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-          child: HostTitle("Hi, I am ${member.name}"),
-        ),
-        Row(
-          children: [
-            DateWidget("I am your host from ", "$from"),
-            const SizedBox(width: 5),
-            DateWidget("until  ", "$until"),
-          ],
-        ),
-      ],
-    );
-  }
-
-  @override
   String _from() {
     return _member.startDate ?? "xx-xx-xxxx";
   }
@@ -97,6 +59,21 @@ class WebHostWidget extends _WebHost {
   @override
   String _until() {
     return _member.endDate ?? "xx-xx-xxxx";
+  }
+
+  @override
+  String _fromTitle() {
+    return "I am your host from ";
+  }
+
+  @override
+  String _hostName() {
+    return "Hi, I am ${_member.name}";
+  }
+
+  @override
+  String _avatar() {
+    return _member.avatar;
   }
 }
 
@@ -111,43 +88,85 @@ abstract class _WebHost extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      alignment: Alignment.center,
       padding: EdgeInsets.fromLTRB(0, 0, 0, 50),
-      child: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: _hostWidget(),
+      child: SizedBox(
+        width: 650,
+        child: Card(
+          elevation: 0,
+          child: Column(
+            children: [
+              _hostWidget(),
+              const SizedBox(
+                height: 15,
+              ),
+              _buttonBar(),
+            ],
           ),
-          const SizedBox(height: 25),
-          _buttonBar()
-        ],
+        ),
       ),
     );
   }
 
-  List<Widget> _hostWidget();
+  String _hostName();
+
+  String _fromTitle();
+
   String _from();
+
   String _until();
+
+  String _avatar();
+
+  Widget _hostWidget() {
+    final String from = _from();
+    final String until = _until();
+
+    return Row(
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              _hostName(),
+              style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
+            ),
+            Row(
+              children: [
+                DateWidget(_fromTitle(), "$from"),
+                const SizedBox(width: 5),
+                DateWidget("until  ", "$until"),
+              ],
+            )
+          ],
+        ),
+        Spacer(),
+        _Avatar(image: _avatar())
+      ],
+    );
+  }
 
   Widget _buttonBar() {
     return Align(
       alignment: Alignment.center,
-      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        HostButton(
-          "Find Host",
-          EdgeInsets.fromLTRB(23, 5, 23, 5),
-          callback: _findHost,
-        ),
-        const SizedBox(width: 10),
-        HostButton(
-          "Save Host",
-          EdgeInsets.fromLTRB(23, 5, 23, 5),
-          callback: _saveHost,
-        ),
-        const SizedBox(width: 285),
-      ]),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          HostButton(
+            "Find Host",
+            EdgeInsets.fromLTRB(23, 5, 23, 5),
+            callback: _findHost,
+          ),
+          const SizedBox(width: 10),
+          HostButton(
+            "Save Host",
+            EdgeInsets.fromLTRB(23, 5, 23, 5),
+            callback: _saveHost,
+          ),
+          const SizedBox(width: 285),
+        ],
+      ),
     );
   }
 }
@@ -160,7 +179,7 @@ class _Avatar extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(50, 0, 0, 0),
+      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
       child: Image(
         image: AssetImage(_image),
         fit: BoxFit.cover,
@@ -168,160 +187,3 @@ class _Avatar extends StatelessWidget {
     );
   }
 }
-
-/*
-class WebHostWidget extends StatefulWidget {
-  final bool _hasMembers;
-  final String _noHostAvatar;
-
-  WebHostWidget({hasMembers = false, String? noHostAvatar})
-      : this._hasMembers = hasMembers,
-        this._noHostAvatar = noHostAvatar ?? AvatarsImages.randomBlackAvatar();
-
-  @override
-  State<StatefulWidget> createState() => WebHostState();
-}
-
-class WebHostState extends State<WebHostWidget> {
-  bool _canSave = false;
-
-  @override
-  Widget build(final BuildContext context) {
-    return Container(
-      color: Colors.white,
-      padding: EdgeInsets.fromLTRB(0, 0, 0, 50),
-      child: FutureBuilder<Member>(
-        future: _currentHost,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Column(
-              children: [
-                _host(snapshot.data),
-                const SizedBox(height: 25),
-                _buttonBar(snapshot.data)
-              ],
-            );
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Text("${snapshot.error}"),
-            );
-          }
-
-          return CircularProgressIndicator();
-        },
-      ),
-    );
-  }
-
-  Widget _host(final Member? host) {
-    bool hasCurrentHost = host != null;
-    bool hasData = false;
-
-    if (hasCurrentHost) {
-      hasData = host.name.isNotEmpty && host.avatar.isNotEmpty;
-    }
-
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: hasCurrentHost && hasData ? _withHost(host) : _noHost(),
-    );
-  }
-
-  Widget _buttonBar(final Member? member) {
-    return Align(
-      alignment: Alignment.center,
-      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        HostButton(
-          "Find Host",
-          EdgeInsets.fromLTRB(23, 5, 23, 5),
-          callback: widget._hasMembers
-              ? () {
-                  setState(() {
-                    _canSave = true;
-                    _currentHost = getNextHost();
-                  });
-                }
-              : null,
-        ),
-        const SizedBox(width: 10),
-        HostButton(
-          "Save Host",
-          EdgeInsets.fromLTRB(23, 5, 23, 5),
-          callback: member == null || !_canSave
-              ? null
-              : () {
-                  saveHost(member);
-                  setState(() {
-                    _canSave = false;
-                  });
-                },
-        ),
-        const SizedBox(width: 285),
-      ]),
-    );
-  }
-
-  List<Widget> _noHost() {
-    return [_noHostDescription(), _Avatar(image: widget._noHostAvatar)];
-  }
-
-  List<Widget> _withHost(final Member member) {
-    return [_description(member), _Avatar(image: member.avatar)];
-  }
-
-  Widget _noHostDescription() {
-    final String from = _from();
-    final String until = _until();
-
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-            child: HostTitle("You don't have a host yet"),
-          ),
-          Row(children: [
-            DateWidget("Find a new host from ", "$from"),
-            const SizedBox(width: 5),
-            DateWidget("until  ", "$until"),
-          ]),
-        ]);
-  }
-
-  Widget _description(final Member member) {
-    final String from = _from();
-    final String until = _until();
-
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-            child: HostTitle("Hi, I am ${member.name}"),
-          ),
-          Row(children: [
-            DateWidget("I am your host from ", "$from"),
-            const SizedBox(width: 5),
-            DateWidget("until  ", "$until"),
-          ]),
-        ]);
-  }
-
-  String _from() {
-    final DateTime now = DateTime.now();
-    final DateFormat formatter = DateFormat('dd-MM-yyyy');
-    return formatter.format(now);
-  }
-
-  String _until() {
-    final DateTime now = DateTime.now().add(const Duration(days: 7));
-    final DateFormat formatter = DateFormat('dd-MM-yyyy');
-    return formatter.format(now);
-  }
-}
-
-
-*/
