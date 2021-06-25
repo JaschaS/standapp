@@ -6,7 +6,7 @@ import 'package:http/http.dart';
 import '../member_model.dart';
 
 class HttpService {
-  static final String APP_ID = "zuh9ilv52f";
+  static const String APP_ID = "zuh9ilv52f";
 
   static Future<List<Member>> addMember(
       final User user, final Member member) async {
