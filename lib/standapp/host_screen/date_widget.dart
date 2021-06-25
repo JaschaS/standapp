@@ -1,10 +1,59 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:standapp/standapp/standapp_colors.dart';
 
-class DateWidget extends StatelessWidget {
+class DateWidget extends StatefulWidget {
   final String _text;
-  final String _date;
+  final String _startDate;
 
-  DateWidget(this._text, this._date);
+  DateWidget(this._text, this._startDate);
+
+  @override
+  State<StatefulWidget> createState() => _DateWidgetState();
+}
+
+class _DateWidgetState extends State<DateWidget> {
+  late String _date;
+
+  @override
+  void initState() {
+    _date = widget._startDate;
+    super.initState();
+  }
+
+  void _onPress(final BuildContext context) async {
+    final DateFormat formatter = DateFormat('dd-MM-yyyy');
+
+    final DateTime? newDate = await showDatePicker(
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: AppColors.blue,
+              onPrimary: AppColors.darkGray,
+              onSurface: Colors.black,
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                primary: AppColors.red,
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+      context: context,
+      initialDate: formatter.parseUTC(_date),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2025),
+    );
+
+    if (newDate != null) {
+      setState(() {
+        _date = formatter.format(newDate);
+      });
+    }
+  }
 
   @override
   Widget build(final BuildContext context) {
@@ -13,24 +62,36 @@ class DateWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(this._text, style: TextStyle(fontSize: 16)),
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Color.fromRGBO(232, 232, 232, 1),
-            ),
-            padding: EdgeInsets.all(5),
-            child: Row(
-              children: [
-                Icon(Icons.date_range),
-                Container(
-                  padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-                  child: Text(this._date, style: TextStyle(fontSize: 16)),
-                )
-              ],
-            ),
-          )
+          Text(widget._text, style: TextStyle(fontSize: 16)),
+          _timeButton(context),
         ],
+      ),
+    );
+  }
+
+  Widget _timeButton(final BuildContext context) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        primary: Color.fromRGBO(232, 232, 232, 1),
+      ),
+      onPressed: () {
+        _onPress(context);
+      },
+      child: Padding(
+        padding: EdgeInsets.only(bottom: 5, top: 5),
+        child: Row(
+          children: [
+            Icon(
+              Icons.date_range,
+              color: Colors.black,
+            ),
+            const SizedBox(width: 5),
+            Text(
+              this._date,
+              style: TextStyle(fontSize: 16, color: Colors.black),
+            )
+          ],
+        ),
       ),
     );
   }
