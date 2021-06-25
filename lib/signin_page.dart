@@ -1,8 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:standapp/standapp/host_screen/host_screen_widget.dart';
-
-final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class SignInPage extends StatefulWidget {
   final String title = 'Sign In & Out';
@@ -12,20 +9,15 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
-  User? user;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   void initState() {
-    _auth.userChanges().listen((event) => setState(() => user = event));
     super.initState();
   }
 
   @override
   Widget build(final BuildContext context) {
-    if (user != null) {
-      return HostScreenWidget(user!);
-    }
-
     return Scaffold(
       body: Center(
         child: SizedBox(
@@ -61,18 +53,7 @@ class _SignInPageState extends State<SignInPage> {
   Future<void> _signInWithGoogle() async {
     try {
       final googleProvider = GoogleAuthProvider();
-      final UserCredential userCredential =
-          await _auth.signInWithPopup(googleProvider);
-
-      user = userCredential.user;
-
-      if (user == null)
-        throw Exception("No user was found in user-credentials");
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => HostScreenWidget(user!)),
-      );
+      await _auth.signInWithPopup(googleProvider);
     } catch (e) {
       print(e);
     }
