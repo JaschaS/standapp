@@ -3,7 +3,6 @@ import 'package:standapp/standapp/standapp_avatars.dart';
 
 import '../date_widget.dart';
 import '../host_button.dart';
-import 'package:intl/intl.dart';
 
 import '../member_model.dart';
 
@@ -12,20 +11,16 @@ class WebNoHostWidget extends _WebHost {
 
   WebNoHostWidget({String? noHostAvatar, VoidCallback? findHost})
       : this._noHostAvatar = noHostAvatar ?? AvatarsImages.randomBlackAvatar(),
-        super(findHost: findHost);
+        super(findHost: findHost, width: 675, clicakble: false);
 
   @override
-  String _from() {
-    final DateTime now = DateTime.now();
-    final DateFormat formatter = DateFormat('dd-MM-yyyy');
-    return formatter.format(now);
+  DateTime _from() {
+    return DateTime.now();
   }
 
   @override
-  String _until() {
-    final DateTime now = DateTime.now().add(const Duration(days: 7));
-    final DateFormat formatter = DateFormat('dd-MM-yyyy');
-    return formatter.format(now);
+  DateTime _until() {
+    return DateTime.now().add(Duration(days: 1));
   }
 
   @override
@@ -42,6 +37,12 @@ class WebNoHostWidget extends _WebHost {
   String _avatar() {
     return _noHostAvatar;
   }
+
+  @override
+  void _fromCallback(DateTime newFrom) {}
+
+  @override
+  void _untilCallback(DateTime newUntil) {}
 }
 
 class WebHostWidget extends _WebHost {
@@ -52,13 +53,17 @@ class WebHostWidget extends _WebHost {
         super(findHost: findHost, saveHost: saveHost);
 
   @override
-  String _from() {
-    return _member.startDate ?? "xx-xx-xxxx";
+  DateTime _from() {
+    if (_member.startDate == null) return DateTime.now();
+
+    return DateTime.parse(_member.startDate!);
   }
 
   @override
-  String _until() {
-    return _member.endDate ?? "xx-xx-xxxx";
+  DateTime _until() {
+    if (_member.startDate == null) return DateTime.now().add(Duration(days: 1));
+
+    return DateTime.parse(_member.endDate!);
   }
 
   @override
@@ -75,15 +80,33 @@ class WebHostWidget extends _WebHost {
   String _avatar() {
     return _member.avatar;
   }
+
+  @override
+  void _fromCallback(DateTime newFrom) {
+    _member.startDate = newFrom.toIso8601String().split("T")[0];
+  }
+
+  @override
+  void _untilCallback(DateTime newUntil) {
+    _member.endDate = newUntil.toIso8601String().split("T")[0];
+  }
 }
 
 abstract class _WebHost extends StatelessWidget {
   final VoidCallback? _findHost;
   final VoidCallback? _saveHost;
+  final double _width;
+  final bool _isClickable;
 
-  _WebHost({VoidCallback? findHost, VoidCallback? saveHost})
+  _WebHost(
+      {VoidCallback? findHost,
+      VoidCallback? saveHost,
+      double width = 650,
+      bool clicakble = true})
       : this._findHost = findHost,
-        this._saveHost = saveHost;
+        this._saveHost = saveHost,
+        this._width = width,
+        this._isClickable = clicakble;
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +114,7 @@ abstract class _WebHost extends StatelessWidget {
       alignment: Alignment.center,
       padding: EdgeInsets.fromLTRB(0, 0, 0, 50),
       child: SizedBox(
-        width: 650,
+        width: _width,
         child: Card(
           elevation: 0,
           child: Column(
@@ -112,16 +135,17 @@ abstract class _WebHost extends StatelessWidget {
 
   String _fromTitle();
 
-  String _from();
+  DateTime _from();
 
-  String _until();
+  DateTime _until();
 
   String _avatar();
 
-  Widget _hostWidget() {
-    final String from = _from();
-    final String until = _until();
+  void _fromCallback(final DateTime newFrom);
 
+  void _untilCallback(final DateTime newUntil);
+
+  Widget _hostWidget() {
     return Row(
       children: [
         Column(
@@ -134,9 +158,17 @@ abstract class _WebHost extends StatelessWidget {
             ),
             Row(
               children: [
-                DateWidget(_fromTitle(), "$from"),
+                DateWidget(
+                  _fromTitle(),
+                  _from(),
+                  callback: _isClickable ? _fromCallback : null,
+                ),
                 const SizedBox(width: 5),
-                DateWidget("until  ", "$until"),
+                DateWidget(
+                  "until  ",
+                  _until(),
+                  callback: _isClickable ? _untilCallback : null,
+                ),
               ],
             )
           ],
