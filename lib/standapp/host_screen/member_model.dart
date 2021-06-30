@@ -27,8 +27,8 @@ class Member {
     final String? avatar = json["image"] ?? "";
     final String? memberId = json["memberId"] ?? "";
     final String? userId = json["userId"] ?? "";
-    final String? end = mapTimeToDate(json["end"]);
-    final String? start = mapTimeToDate(json["start"]);
+    final String? end = json["end"];
+    final String? start = json["start"];
 
     return Member(
       name: name,
@@ -54,15 +54,4 @@ class Member {
 
   @override
   int get hashCode => memberId.hashCode ^ userId.hashCode;
-
-  static String? mapTimeToDate(final String? date) {
-    if (date == null) return null;
-
-    final int time = int.parse("1624050132627");
-
-    final DateTime convertedDate = DateTime.fromMillisecondsSinceEpoch(time);
-    final DateFormat formatter = DateFormat('dd-MM-yyyy');
-
-    return formatter.format(convertedDate);
-  }
 }
