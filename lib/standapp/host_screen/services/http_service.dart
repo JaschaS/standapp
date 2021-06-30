@@ -6,7 +6,7 @@ import 'package:http/http.dart';
 import '../member_model.dart';
 
 class HttpService {
-  static const String APP_ID = "zuh9ilv52f";
+  static const String APP_ID = "lob80zu3ng";
 
   static Future<List<Member>> addMember(
       final User user, final Member member) async {
@@ -23,6 +23,7 @@ class HttpService {
   }
 
   static Future<Member> getCurrentHost(final User user) async {
+    print(await user.getIdToken());
     final response = await get(
       Uri.parse(
           'https://$APP_ID.execute-api.eu-west-1.amazonaws.com/dev/host/current'),
@@ -68,7 +69,7 @@ class HttpService {
   static void postHost(final User user, final Member member) async {
     final response = await post(
         Uri.parse(
-            'https://zuh9ilv52f.execute-api.eu-west-1.amazonaws.com/dev/host/save'),
+            'https://$APP_ID.execute-api.eu-west-1.amazonaws.com/dev/host/save'),
         headers: {
           "content-type": "application/json",
           "Authorization": "Bearer ${await user.getIdToken()}"
