@@ -2,9 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:standapp/signin_page.dart';
+import 'package:standapp/standapp/home_screen/home_screen_widget.dart';
 import 'package:standapp/standapp/host_screen/host_screen_widget.dart';
-import 'package:standapp/standapp/standapp_colors.dart';
+import 'package:standapp/standapp/signin_page.dart';
 import 'configure_nonweb.dart' if (dart.library.html) 'configure_web.dart';
 
 Future<void> main() async {
@@ -40,9 +40,10 @@ class _StandAppState extends State<StandApp> {
     return MaterialApp(
       title: "StandApp",
       home: Scaffold(
+        extendBodyBehindAppBar: true,
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.transparent,
           actions: _createActions(),
         ),
         body: _createBody(),
@@ -51,7 +52,7 @@ class _StandAppState extends State<StandApp> {
   }
 
   Widget _createBody() {
-    if (_user == null) return SignInPage();
+    if (_user == null) return HomeScreenWidget();
 
     return HostScreenWidget(_user!);
   }

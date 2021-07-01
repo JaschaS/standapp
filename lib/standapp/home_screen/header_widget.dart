@@ -33,7 +33,7 @@ class HomeScreenHeader extends StatelessWidget {
             ),
             Align(
               alignment: Alignment.center,
-              child: Text("STANDAPP",
+              child: Text("STANDUP-Host",
                   style: GoogleFonts.bungee(
                       textStyle:
                           TextStyle(fontSize: 34, color: AppColors.darkGray))),

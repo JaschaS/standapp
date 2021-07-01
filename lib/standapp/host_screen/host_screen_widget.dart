@@ -86,41 +86,39 @@ class _HostScreenState extends State<HostScreenWidget> {
 
   @override
   Widget build(final BuildContext context) {
-    return Scaffold(
-      body: BackgroundWidget(
-        topWeight: 0.5,
-        bottomWeight: 0.5,
-        child: FutureBuilder<List<Member>>(
-          future: _futureMembers,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return ListView(
-                padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
-                children: [
-                  _webHost(context, snapshot.data),
-                  WebMemberWidget(
-                    widget._user,
-                    members: snapshot.data,
-                    callback: (members) {
-                      setState(() {
-                        _futureMembers = members;
-                      });
-                    },
-                    onInfo: _onInfo,
-                    onRemove: _onRemove,
-                  )
-                ],
-              );
-            } else if (snapshot.hasError) {
-              return Center(
-                child: Text("${snapshot.error}"),
-              );
-            }
-            return Center(
-              child: CircularProgressIndicator(),
+    return BackgroundWidget(
+      topWeight: 0.5,
+      bottomWeight: 0.5,
+      child: FutureBuilder<List<Member>>(
+        future: _futureMembers,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView(
+              padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
+              children: [
+                _webHost(context, snapshot.data),
+                WebMemberWidget(
+                  widget._user,
+                  members: snapshot.data,
+                  callback: (members) {
+                    setState(() {
+                      _futureMembers = members;
+                    });
+                  },
+                  onInfo: _onInfo,
+                  onRemove: _onRemove,
+                )
+              ],
             );
-          },
-        ),
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text("${snapshot.error}"),
+            );
+          }
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        },
       ),
     );
   }
