@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:standapp/standapp/home_screen/home_screen_widget.dart';
 import 'package:standapp/standapp/host_screen/host_screen_widget.dart';
-import 'package:standapp/standapp/signin_page.dart';
 import 'configure_nonweb.dart' if (dart.library.html) 'configure_web.dart';
 
 Future<void> main() async {
@@ -38,7 +37,7 @@ class _StandAppState extends State<StandApp> {
   @override
   Widget build(final BuildContext context) {
     return MaterialApp(
-      title: "StandApp",
+      title: "StandUp-Host",
       home: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
