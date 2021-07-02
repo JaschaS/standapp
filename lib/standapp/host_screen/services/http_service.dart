@@ -23,7 +23,6 @@ class HttpService {
   }
 
   static Future<Member> getCurrentHost(final User user) async {
-    print(await user.getIdToken());
     final response = await get(
       Uri.parse(
           'https://$APP_ID.execute-api.eu-west-1.amazonaws.com/dev/host/current'),
