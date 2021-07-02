@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:standapp/standapp/host_screen/background_widget.dart';
 
-import '../signin_page.dart';
+import 'signin_page.dart';
 import 'header_widget.dart';
 
 class HomeScreenWidget extends StatefulWidget {
