@@ -10,7 +10,6 @@ class EmailSignInPage extends StatefulWidget {
 }
 
 class _EmailSignInState extends State<EmailSignInPage> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   late TextEditingController _userNameController;
   late TextEditingController _passwordController;
   String? _emailError;
@@ -120,15 +119,6 @@ class _EmailSignInState extends State<EmailSignInPage> {
         ),
       ),
     );
-  }
-
-  Future<void> _signInWithEmail() async {
-    try {
-      final googleProvider = GoogleAuthProvider();
-      await _auth.signInWithPopup(googleProvider);
-    } catch (e) {
-      print(e);
-    }
   }
 }
 
