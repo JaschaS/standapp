@@ -13,6 +13,8 @@ class _EmailSignInState extends State<EmailSignInPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   late TextEditingController _userNameController;
   late TextEditingController _passwordController;
+  String? _emailError;
+  String? _passwordError;
 
   @override
   void initState() {
@@ -38,14 +40,27 @@ class _EmailSignInState extends State<EmailSignInPage> {
         password: password,
       );
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+      print(e.code);
+      if (e.code == 'invalid-email') {
+        _setEmailAndPasswordError("Email must be a valid email address", null);
+      } else if (e.code == 'wrong-password') {
+        _setEmailAndPasswordError(
+          null,
+          "Sorry, wrong password. Please try again",
+        );
+      } else if (e.code == 'user-not-found') {
+        _setEmailAndPasswordError("User not found", null);
       }
     } catch (e) {
       print(e);
     }
+  }
+
+  void _setEmailAndPasswordError(final String? email, final String? password) {
+    setState(() {
+      _emailError = email;
+      _passwordError = password;
+    });
   }
 
   @override
@@ -65,6 +80,7 @@ class _EmailSignInState extends State<EmailSignInPage> {
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.account_circle),
                     hintText: 'Email',
+                    errorText: _emailError,
                   ),
                   controller: _userNameController,
                 ),
@@ -78,6 +94,7 @@ class _EmailSignInState extends State<EmailSignInPage> {
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.lock),
                     hintText: 'Password',
+                    errorText: _passwordError,
                   ),
                   controller: _passwordController,
                   obscureText: true,
