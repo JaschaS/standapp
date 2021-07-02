@@ -6,11 +6,8 @@ typedef ContextCallback = void Function(BuildContext);
 
 class MemberBar extends StatelessWidget {
   final ContextCallback? _addMember;
-  final ContextCallback? _addGroup;
 
-  MemberBar({ContextCallback? addMember, ContextCallback? addGroup})
-      : this._addMember = addMember,
-        this._addGroup = addGroup;
+  MemberBar({ContextCallback? addMember}) : this._addMember = addMember;
 
   @override
   Widget build(final BuildContext context) {
@@ -25,21 +22,14 @@ class MemberBar extends StatelessWidget {
           width: 485,
         ),
         TextButton(
-            onPressed: () {
-              this._addMember!(context);
-            },
-            child: Icon(
-              Icons.person_add,
-              color: AppColors.darkGray,
-            )),
-        /*TextButton(
-            onPressed: () {
-              this._addGroup!(context);
-            },
-            child: Icon(
-              Icons.group_add,
-              color: AppColors.darkGray,
-            ))*/
+          onPressed: () {
+            this._addMember!(context);
+          },
+          child: Icon(
+            Icons.person_add,
+            color: AppColors.darkGray,
+          ),
+        ),
       ],
     );
   }
