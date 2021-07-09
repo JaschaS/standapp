@@ -17,11 +17,11 @@ class AvatarTile extends StatelessWidget {
   AvatarTile({
     this.start,
     this.end,
-    this.avatar = const Avatar(),
     this.title,
     this.onStartChange,
     this.onEndChange,
-  });
+    Avatar? avatar,
+  }) : this.avatar = avatar ?? const Avatar();
 
   @override
   Widget build(final BuildContext context) {
@@ -165,7 +165,7 @@ class _DateButton extends StatelessWidget {
             ),
           ),
         ),
-        onPressed: () => _onPress(context),
+        onPressed: this.onDateChange != null ? () => _onPress(context) : null,
         icon: Icon(
           Icons.date_range,
           size: 24,

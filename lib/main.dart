@@ -4,9 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:standapp/standapp/home_screen/home_screen_widget.dart';
 import 'package:standapp/standapp/host_screen/host_screen_widget.dart';
-import 'package:standapp/standapp/host_screen/no_host/no_host_widget.dart';
 import 'package:standapp/standapp/host_screen/no_host/select_host_widget.dart';
 import 'configure_nonweb.dart' if (dart.library.html) 'configure_web.dart';
+import 'standapp/host_screen/no_host/avatar_widget.dart';
 
 /*
 Future<void> main() async {
@@ -27,7 +27,32 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.white,
-        body: SelectHostWidget(),
+        body: ListView(
+          children: [
+            NoHostWidget(),
+            const SizedBox(
+              height: 150,
+            ),
+            SelectDateWidget(
+              onStartChange: (date) {},
+              onEndChange: (date) {},
+            ),
+            const SizedBox(
+              height: 150,
+            ),
+            SelectHostWidget(
+              avatar: Avatar(image: "images/Avatar18.png"),
+              title: "It is Jascha!",
+            ),
+            const SizedBox(
+              height: 150,
+            ),
+            CurrentHostWidget(
+              avatar: Avatar(image: "images/Avatar18.png"),
+              title: "It is Jascha!",
+            )
+          ],
+        ),
       ),
     );
   }
