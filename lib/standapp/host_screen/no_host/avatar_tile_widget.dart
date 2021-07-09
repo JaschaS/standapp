@@ -6,29 +6,22 @@ import 'avatar_widget.dart';
 
 typedef DateCallback = void Function(DateTime);
 
-class AvatarTile extends StatefulWidget {
+class AvatarTile extends StatelessWidget {
   final Avatar avatar;
   final Widget? title;
   final DateTime? start;
   final DateTime? end;
+  final DateCallback? onStartChange;
+  final DateCallback? onEndChange;
 
-  AvatarTile({this.avatar = const Avatar(), this.title, this.start, this.end});
-
-  @override
-  State<StatefulWidget> createState() => _AvatarTileState();
-}
-
-class _AvatarTileState extends State<AvatarTile> {
-  late DateTime _start;
-  late DateTime _end;
-
-  @override
-  void initState() {
-    _start = widget.start ?? _generateStartTime();
-    _end = widget.end ?? _start.add(Duration(days: 4));
-
-    super.initState();
-  }
+  AvatarTile({
+    this.start,
+    this.end,
+    this.avatar = const Avatar(),
+    this.title,
+    this.onStartChange,
+    this.onEndChange,
+  });
 
   @override
   Widget build(final BuildContext context) {
@@ -37,7 +30,7 @@ class _AvatarTileState extends State<AvatarTile> {
         alignment: Alignment.centerLeft,
         children: [
           _banner(),
-          widget.avatar,
+          this.avatar,
         ],
       ),
     );
@@ -87,7 +80,7 @@ class _AvatarTileState extends State<AvatarTile> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (widget.title != null) widget.title!,
+                    if (this.title != null) this.title!,
                     const SizedBox(
                       height: 10,
                     ),
@@ -114,11 +107,10 @@ class _AvatarTileState extends State<AvatarTile> {
         const SizedBox(
           width: 9,
         ),
-        _DateButton(_start, (newDate) {
-          setState(() {
-            _start = newDate;
-          });
-        }),
+        _DateButton(
+          date: this.start,
+          onDateChange: this.onStartChange,
+        ),
         const SizedBox(
           width: 18,
         ),
@@ -131,45 +123,22 @@ class _AvatarTileState extends State<AvatarTile> {
         const SizedBox(
           width: 9,
         ),
-        _DateButton(_end, (newDate) {
-          setState(() {
-            _end = newDate;
-          });
-        }),
+        _DateButton(
+          date: this.end,
+          onDateChange: this.onEndChange,
+        ),
       ],
     );
-  }
-
-  static DateTime _generateStartTime() {
-    final today = DateTime.now();
-
-    switch (today.weekday) {
-      case DateTime.monday:
-        return today;
-      case DateTime.tuesday:
-        return today.add(Duration(days: 6));
-      case DateTime.wednesday:
-        return today.add(Duration(days: 5));
-      case DateTime.thursday:
-        return today.add(Duration(days: 4));
-      case DateTime.friday:
-        return today.add(Duration(days: 3));
-      case DateTime.saturday:
-        return today.add(Duration(days: 2));
-      case DateTime.sunday:
-        return today.add(Duration(days: 1));
-      default:
-        return today;
-    }
   }
 }
 
 class _DateButton extends StatelessWidget {
   final DateTime date;
-  final DateCallback onDateChange;
+  final DateCallback? onDateChange;
   final DateFormat _formatter = DateFormat("MMMM d'th', y");
 
-  _DateButton(this.date, this.onDateChange);
+  _DateButton({DateTime? date, this.onDateChange})
+      : this.date = date ?? DateTime.now();
 
   @override
   Widget build(final BuildContext context) {
@@ -202,7 +171,7 @@ class _DateButton extends StatelessWidget {
           size: 24,
         ),
         label: Text(
-          _formatter.format(date),
+          _formatter.format(this.date),
           style: TextStyle(fontSize: 16),
         ),
       ),
@@ -230,13 +199,13 @@ class _DateButton extends StatelessWidget {
         );
       },
       context: context,
-      initialDate: date,
+      initialDate: this.date,
       firstDate: DateTime(2020),
       lastDate: DateTime(2030),
     );
 
-    if (newDate != null) {
-      onDateChange(newDate);
+    if (newDate != null && this.onDateChange != null) {
+      this.onDateChange!(newDate);
     }
   }
 }

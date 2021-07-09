@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:standapp/standapp/home_screen/home_screen_widget.dart';
 import 'package:standapp/standapp/host_screen/host_screen_widget.dart';
 import 'package:standapp/standapp/host_screen/no_host/no_host_widget.dart';
-import 'package:standapp/standapp/host_screen/no_host/select_date_widget.dart';
+import 'package:standapp/standapp/host_screen/no_host/select_host_widget.dart';
 import 'configure_nonweb.dart' if (dart.library.html) 'configure_web.dart';
 
 /*
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.white,
-        body: SelectDateWidget(),
+        body: SelectHostWidget(),
       ),
     );
   }
