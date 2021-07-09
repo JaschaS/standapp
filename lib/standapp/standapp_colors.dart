@@ -9,4 +9,6 @@ class AppColors {
   static const Color lightGray = Color.fromRGBO(180, 180, 180, 1);
   static const Color darkGray = Color.fromRGBO(151, 151, 151, 1);
   static const Color gray = Color.fromRGBO(249, 249, 249, 1);
+  static const Color button_color = Color.fromRGBO(232, 232, 232, 1);
+  static const Color button_text_disable = Color.fromRGBO(102, 102, 102, 1);
 }
