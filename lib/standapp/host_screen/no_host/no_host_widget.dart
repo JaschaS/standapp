@@ -8,7 +8,6 @@ class NoHostWidget extends StatelessWidget {
   Widget build(final BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      padding: EdgeInsets.fromLTRB(0, 0, 0, 50),
       child: SizedBox(
         width: 555,
         height: 190,
