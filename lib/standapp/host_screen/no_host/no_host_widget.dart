@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:standapp/standapp/host_screen/host_button.dart';
+import 'package:standapp/standapp/standapp_fonts.dart';
 
 import '../../standapp_colors.dart';
 
@@ -26,7 +27,7 @@ class NoHostWidget extends StatelessWidget {
                   const Text(
                     "You don't have a \nhost, yet",
                     style: const TextStyle(
-                      fontSize: 32,
+                      fontSize: AppFonts.h2,
                     ),
                   ),
                   const SizedBox(
@@ -68,7 +69,7 @@ class _HostButton extends StatelessWidget {
         padding: this._padding,
         child: Text(
           this._text,
-          style: TextStyle(fontSize: 24),
+          style: TextStyle(fontSize: AppFonts.h3),
         ),
       ),
     );

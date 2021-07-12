@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:standapp/standapp/host_screen/host_button.dart';
+import 'package:standapp/standapp/standapp_fonts.dart';
 import '../../standapp_colors.dart';
 import 'avatar_tile_widget.dart';
 import 'avatar_widget.dart';
@@ -184,7 +185,7 @@ abstract class _BaseSelectWidget extends StatelessWidget {
     return Text(
       this.avatarTitle ?? "Select time",
       style: const TextStyle(
-        fontSize: 16,
+        fontSize: AppFonts.h5,
         fontWeight: FontWeight.bold,
       ),
     );
@@ -196,7 +197,7 @@ abstract class _BaseSelectWidget extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: Text(
         this.title ?? "",
-        style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: AppFonts.h2, fontWeight: FontWeight.bold),
       ),
     );
   }
@@ -268,7 +269,7 @@ class _BaseSelectState extends State<_tmp> {
     return const Text(
       "Select time",
       style: const TextStyle(
-        fontSize: 16,
+        fontSize: AppFonts.h5,
         fontWeight: FontWeight.bold,
       ),
     );
@@ -280,7 +281,7 @@ class _BaseSelectState extends State<_tmp> {
       alignment: Alignment.centerLeft,
       child: Text(
         widget.title ?? "",
-        style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: AppFonts.h2, fontWeight: FontWeight.bold),
       ),
     );
   }
@@ -325,7 +326,7 @@ class _RaisedAppButton extends StatelessWidget {
         onPressed: this.callback,
         child: Text(
           this.title ?? "",
-          style: const TextStyle(fontSize: 16),
+          style: const TextStyle(fontSize: AppFonts.h5),
         ),
       ),
     );
@@ -348,7 +349,7 @@ class _TextAppButton extends StatelessWidget {
         onPressed: this.callback,
         child: Text(
           this.title ?? "",
-          style: const TextStyle(fontSize: 16),
+          style: const TextStyle(fontSize: AppFonts.h5),
         ),
       ),
     );

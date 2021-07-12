@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../standapp_colors.dart';
+import '../../standapp_fonts.dart';
 import 'avatar_widget.dart';
 
 typedef DateCallback = void Function(DateTime);
@@ -101,7 +102,7 @@ class AvatarTile extends StatelessWidget {
         const Text(
           "from",
           style: const TextStyle(
-            fontSize: 16,
+            fontSize: AppFonts.h5,
           ),
         ),
         const SizedBox(
@@ -117,7 +118,7 @@ class AvatarTile extends StatelessWidget {
         const Text(
           "until",
           style: const TextStyle(
-            fontSize: 16,
+            fontSize: AppFonts.h5,
           ),
         ),
         const SizedBox(
@@ -172,7 +173,7 @@ class _DateButton extends StatelessWidget {
         ),
         label: Text(
           _formatter.format(this.date),
-          style: TextStyle(fontSize: 16),
+          style: TextStyle(fontSize: AppFonts.h5),
         ),
       ),
     );
