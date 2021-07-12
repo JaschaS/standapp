@@ -41,14 +41,14 @@ class MyApp extends StatelessWidget {
               height: 150,
             ),
             SelectHostWidget(
-              avatar: Avatar(image: "images/Avatar18.png"),
+              avatar: Avatar(image: "images/ginger_freckles.png"),
               title: "It is Jascha!",
             ),
             const SizedBox(
               height: 150,
             ),
             CurrentHostWidget(
-              avatar: Avatar(image: "images/Avatar18.png"),
+              avatar: Avatar(image: "images/ginger_freckles.png"),
               title: "It is Jascha!",
             )
           ],

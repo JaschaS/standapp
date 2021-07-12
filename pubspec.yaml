@@ -58,6 +58,7 @@ flutter:
   assets:
     - images/
     - images/Anonymous.png
+    - images/ginger_freckles.png
     - images/Avatar01.png
     - images/Avatar03.png
     - images/Avatar04.png
