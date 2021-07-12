@@ -119,8 +119,9 @@ class SelectHostWidget extends _BaseSelectWidget {
           const SizedBox(
             width: 12,
           ),
-          PrimaryAppButton(
+          SecondaryAppButton(
             title: "Search again",
+            callback: () {},
           ),
           const SizedBox(
             width: 12,
