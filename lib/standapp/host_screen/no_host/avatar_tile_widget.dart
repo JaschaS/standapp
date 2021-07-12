@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import '../../standapp_colors.dart';
@@ -47,7 +46,7 @@ class AvatarTile extends StatelessWidget {
         ),
         Container(
           decoration: BoxDecoration(
-            color: AppColors.fifty_shades,
+            color: AppColors.light_grey,
             borderRadius: BorderRadius.all(
               Radius.circular(10),
             ),
@@ -147,7 +146,7 @@ class _DateButton extends StatelessWidget {
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.resolveWith<Color>(
             (Set<MaterialState> states) {
-              return AppColors.button_color;
+              return AppColors.fifty_shades;
             },
           ),
           foregroundColor: MaterialStateProperty.resolveWith<Color>(
