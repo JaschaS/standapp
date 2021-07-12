@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:standapp/standapp/home_screen/home_screen_widget.dart';
 import 'package:standapp/standapp/host_screen/host_screen_widget.dart';
 import 'package:standapp/standapp/host_screen/no_host/select_host_widget.dart';
+import 'package:standapp/standapp/standapp_avatars.dart';
 import 'configure_nonweb.dart' if (dart.library.html) 'configure_web.dart';
 import 'standapp/host_screen/no_host/avatar_widget.dart';
 
@@ -41,14 +42,14 @@ class MyApp extends StatelessWidget {
               height: 150,
             ),
             SelectHostWidget(
-              avatar: Avatar(image: "images/ginger_freckles.png"),
+              avatar: Avatar(image: AvatarsImages.ginger_freckles),
               title: "It is Jascha!",
             ),
             const SizedBox(
               height: 150,
             ),
             CurrentHostWidget(
-              avatar: Avatar(image: "images/ginger_freckles.png"),
+              avatar: Avatar(image: AvatarsImages.ginger_freckles),
               title: "It is Jascha!",
             )
           ],
