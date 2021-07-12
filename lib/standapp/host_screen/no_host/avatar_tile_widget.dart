@@ -152,9 +152,9 @@ class _DateButton extends StatelessWidget {
           foregroundColor: MaterialStateProperty.resolveWith<Color>(
               (Set<MaterialState> states) {
             if (states.contains(MaterialState.disabled)) {
-              return AppColors.button_text_disable;
+              return AppColors.audi_grey;
             }
-            return Colors.black;
+            return AppColors.standard_blue;
           }),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
