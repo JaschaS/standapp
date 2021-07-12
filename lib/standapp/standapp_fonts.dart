@@ -10,10 +10,17 @@ class AppFonts {
   static const double h4 = 20;
   static const double h5 = 16;
 
-  static TextStyle textStyleWithSize(final double fontSize,
-      [final FontWeight? weight]) {
+  static TextStyle textStyleWithSize(
+    final double fontSize, {
+    final FontWeight? weight,
+    final Color? color,
+  }) {
     return GoogleFonts.inter(
-      textStyle: TextStyle(fontSize: fontSize, fontWeight: weight),
+      textStyle: TextStyle(
+        fontSize: fontSize,
+        fontWeight: weight,
+        color: color == null ? Colors.black : color,
+      ),
     );
   }
 }

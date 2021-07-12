@@ -13,6 +13,7 @@ class AppColors {
   static const Color button_text_disable = Color.fromRGBO(102, 102, 102, 1);
 
   static const Color jascha_red = const Color(0xFFFF685F);
+  static const Color jascha_red_disable = const Color(0xB3FF685F);
   static const Color baby_blue = const Color(0xFFE0F3F8);
   static const Color standard_blue = const Color(0xFF263238);
   static const Color audi_grey = const Color(0xFF666666);
