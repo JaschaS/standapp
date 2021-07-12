@@ -33,6 +33,41 @@ class PrimaryAppButton extends StatelessWidget {
   }
 }
 
+class SecondaryAppButton extends StatelessWidget {
+  final VoidCallback? callback;
+  final String? title;
+
+  SecondaryAppButton({this.callback, this.title});
+
+  @override
+  Widget build(final BuildContext context) {
+    return SizedBox(
+      width: 210,
+      height: 56,
+      child: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
+            return AppColors.fifty_shades;
+          }),
+          foregroundColor: MaterialStateProperty.resolveWith<Color>((states) {
+            if (states.contains(MaterialState.disabled))
+              return AppColors.weisser_als_weiss;
+
+            return Colors.black;
+          }),
+          textStyle: MaterialStateProperty.resolveWith<TextStyle>((states) {
+            return AppFonts.textStyleWithSize(AppFonts.h5);
+          }),
+        ),
+        onPressed: this.callback,
+        child: Text(
+          this.title ?? "",
+        ),
+      ),
+    );
+  }
+}
+
 class TextAppButton extends StatelessWidget {
   final VoidCallback? callback;
   final String? title;
