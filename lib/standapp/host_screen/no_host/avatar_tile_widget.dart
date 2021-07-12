@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import '../../standapp_colors.dart';
@@ -75,7 +76,7 @@ class AvatarTile extends StatelessWidget {
                 height: 180,
               ),
               Container(
-                width: 452,
+                width: 455,
                 height: 69,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -99,11 +100,9 @@ class AvatarTile extends StatelessWidget {
   Widget _subtitle() {
     return Row(
       children: [
-        const Text(
+        Text(
           "from",
-          style: const TextStyle(
-            fontSize: AppFonts.h5,
-          ),
+          style: AppFonts.textStyleWithSize(AppFonts.h5),
         ),
         const SizedBox(
           width: 9,
@@ -115,11 +114,9 @@ class AvatarTile extends StatelessWidget {
         const SizedBox(
           width: 18,
         ),
-        const Text(
+        Text(
           "until",
-          style: const TextStyle(
-            fontSize: AppFonts.h5,
-          ),
+          style: AppFonts.textStyleWithSize(AppFonts.h5),
         ),
         const SizedBox(
           width: 9,
@@ -173,7 +170,7 @@ class _DateButton extends StatelessWidget {
         ),
         label: Text(
           _formatter.format(this.date),
-          style: TextStyle(fontSize: AppFonts.h5),
+          style: AppFonts.textStyleWithSize(AppFonts.h5),
         ),
       ),
     );

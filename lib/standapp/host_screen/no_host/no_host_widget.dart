@@ -24,11 +24,9 @@ class NoHostWidget extends StatelessWidget {
               ),
               Column(
                 children: [
-                  const Text(
+                  Text(
                     "You don't have a \nhost, yet",
-                    style: const TextStyle(
-                      fontSize: AppFonts.h2,
-                    ),
+                    style: AppFonts.textStyleWithSize(AppFonts.h2),
                   ),
                   const SizedBox(
                     height: 45,
@@ -69,7 +67,7 @@ class _HostButton extends StatelessWidget {
         padding: this._padding,
         child: Text(
           this._text,
-          style: TextStyle(fontSize: AppFonts.h3),
+          style: AppFonts.textStyleWithSize(AppFonts.h3),
         ),
       ),
     );

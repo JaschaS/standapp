@@ -197,7 +197,7 @@ abstract class _BaseSelectWidget extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: Text(
         this.title ?? "",
-        style: TextStyle(fontSize: AppFonts.h2, fontWeight: FontWeight.bold),
+        style: AppFonts.textStyleWithSize(AppFonts.h2, FontWeight.bold),
       ),
     );
   }
@@ -266,12 +266,9 @@ class _BaseSelectState extends State<_tmp> {
   }
 
   Widget _avatarTitle() {
-    return const Text(
+    return Text(
       "Select time",
-      style: const TextStyle(
-        fontSize: AppFonts.h5,
-        fontWeight: FontWeight.bold,
-      ),
+      style: AppFonts.textStyleWithSize(AppFonts.h5, FontWeight.bold),
     );
   }
 
@@ -281,7 +278,7 @@ class _BaseSelectState extends State<_tmp> {
       alignment: Alignment.centerLeft,
       child: Text(
         widget.title ?? "",
-        style: TextStyle(fontSize: AppFonts.h2, fontWeight: FontWeight.bold),
+        style: AppFonts.textStyleWithSize(AppFonts.h2, FontWeight.bold),
       ),
     );
   }
@@ -326,7 +323,7 @@ class _RaisedAppButton extends StatelessWidget {
         onPressed: this.callback,
         child: Text(
           this.title ?? "",
-          style: const TextStyle(fontSize: AppFonts.h5),
+          style: AppFonts.textStyleWithSize(AppFonts.h5),
         ),
       ),
     );
@@ -349,7 +346,7 @@ class _TextAppButton extends StatelessWidget {
         onPressed: this.callback,
         child: Text(
           this.title ?? "",
-          style: const TextStyle(fontSize: AppFonts.h5),
+          style: AppFonts.textStyleWithSize(AppFonts.h5),
         ),
       ),
     );
