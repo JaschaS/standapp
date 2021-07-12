@@ -18,6 +18,7 @@ class AppColors {
   static const Color standard_blue = const Color(0xFF263238);
   static const Color audi_grey = const Color(0xFF666666);
   static const Color dark_grey = const Color(0xFF979797);
+  static const Color light_grey = const Color(0xFFF9F9F9);
   static const Color fifty_shades = const Color(0xFFE8E8E8);
   static const Color weisser_als_weiss = const Color(0xFFFFFFFF);
 }
