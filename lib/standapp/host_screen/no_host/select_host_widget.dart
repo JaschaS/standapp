@@ -321,7 +321,7 @@ class _RaisedAppButton extends StatelessWidget {
       width: 210,
       height: 56,
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(primary: AppColors.red),
+        style: ElevatedButton.styleFrom(primary: AppColors.jascha_red),
         onPressed: this.callback,
         child: Text(
           this.title ?? "",

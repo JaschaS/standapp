@@ -45,7 +45,7 @@ class AvatarTile extends StatelessWidget {
         ),
         Container(
           decoration: BoxDecoration(
-            color: AppColors.gray,
+            color: AppColors.fifty_shades,
             borderRadius: BorderRadius.all(
               Radius.circular(10),
             ),
