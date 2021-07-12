@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:standapp/standapp/host_screen/host_button.dart';
+import 'package:standapp/standapp/standapp_buttons.dart';
 import 'package:standapp/standapp/standapp_fonts.dart';
-import '../../standapp_colors.dart';
 import 'avatar_tile_widget.dart';
 import 'avatar_widget.dart';
 
@@ -23,7 +22,7 @@ class NoHostWidget extends _BaseSelectWidget {
       padding: const EdgeInsets.fromLTRB(250, 0, 0, 0),
       child: Row(
         children: [
-          _RaisedAppButton(
+          PrimaryAppButton(
             title: "Find new Host",
             callback: () {},
           )
@@ -53,9 +52,8 @@ class CurrentHostWidget extends _BaseSelectWidget {
       padding: const EdgeInsets.fromLTRB(250, 0, 0, 0),
       child: Row(
         children: [
-          _RaisedAppButton(
+          PrimaryAppButton(
             title: "Find new Host",
-            callback: () {},
           )
         ],
       ),
@@ -77,14 +75,14 @@ class SelectDateWidget extends _BaseSelectWidget {
       padding: const EdgeInsets.fromLTRB(250, 0, 0, 0),
       child: Row(
         children: [
-          _RaisedAppButton(
+          PrimaryAppButton(
             title: "Continue",
             callback: () {},
           ),
           const SizedBox(
             width: 12,
           ),
-          _TextAppButton(
+          TextAppButton(
             callback: () {},
             title: "Cancel",
           )
@@ -114,20 +112,20 @@ class SelectHostWidget extends _BaseSelectWidget {
       padding: const EdgeInsets.fromLTRB(250, 0, 0, 0),
       child: Row(
         children: [
-          _RaisedAppButton(
+          PrimaryAppButton(
             title: "Confirm host",
             callback: () {},
           ),
           const SizedBox(
             width: 12,
           ),
-          _RaisedAppButton(
+          PrimaryAppButton(
             title: "Search again",
           ),
           const SizedBox(
             width: 12,
           ),
-          _TextAppButton(
+          TextAppButton(
             callback: () {},
             title: "Cancel",
           )
@@ -197,7 +195,7 @@ abstract class _BaseSelectWidget extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: Text(
         this.title ?? "",
-        style: AppFonts.textStyleWithSize(AppFonts.h2, FontWeight.bold),
+        style: AppFonts.textStyleWithSize(AppFonts.h2, weight: FontWeight.bold),
       ),
     );
   }
@@ -268,7 +266,7 @@ class _BaseSelectState extends State<_tmp> {
   Widget _avatarTitle() {
     return Text(
       "Select time",
-      style: AppFonts.textStyleWithSize(AppFonts.h5, FontWeight.bold),
+      style: AppFonts.textStyleWithSize(AppFonts.h5, weight: FontWeight.bold),
     );
   }
 
@@ -278,7 +276,7 @@ class _BaseSelectState extends State<_tmp> {
       alignment: Alignment.centerLeft,
       child: Text(
         widget.title ?? "",
-        style: AppFonts.textStyleWithSize(AppFonts.h2, FontWeight.bold),
+        style: AppFonts.textStyleWithSize(AppFonts.h2, weight: FontWeight.bold),
       ),
     );
   }
@@ -304,51 +302,5 @@ class _BaseSelectState extends State<_tmp> {
       default:
         return today;
     }
-  }
-}
-
-class _RaisedAppButton extends StatelessWidget {
-  final VoidCallback? callback;
-  final String? title;
-
-  _RaisedAppButton({this.callback, this.title});
-
-  @override
-  Widget build(final BuildContext context) {
-    return SizedBox(
-      width: 210,
-      height: 56,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(primary: AppColors.jascha_red),
-        onPressed: this.callback,
-        child: Text(
-          this.title ?? "",
-          style: AppFonts.textStyleWithSize(AppFonts.h5),
-        ),
-      ),
-    );
-  }
-}
-
-class _TextAppButton extends StatelessWidget {
-  final VoidCallback? callback;
-  final String? title;
-
-  _TextAppButton({this.callback, this.title});
-
-  @override
-  Widget build(final BuildContext context) {
-    return SizedBox(
-      width: 99,
-      height: 56,
-      child: TextButton(
-        style: TextButton.styleFrom(primary: Colors.black),
-        onPressed: this.callback,
-        child: Text(
-          this.title ?? "",
-          style: AppFonts.textStyleWithSize(AppFonts.h5),
-        ),
-      ),
-    );
   }
 }
