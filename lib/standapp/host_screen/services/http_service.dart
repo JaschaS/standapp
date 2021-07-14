@@ -65,7 +65,7 @@ class HttpService {
     return _evaluateMembers(response);
   }
 
-  static void postHost(final User user, final Member member) async {
+  static Future<void> postHost(final User user, final Member member) async {
     final response = await post(
         Uri.parse(
             'https://$APP_ID.execute-api.eu-west-1.amazonaws.com/dev/host/save'),
