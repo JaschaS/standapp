@@ -13,8 +13,6 @@ import 'package:standapp/standapp/host_screen/web/web_dialog.dart';
 import 'package:standapp/standapp/standapp_colors.dart';
 import 'configure_nonweb.dart' if (dart.library.html) 'configure_web.dart';
 
-//- Löschen von member geht nicht
-// updaten von current host scheint nicht zu funktionieren
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -53,7 +51,7 @@ class _StandAppState extends State<StandApp> {
           centerTitle: false,
           leadingWidth: 0,
           elevation: 0,
-          backgroundColor: AppColors.weisser_als_weiss,
+          backgroundColor: Colors.transparent,
           title: _createHeaderTitle(),
           actions: _createActions(),
         ),
@@ -206,54 +204,65 @@ class _MemberState extends State<WebMemberWidget> {
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 55, 20, 0),
       color: AppColors.blue,
-      child: ListView(
-        shrinkWrap: true,
-        physics: ClampingScrollPhysics(),
-        children: [
-          Padding(
-            padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-            child: MemberBar(
-              addMember: _addMemberDialog,
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Center(
-            child: Container(
-              width: 797,
-              child: FutureBuilder<List<Member>>(
-                  future: _members,
-                  builder: (context, members) {
-                    if (members.connectionState != ConnectionState.done) {
-                      return LoadingMemberWidget();
-                    }
+      child: FutureBuilder<List<Member>>(
+        future: _members,
+        builder: (context, members) {
+          if (members.connectionState != ConnectionState.done) {
+            return LoadingMemberWidget();
+          }
 
-                    if (members.hasData) {
-                      return Wrap(
-                        spacing: 10,
-                        runSpacing: 10,
-                        children: _generateMemberWidget(members.data),
-                      );
-                    }
+          if (members.hasData) {
+            return Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                _memberWidget(members.data),
+              ],
+            );
+          }
 
-                    if (members.hasError) {
-                      return _showError(members);
-                    }
+          if (members.hasError) {
+            return _showError(members);
+          }
 
-                    return LoadingMemberWidget();
-                  }),
-            ),
-          ),
-          const SizedBox(
-            height: 150,
-          )
-        ],
+          return LoadingMemberWidget();
+        },
       ),
     );
   }
 
-  List<Widget> _generateMemberWidget(List<Member>? members) {
+  Widget _memberWidget(final List<Member>? members) {
+    return ListView(
+      shrinkWrap: true,
+      physics: ClampingScrollPhysics(),
+      children: [
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+          child: MemberBar(
+            addMember: _addMemberDialog,
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Center(
+          child: Container(
+            width: 797,
+            child: Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: _generateMembers(members),
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 150,
+        )
+      ],
+    );
+  }
+
+  List<Widget> _generateMembers(final List<Member>? members) {
     return members!.map(
       (entry) {
         return WebBoardButton(
