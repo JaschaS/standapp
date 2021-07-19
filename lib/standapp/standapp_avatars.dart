@@ -7,7 +7,7 @@ class AvatarsImages {
   static const String ginger_freckles = "images/ginger_freckles.png";
 
   static List<String> imagesColored = [
-    for (var i = 0; i < 21; i += 1)
+    for (var i = 0; i < 22; i += 1)
       if (i != 0 && i != 2) "images/Avatar${i < 10 ? "0$i" : i}.png"
   ];
 

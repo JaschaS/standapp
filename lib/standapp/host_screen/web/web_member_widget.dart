@@ -78,8 +78,8 @@ class _MemberState extends State<WebMemberWidget> {
             Padding(
               padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
               child: MemberBar(
-                addMember: _addMemberDialog,
-              ),
+                  //addMember: _addMemberDialog,
+                  ),
             ),
             const SizedBox(
               height: 10,

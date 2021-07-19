@@ -5,9 +5,9 @@ import '../standapp_colors.dart';
 typedef ContextCallback = void Function(BuildContext);
 
 class MemberBar extends StatelessWidget {
-  final ContextCallback? _addMember;
+  final VoidCallback? addMember;
 
-  MemberBar({ContextCallback? addMember}) : this._addMember = addMember;
+  MemberBar({this.addMember});
 
   @override
   Widget build(final BuildContext context) {
@@ -15,16 +15,14 @@ class MemberBar extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "Members",
+          "Team members",
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         const SizedBox(
-          width: 485,
+          width: 600,
         ),
         TextButton(
-          onPressed: () {
-            this._addMember!(context);
-          },
+          onPressed: this.addMember,
           child: Icon(
             Icons.person_add,
             color: AppColors.darkGray,

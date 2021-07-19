@@ -1,11 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:standapp/standapp/host_screen/services/http_service.dart';
-import 'package:standapp/standapp/standapp_avatars.dart';
 import 'package:standapp/standapp/standapp_buttons.dart';
 import 'package:standapp/standapp/standapp_colors.dart';
 import 'package:standapp/standapp/standapp_fonts.dart';
-import '../background_widget.dart';
 import '../member_model.dart';
 import 'avatar_tile_widget.dart';
 import 'avatar_widget.dart';
@@ -14,8 +12,9 @@ enum _HostState { SELECT_DATE, SELECT_HOST, SHOW_HOST }
 
 class HostWidget extends StatefulWidget {
   final User? user;
+  final Future<Member>? currentHost;
 
-  HostWidget({this.user});
+  HostWidget({this.user, this.currentHost});
 
   @override
   State<StatefulWidget> createState() => _HostWidgetState();
@@ -25,14 +24,14 @@ class _HostWidgetState extends State<HostWidget> {
   _HostState _showState = _HostState.SHOW_HOST;
   late DateTime _start = DateTime.now();
   late DateTime _end = DateTime.now();
-  late Future<Member> _currentHost;
   late Future<Member> _suggestion;
+  late Future<Member> _host;
 
   @override
   void initState() {
     super.initState();
 
-    _currentHost = HttpService.getCurrentHost(widget.user!);
+    _host = widget.currentHost ?? HttpService.getCurrentHost(widget.user!);
     _start = _calculateStartDate();
     _end = _calculateEndDate();
   }
@@ -86,30 +85,36 @@ class _HostWidgetState extends State<HostWidget> {
     await HttpService.postHost(widget.user!, newHost);
 
     setState(() {
-      this._currentHost = HttpService.getCurrentHost(widget.user!);
+      _host = HttpService.getCurrentHost(widget.user!);
       this._showState = _HostState.SHOW_HOST;
     });
   }
 
   @override
   Widget build(final BuildContext context) {
-    return FutureBuilder<Member>(
-      future: _currentHost,
-      builder: (context, currentHost) {
-        if (currentHost.connectionState != ConnectionState.done) {
+    return Container(
+      color: AppColors.weisser_als_weiss,
+      child: FutureBuilder<Member>(
+        future: _host,
+        builder: (context, currentHost) {
+          if (currentHost.connectionState != ConnectionState.done) {
+            return _loading();
+          }
+
+          if (currentHost.hasData) {
+            return Padding(
+              padding: EdgeInsets.only(bottom: 92),
+              child: _widgetForState(currentHost),
+            );
+          }
+
+          if (currentHost.hasError) {
+            return _showError(currentHost);
+          }
+
           return _loading();
-        }
-
-        if (currentHost.hasData) {
-          return _widgetForState(currentHost);
-        }
-
-        if (currentHost.hasError) {
-          return _showError(currentHost);
-        }
-
-        return _loading();
-      },
+        },
+      ),
     );
   }
 
@@ -124,7 +129,7 @@ class _HostWidgetState extends State<HostWidget> {
         return CurrentHostWidget(
           title: "Hi, I am ${hostData.name}",
           avatar: Avatar(
-            image: AvatarsImages.ginger_freckles,
+            image: hostData.avatar,
           ),
           start: DateTime.parse(hostData.startDate!),
           end: DateTime.parse(hostData.endDate!),
@@ -157,7 +162,7 @@ class _HostWidgetState extends State<HostWidget> {
               return SelectHostWidget(
                 title: "It is ${suggestionData.name}!",
                 avatar: Avatar(
-                  image: AvatarsImages.ginger_freckles,
+                  image: suggestionData.avatar,
                 ),
                 start: _start,
                 end: _end,

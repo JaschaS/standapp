@@ -23,7 +23,7 @@ class WebBoardButton extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return SizedBox(
-      width: 210,
+      width: 259,
       child: Card(
         color: this._color,
         child: ListTile(

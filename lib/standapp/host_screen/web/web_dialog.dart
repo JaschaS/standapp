@@ -79,7 +79,6 @@ class _WebDialogState extends State<WebDialog> {
   Widget build(final BuildContext context) {
     final avatars = [];
     avatars.addAll(AvatarsImages.imagesColored);
-    avatars.addAll(AvatarsImages.imagesBlack);
 
     return SimpleDialog(
       title: _buttonBar(),
