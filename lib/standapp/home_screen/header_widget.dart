@@ -6,7 +6,7 @@ class HomeScreenHeader extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: AppColors.weisser_als_weiss,
       child: Container(
         margin: EdgeInsets.fromLTRB(0, 50, 0, 50),
         child: Column(
