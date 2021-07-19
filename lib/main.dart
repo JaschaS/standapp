@@ -210,7 +210,7 @@ class _MemberState extends State<WebMemberWidget> {
                   future: _members,
                   builder: (context, members) {
                     if (members.connectionState != ConnectionState.done) {
-                      return _loading();
+                      return LoadingMemberWidget();
                     }
 
                     if (members.hasData) {
@@ -225,7 +225,7 @@ class _MemberState extends State<WebMemberWidget> {
                       return _showError(members);
                     }
 
-                    return _loading();
+                    return LoadingMemberWidget();
                   }),
             ),
           ),
@@ -258,10 +258,85 @@ class _MemberState extends State<WebMemberWidget> {
       child: Text("${snapshot.error}"),
     );
   }
+}
 
-  Widget _loading() {
-    return Center(
-      child: CircularProgressIndicator(),
+class LoadingMemberWidget extends StatelessWidget {
+  @override
+  Widget build(final BuildContext context) {
+    return Container(
+      color: AppColors.baby_blue,
+      child: ListView(
+        shrinkWrap: true,
+        physics: ClampingScrollPhysics(),
+        children: [
+          Padding(
+            padding: EdgeInsets.only(bottom: 10),
+            child: _memberBar(),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Center(
+            child: Container(
+              width: 797,
+              child: Wrap(
+                spacing: 10,
+                runSpacing: 10,
+                children: _loadingMembers(),
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 150,
+          )
+        ],
+      ),
     );
+  }
+
+  Widget _memberBar() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          width: 150,
+          height: 24,
+          decoration: const BoxDecoration(
+            color: AppColors.light_grey,
+            borderRadius: BorderRadius.all(
+              Radius.circular(5),
+            ),
+          ),
+        ),
+        const SizedBox(
+          width: 592,
+        ),
+        Container(
+          width: 55,
+          height: 24,
+          decoration: const BoxDecoration(
+            color: AppColors.light_grey,
+            borderRadius: BorderRadius.all(
+              Radius.circular(5),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  List<Widget> _loadingMembers() {
+    return List.generate(9, (index) {
+      return Container(
+        width: 259,
+        height: 56,
+        decoration: const BoxDecoration(
+          color: AppColors.light_grey,
+          borderRadius: BorderRadius.all(
+            Radius.circular(5),
+          ),
+        ),
+      );
+    });
   }
 }
