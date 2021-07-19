@@ -24,9 +24,8 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^2.1.0
-  flutter_slidable: ^0.6.0 
-  firebase_core: ^1.3.0
-  firebase_auth: ^1.4.1
+  firebase_core: ^1.4.0
+  firebase_auth: ^3.0.1
   flutter_signin_button: ^2.0.0  
   flutter_web_plugins:
       sdk: flutter
@@ -39,7 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
-  flutter_lints: ^1.0.3
+  flutter_lints: ^1.0.4
   flutter_test:
     sdk: flutter
 
@@ -79,26 +78,6 @@ flutter:
     - images/Avatar19.png
     - images/Avatar20.png
     - images/Avatar21.png
-    - images/Avatar01-1.png
-    - images/Avatar03-1.png
-    - images/Avatar04-1.png
-    - images/Avatar05-1.png
-    - images/Avatar06-1.png
-    - images/Avatar07-1.png
-    - images/Avatar08-1.png
-    - images/Avatar09-1.png
-    - images/Avatar10-1.png
-    - images/Avatar11-1.png
-    - images/Avatar12-1.png
-    - images/Avatar13-1.png
-    - images/Avatar14-1.png
-    - images/Avatar15-1.png
-    - images/Avatar16-1.png
-    - images/Avatar17-1.png
-    - images/Avatar18-1.png
-    - images/Avatar19-1.png
-    - images/Avatar20-1.png
-    - images/Avatar21-1.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
