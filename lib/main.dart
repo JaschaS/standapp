@@ -50,8 +50,11 @@ class _StandAppState extends State<StandApp> {
       home: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
+          centerTitle: false,
+          leadingWidth: 0,
           elevation: 0,
-          backgroundColor: Colors.transparent,
+          backgroundColor: AppColors.weisser_als_weiss,
+          title: _createHeaderTitle(),
           actions: _createActions(),
         ),
         body: _createBody(),
@@ -63,6 +66,19 @@ class _StandAppState extends State<StandApp> {
     if (_user == null) return HomeScreenWidget();
 
     return HostPage(user: _user);
+  }
+
+  Widget _createHeaderTitle() {
+    if (_user == null) return Container();
+
+    return Container(
+      alignment: Alignment.centerLeft,
+      child: Image(
+        width: 60,
+        height: 24,
+        image: AssetImage("images/logo.png"),
+      ),
+    );
   }
 
   List<Widget> _createActions() {
