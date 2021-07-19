@@ -14,6 +14,8 @@ class _HomeScreenState extends State<HomeScreenWidget> {
   Widget build(final BuildContext context) {
     return BackgroundWidget(
       child: ListView(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
         children: [
           HomeScreenHeader(),
           EmailSignInPage(),
