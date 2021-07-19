@@ -179,6 +179,12 @@ class _MemberState extends State<WebMemberWidget> {
     );
   }
 
+  void _onRemove(final Member member) async {
+    setState(() {
+      _members = HttpService.deleteMember(widget.user!, member);
+    });
+  }
+
   @override
   Widget build(final BuildContext context) {
     return Container(
@@ -239,7 +245,9 @@ class _MemberState extends State<WebMemberWidget> {
           onInfo: () {
             _onMemberInfo(entry);
           },
-          onRemove: () {},
+          onRemove: () {
+            _onRemove(entry);
+          },
         );
       },
     ).toList();
