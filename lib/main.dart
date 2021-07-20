@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:standapp/standapp/home_screen/home_screen_widget.dart';
 import 'package:standapp/standapp/host_screen/background_widget.dart';
 import 'package:standapp/standapp/host_screen/member_bar.dart';
@@ -351,17 +352,24 @@ class LoadingMemberWidget extends StatelessWidget {
   }
 
   List<Widget> _loadingMembers() {
-    return List.generate(9, (index) {
-      return Container(
-        width: 259,
-        height: 56,
-        decoration: const BoxDecoration(
-          color: AppColors.light_grey,
-          borderRadius: BorderRadius.all(
-            Radius.circular(5),
+    return List.generate(
+      9,
+      (index) {
+        return Shimmer.fromColors(
+          baseColor: AppColors.light_grey,
+          highlightColor: AppColors.weisser_als_weiss,
+          child: Container(
+            width: 259,
+            height: 56,
+            decoration: const BoxDecoration(
+              color: AppColors.light_grey,
+              borderRadius: BorderRadius.all(
+                Radius.circular(5),
+              ),
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }

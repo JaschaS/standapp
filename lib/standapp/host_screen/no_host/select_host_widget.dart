@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:standapp/standapp/host_screen/services/http_service.dart';
 import 'package:standapp/standapp/standapp_buttons.dart';
 import 'package:standapp/standapp/standapp_colors.dart';
@@ -466,31 +467,35 @@ abstract class _BaseSelectWidget extends StatelessWidget {
 class LoadingHostWidget extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      child: SizedBox(
-        width: 867,
-        height: 275,
-        child: Column(
-          children: [
-            _header(),
-            Container(
-              child: Stack(
-                alignment: Alignment.centerLeft,
-                children: [
-                  _banner(),
-                  Container(
-                    width: 180,
-                    height: 180,
-                    child: CircleAvatar(
-                      backgroundColor: AppColors.light_grey,
+    return Shimmer.fromColors(
+      baseColor: AppColors.light_grey,
+      highlightColor: AppColors.weisser_als_weiss,
+      child: Container(
+        alignment: Alignment.center,
+        child: SizedBox(
+          width: 867,
+          height: 275,
+          child: Column(
+            children: [
+              _header(),
+              Container(
+                child: Stack(
+                  alignment: Alignment.centerLeft,
+                  children: [
+                    _banner(),
+                    Container(
+                      width: 180,
+                      height: 180,
+                      child: CircleAvatar(
+                        backgroundColor: AppColors.light_grey,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            _buttonBar(),
-          ],
+              _buttonBar(),
+            ],
+          ),
         ),
       ),
     );
