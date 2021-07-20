@@ -9,7 +9,7 @@ import '../member_model.dart';
 import 'avatar_tile_widget.dart';
 import 'avatar_widget.dart';
 
-enum _HostState { SELECT_DATE, SELECT_HOST, SHOW_HOST }
+enum _HostState { SELECT_DATE, SELECT_HOST, SHOW_HOST, LOADING_STATE }
 
 class HostWidget extends StatefulWidget {
   final User? user;
@@ -83,11 +83,16 @@ class _HostWidgetState extends State<HostWidget> {
   void _saveHost(final Member newHost) async {
     newHost.startDate = _start.toIso8601String();
     newHost.endDate = _end.toIso8601String();
-    await HttpService.postHost(widget.user!, newHost);
+
+    HttpService.postHost(widget.user!, newHost).then((value) {
+      setState(() {
+        _host = HttpService.getCurrentHost(widget.user!);
+        this._showState = _HostState.SHOW_HOST;
+      });
+    });
 
     setState(() {
-      _host = HttpService.getCurrentHost(widget.user!);
-      this._showState = _HostState.SHOW_HOST;
+      this._showState = _HostState.LOADING_STATE;
     });
   }
 
@@ -182,6 +187,8 @@ class _HostWidgetState extends State<HostWidget> {
             return LoadingHostWidget();
           },
         );
+      case _HostState.LOADING_STATE:
+        return LoadingHostWidget();
       default:
         return NoHostWidget();
     }
