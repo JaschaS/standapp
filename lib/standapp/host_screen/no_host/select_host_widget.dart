@@ -74,9 +74,10 @@ class _HostWidgetState extends State<HostWidget> {
     });
   }
 
-  void _searchAgain() {
+  void _searchAgain(final Member member) {
     setState(() {
-      this._suggestion = HttpService.getRecommendation(widget.user!);
+      this._suggestion =
+          HttpService.getRecommendationWithoutMember(widget.user!, member);
     });
   }
 
@@ -179,7 +180,7 @@ class _HostWidgetState extends State<HostWidget> {
                 start: _start,
                 end: _end,
                 cancel: _goBackToSelectDate,
-                searchAgain: _searchAgain,
+                searchAgain: () => _searchAgain(suggestionData),
                 confirm: () => _saveHost(suggestionData),
               );
             }

@@ -41,6 +41,16 @@ class HttpService {
     return _evaluateMember(response);
   }
 
+  static Future<Member> getRecommendationWithoutMember(
+      final User user, final Member member) async {
+    final response = await get(
+        Uri.parse(
+            'https://$APP_ID.execute-api.eu-west-1.amazonaws.com/dev/host/find?memberId=${member.memberId}'),
+        headers: {"Authorization": "Bearer ${await user.getIdToken()}"});
+
+    return _evaluateMember(response);
+  }
+
   static Future<List<Member>> getMembers(final User user) async {
     final response = await get(
         Uri.parse(
