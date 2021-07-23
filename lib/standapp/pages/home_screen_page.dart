@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:standapp/standapp/host_screen/background_widget.dart';
 
-import 'signin_page.dart';
-import 'header_widget.dart';
+import '../home_screen/signin_page.dart';
+import '../home_screen/header_widget.dart';
 
-class HomeScreenWidget extends StatefulWidget {
+class HomeScreenPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreenWidget> {
+class _HomeScreenState extends State<HomeScreenPage> {
   @override
   Widget build(final BuildContext context) {
     return BackgroundWidget(

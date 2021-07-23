@@ -3,11 +3,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:standapp/standapp/home_screen/home_screen_widget.dart';
-import 'package:standapp/standapp/host_screen/background_widget.dart';
+import 'package:standapp/standapp/pages/home_screen_page.dart';
 import 'package:standapp/standapp/host_screen/member_bar.dart';
 import 'package:standapp/standapp/host_screen/member_model.dart';
-import 'package:standapp/standapp/host_screen/select_host_widget.dart';
 import 'package:standapp/standapp/host_screen/http_service.dart';
 import 'package:standapp/standapp/host_screen/web_board_button.dart';
 import 'package:standapp/standapp/host_screen/web_dialog.dart';
@@ -63,7 +61,7 @@ class _StandAppState extends State<StandApp> {
   }
 
   Widget _createBody() {
-    if (_user == null) return HomeScreenWidget();
+    if (_user == null) return HomeScreenPage();
 
     return HostPage(user: _user);
   }
