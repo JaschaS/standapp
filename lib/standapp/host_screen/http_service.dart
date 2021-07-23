@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart';
 
-import '../member_model.dart';
+import 'member_model.dart';
 
 class HttpService {
   static const String APP_ID = "lob80zu3ng";

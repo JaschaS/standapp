@@ -7,10 +7,10 @@ import 'package:standapp/standapp/home_screen/home_screen_widget.dart';
 import 'package:standapp/standapp/host_screen/background_widget.dart';
 import 'package:standapp/standapp/host_screen/member_bar.dart';
 import 'package:standapp/standapp/host_screen/member_model.dart';
-import 'package:standapp/standapp/host_screen/no_host/select_host_widget.dart';
-import 'package:standapp/standapp/host_screen/services/http_service.dart';
-import 'package:standapp/standapp/host_screen/web/web_board_button.dart';
-import 'package:standapp/standapp/host_screen/web/web_dialog.dart';
+import 'package:standapp/standapp/host_screen/select_host_widget.dart';
+import 'package:standapp/standapp/host_screen/http_service.dart';
+import 'package:standapp/standapp/host_screen/web_board_button.dart';
+import 'package:standapp/standapp/host_screen/web_dialog.dart';
 import 'package:standapp/standapp/standapp_colors.dart';
 import 'configure_nonweb.dart' if (dart.library.html) 'configure_web.dart';
 

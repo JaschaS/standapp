@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../standapp_avatars.dart';
-import '../member_model.dart';
+import '../standapp_avatars.dart';
+import 'member_model.dart';
 
 typedef MemberCallback = void Function(Member?, Member);
 

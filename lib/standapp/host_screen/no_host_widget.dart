@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:standapp/standapp/host_screen/host_button.dart';
 import 'package:standapp/standapp/standapp_fonts.dart';
 
-import '../../standapp_colors.dart';
+import '../standapp_colors.dart';
 
 class NoHostWidget extends StatelessWidget {
   @override
