@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:standapp/standapp/host_screen/http_service.dart';
+import 'package:standapp/standapp/services/http_service.dart';
 import 'package:standapp/standapp/standapp_buttons.dart';
 import 'package:standapp/standapp/standapp_colors.dart';
 import 'package:standapp/standapp/standapp_fonts.dart';

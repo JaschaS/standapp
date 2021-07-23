@@ -6,7 +6,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:standapp/standapp/pages/home_screen_page.dart';
 import 'package:standapp/standapp/host_screen/member_bar.dart';
 import 'package:standapp/standapp/host_screen/member_model.dart';
-import 'package:standapp/standapp/host_screen/http_service.dart';
+import 'package:standapp/standapp/services/http_service.dart';
 import 'package:standapp/standapp/host_screen/web_board_button.dart';
 import 'package:standapp/standapp/host_screen/web_dialog.dart';
 import 'package:standapp/standapp/standapp_colors.dart';

@@ -2,7 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:standapp/standapp/host_screen/background_widget.dart';
-import 'package:standapp/standapp/host_screen/http_service.dart';
+import 'package:standapp/standapp/services/http_service.dart';
 import 'package:standapp/standapp/host_screen/member_model.dart';
 import 'package:standapp/standapp/host_screen/select_host_widget.dart';
 
