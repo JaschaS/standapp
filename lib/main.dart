@@ -13,6 +13,7 @@ import 'package:standapp/standapp/host_screen/web_board_button.dart';
 import 'package:standapp/standapp/host_screen/web_dialog.dart';
 import 'package:standapp/standapp/standapp_colors.dart';
 import 'configure_nonweb.dart' if (dart.library.html) 'configure_web.dart';
+import 'standapp/pages/host_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -93,45 +94,6 @@ class _StandAppState extends State<StandApp> {
             child: Text("sign-out")),
       )
     ];
-  }
-}
-
-class HostPage extends StatefulWidget {
-  final User? user;
-
-  HostPage({this.user});
-
-  @override
-  State<StatefulWidget> createState() => _HostPageState();
-}
-
-class _HostPageState extends State<HostPage> {
-  Future<Member>? _currentHost = null;
-
-  void _updateCurrentHost() {
-    setState(() {
-      _currentHost = HttpService.getCurrentHost(widget.user!);
-    });
-  }
-
-  @override
-  Widget build(final BuildContext context) {
-    return BackgroundWidget(
-      topWeight: 0.5,
-      bottomWeight: 0.5,
-      child: ListView(
-        children: [
-          HostWidget(
-            user: widget.user,
-            currentHost: _currentHost,
-          ),
-          WebMemberWidget(
-            user: widget.user,
-            updateCurrentHost: _updateCurrentHost,
-          ),
-        ],
-      ),
-    );
   }
 }
 
