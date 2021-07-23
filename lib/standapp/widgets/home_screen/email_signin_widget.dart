@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:standapp/standapp/host_screen/background_widget.dart';
 import 'package:standapp/standapp/standapp_colors.dart';
-
-import '../host_screen/background_widget.dart';
 
 class EmailSignInWidget extends StatefulWidget {
   @override
