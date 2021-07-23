@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:standapp/standapp/host_screen/background_widget.dart';
-import 'package:standapp/standapp/widgets/home_screen/email_signin_widget.dart';
+import 'package:standapp/standapp/widgets/home_screen/email_signin.dart';
 import 'package:standapp/standapp/widgets/home_screen/header_widget.dart';
 
 class HomeScreenPage extends StatefulWidget {
@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreenPage> {
         physics: NeverScrollableScrollPhysics(),
         children: [
           HomeScreenHeader(),
-          EmailSignInWidget(),
+          EmailSignIn(),
         ],
       ),
     );

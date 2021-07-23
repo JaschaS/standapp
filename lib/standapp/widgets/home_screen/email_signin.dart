@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:standapp/standapp/host_screen/background_widget.dart';
 import 'package:standapp/standapp/standapp_colors.dart';
 
-class EmailSignInWidget extends StatefulWidget {
+class EmailSignIn extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _EmailSignInState();
 }
 
-class _EmailSignInState extends State<EmailSignInWidget> {
+class _EmailSignInState extends State<EmailSignIn> {
   late TextEditingController _userNameController;
   late TextEditingController _passwordController;
   String? _emailError;
