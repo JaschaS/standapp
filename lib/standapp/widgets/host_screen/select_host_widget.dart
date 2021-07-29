@@ -107,7 +107,7 @@ class _HostWidgetState extends State<HostWidget> {
           if (currentHost.connectionState != ConnectionState.done) {
             return Padding(
               padding: EdgeInsets.only(bottom: 92),
-              child: LoadingHostWidget(),
+              child: _LoadingHostWidget(),
             );
           }
 
@@ -124,7 +124,7 @@ class _HostWidgetState extends State<HostWidget> {
 
           return Padding(
             padding: EdgeInsets.only(bottom: 92),
-            child: LoadingHostWidget(),
+            child: _LoadingHostWidget(),
           );
         },
       ),
@@ -136,10 +136,10 @@ class _HostWidgetState extends State<HostWidget> {
       case _HostState.SHOW_HOST:
         final hostData = currentHost.data!;
         if (hostData.isEmpty()) {
-          return NoHostWidget();
+          return _NoHostWidget();
         }
 
-        return CurrentHostWidget(
+        return _CurrentHostWidget(
           title: "Hi, I am ${hostData.name}",
           avatar: Avatar(
             image: hostData.avatar,
@@ -149,7 +149,7 @@ class _HostWidgetState extends State<HostWidget> {
           callback: _selectHost,
         );
       case _HostState.SELECT_DATE:
-        return SelectDateWidget(
+        return _SelectDateWidget(
           cancel: _goBackToShowHost,
           onStartChange: _onStartChange,
           onEndChange: _onEndChange,
@@ -162,7 +162,7 @@ class _HostWidgetState extends State<HostWidget> {
           future: this._suggestion,
           builder: (context, suggestion) {
             if (suggestion.connectionState != ConnectionState.done) {
-              return LoadingHostWidget();
+              return _LoadingHostWidget();
             }
 
             if (suggestion.hasError) {
@@ -172,7 +172,7 @@ class _HostWidgetState extends State<HostWidget> {
             if (suggestion.hasData) {
               final suggestionData = suggestion.data!;
 
-              return SelectHostWidget(
+              return _SelectHostWidget(
                 title: "It is ${suggestionData.name}!",
                 avatar: Avatar(
                   image: suggestionData.avatar,
@@ -185,13 +185,13 @@ class _HostWidgetState extends State<HostWidget> {
               );
             }
 
-            return LoadingHostWidget();
+            return _LoadingHostWidget();
           },
         );
       case _HostState.LOADING_STATE:
-        return LoadingHostWidget();
+        return _LoadingHostWidget();
       default:
-        return NoHostWidget();
+        return _NoHostWidget();
     }
   }
 
@@ -229,10 +229,10 @@ class _HostWidgetState extends State<HostWidget> {
   }
 }
 
-class NoHostWidget extends _BaseSelectWidget {
+class _NoHostWidget extends _BaseSelectWidget {
   final VoidCallback? callback;
 
-  NoHostWidget({
+  _NoHostWidget({
     DateTime? start,
     DateTime? end,
     VoidCallback? callback,
@@ -261,10 +261,10 @@ class NoHostWidget extends _BaseSelectWidget {
   }
 }
 
-class CurrentHostWidget extends _BaseSelectWidget {
+class _CurrentHostWidget extends _BaseSelectWidget {
   final VoidCallback? callback;
 
-  CurrentHostWidget({
+  _CurrentHostWidget({
     String? title,
     Avatar? avatar,
     DateTime? start,
@@ -295,11 +295,11 @@ class CurrentHostWidget extends _BaseSelectWidget {
   }
 }
 
-class SelectDateWidget extends _BaseSelectWidget {
+class _SelectDateWidget extends _BaseSelectWidget {
   final VoidCallback? cancel;
   final VoidCallback? next;
 
-  SelectDateWidget({
+  _SelectDateWidget({
     DateCallback? onStartChange,
     DateCallback? onEndChange,
     VoidCallback? cancel,
@@ -339,12 +339,12 @@ class SelectDateWidget extends _BaseSelectWidget {
   }
 }
 
-class SelectHostWidget extends _BaseSelectWidget {
+class _SelectHostWidget extends _BaseSelectWidget {
   final VoidCallback? cancel;
   final VoidCallback? confirmHost;
   final VoidCallback? searchAgain;
 
-  SelectHostWidget({
+  _SelectHostWidget({
     String? title,
     Avatar? avatar,
     DateTime? start,
@@ -466,7 +466,7 @@ abstract class _BaseSelectWidget extends StatelessWidget {
   Widget _buttonBar();
 }
 
-class LoadingHostWidget extends StatelessWidget {
+class _LoadingHostWidget extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return Shimmer.fromColors(
