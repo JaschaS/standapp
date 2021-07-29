@@ -227,12 +227,6 @@ class _HostWidgetState extends State<HostWidget> {
       child: Text("${snapshot.error}"),
     );
   }
-
-  Widget _loading() {
-    return Center(
-      child: CircularProgressIndicator(),
-    );
-  }
 }
 
 class NoHostWidget extends _BaseSelectWidget {
