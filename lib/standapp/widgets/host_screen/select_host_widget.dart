@@ -5,7 +5,7 @@ import 'package:standapp/standapp/services/http_service.dart';
 import 'package:standapp/standapp/standapp_buttons.dart';
 import 'package:standapp/standapp/standapp_colors.dart';
 import 'package:standapp/standapp/standapp_fonts.dart';
-import 'member_model.dart';
+import '../../models/member_model.dart';
 import 'avatar_tile_widget.dart';
 import 'avatar_widget.dart';
 

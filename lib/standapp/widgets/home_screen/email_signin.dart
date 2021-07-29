@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:standapp/standapp/host_screen/background_widget.dart';
+import 'package:standapp/standapp/widgets/background_widget.dart';
 import 'package:standapp/standapp/standapp_colors.dart';
 
 class EmailSignIn extends StatefulWidget {

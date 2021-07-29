@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:standapp/standapp/host_screen/background_widget.dart';
+import 'package:standapp/standapp/widgets/background_widget.dart';
 import 'package:standapp/standapp/widgets/home_screen/email_signin.dart';
 import 'package:standapp/standapp/widgets/home_screen/home_screen_header.dart';
 

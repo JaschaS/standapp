@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../standapp_colors.dart';
+import '../../standapp_colors.dart';
 
 typedef ContextCallback = void Function(BuildContext);
 

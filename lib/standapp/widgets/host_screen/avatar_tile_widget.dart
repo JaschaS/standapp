@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../standapp_colors.dart';
-import '../standapp_fonts.dart';
+import '../../standapp_colors.dart';
+import '../../standapp_fonts.dart';
 import 'avatar_widget.dart';
 
 typedef DateCallback = void Function(DateTime);
