@@ -4,8 +4,7 @@ import 'package:standapp/standapp/widgets/background_widget.dart';
 import 'package:standapp/standapp/services/http_service.dart';
 import 'package:standapp/standapp/models/member_model.dart';
 import 'package:standapp/standapp/widgets/host_screen/select_host_widget.dart';
-
-import '../../main.dart';
+import 'package:standapp/standapp/widgets/host_screen/web_member_widget.dart';
 
 class HostPage extends StatefulWidget {
   final User? user;
