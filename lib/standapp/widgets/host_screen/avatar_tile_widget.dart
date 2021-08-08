@@ -75,7 +75,7 @@ class AvatarTile extends StatelessWidget {
                 height: 180,
               ),
               Container(
-                width: 495,
+                width: 560,
                 height: 69,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -140,7 +140,7 @@ class _DateButton extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return SizedBox(
-      width: 190,
+      width: 225,
       height: 40,
       child: ElevatedButton.icon(
         style: ButtonStyle(
