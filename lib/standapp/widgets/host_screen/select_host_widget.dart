@@ -8,6 +8,7 @@ import 'package:standapp/standapp/standapp_fonts.dart';
 import '../../models/member_model.dart';
 import 'avatar_tile_widget.dart';
 import 'avatar_widget.dart';
+import 'loading_host_widget.dart';
 
 enum _HostState { SELECT_DATE, SELECT_HOST, SHOW_HOST, LOADING_STATE }
 
@@ -107,7 +108,7 @@ class _HostWidgetState extends State<HostWidget> {
           if (currentHost.connectionState != ConnectionState.done) {
             return Padding(
               padding: EdgeInsets.only(bottom: 92),
-              child: _LoadingHostWidget(),
+              child: LoadingHostWidget(),
             );
           }
 
@@ -124,7 +125,7 @@ class _HostWidgetState extends State<HostWidget> {
 
           return Padding(
             padding: EdgeInsets.only(bottom: 92),
-            child: _LoadingHostWidget(),
+            child: LoadingHostWidget(),
           );
         },
       ),
@@ -162,7 +163,7 @@ class _HostWidgetState extends State<HostWidget> {
           future: this._suggestion,
           builder: (context, suggestion) {
             if (suggestion.connectionState != ConnectionState.done) {
-              return _LoadingHostWidget();
+              return LoadingHostWidget();
             }
 
             if (suggestion.hasError) {
@@ -185,11 +186,11 @@ class _HostWidgetState extends State<HostWidget> {
               );
             }
 
-            return _LoadingHostWidget();
+            return LoadingHostWidget();
           },
         );
       case _HostState.LOADING_STATE:
-        return _LoadingHostWidget();
+        return LoadingHostWidget();
       default:
         return _NoHostWidget();
     }
@@ -464,100 +465,4 @@ abstract class _BaseSelectWidget extends StatelessWidget {
   }
 
   Widget _buttonBar();
-}
-
-class _LoadingHostWidget extends StatelessWidget {
-  @override
-  Widget build(final BuildContext context) {
-    return Shimmer.fromColors(
-      baseColor: AppColors.light_grey,
-      highlightColor: AppColors.weisser_als_weiss,
-      child: Container(
-        alignment: Alignment.center,
-        child: SizedBox(
-          width: 867,
-          height: 275,
-          child: Column(
-            children: [
-              _header(),
-              Container(
-                child: Stack(
-                  alignment: Alignment.centerLeft,
-                  children: [
-                    _banner(),
-                    Container(
-                      width: 180,
-                      height: 180,
-                      child: CircleAvatar(
-                        backgroundColor: AppColors.light_grey,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              _buttonBar(),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _header() {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(250, 0, 0, 0),
-      alignment: Alignment.centerLeft,
-      child: Container(
-        width: 210,
-        height: 20,
-        decoration: BoxDecoration(
-          color: AppColors.light_grey,
-          borderRadius: BorderRadius.all(
-            Radius.circular(10),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _banner() {
-    return Row(
-      children: [
-        Container(
-          width: 127,
-          height: 180,
-        ),
-        Container(
-          decoration: const BoxDecoration(
-            color: AppColors.light_grey,
-            borderRadius: BorderRadius.all(
-              Radius.circular(10),
-            ),
-          ),
-          width: 699,
-          height: 133,
-        )
-      ],
-    );
-  }
-
-  Widget _buttonBar() {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(250, 0, 0, 0),
-      child: Row(
-        children: [
-          Container(
-            width: 210,
-            height: 56,
-            decoration: const BoxDecoration(
-              color: AppColors.light_grey,
-              borderRadius: BorderRadius.all(
-                Radius.circular(5),
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  }
 }
