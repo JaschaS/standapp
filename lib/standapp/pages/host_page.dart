@@ -9,14 +9,14 @@ import 'package:standapp/standapp/widgets/host_screen/web_member_widget.dart';
 class HostPage extends StatefulWidget {
   final User? user;
 
-  HostPage({this.user});
+  const HostPage({this.user}) : super(key: const Key("HostPage"));
 
   @override
   State<StatefulWidget> createState() => _HostPageState();
 }
 
 class _HostPageState extends State<HostPage> {
-  Future<Member>? _currentHost = null;
+  Future<Member>? _currentHost;
 
   void _updateCurrentHost() {
     setState(() {

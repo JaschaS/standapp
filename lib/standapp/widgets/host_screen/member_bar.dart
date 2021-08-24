@@ -7,14 +7,14 @@ typedef ContextCallback = void Function(BuildContext);
 class MemberBar extends StatelessWidget {
   final VoidCallback? addMember;
 
-  MemberBar({this.addMember});
+  const MemberBar({this.addMember}) : super(key: const Key("MemberBar"));
 
   @override
   Widget build(final BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
+        const Text(
           "Team members",
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
@@ -22,8 +22,8 @@ class MemberBar extends StatelessWidget {
           width: 600,
         ),
         TextButton(
-          onPressed: this.addMember,
-          child: Icon(
+          onPressed: addMember,
+          child: const Icon(
             Icons.person_add,
             color: AppColors.darkGray,
           ),

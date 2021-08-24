@@ -1,24 +1,20 @@
 class Member {
-  String name;
-  String avatar;
-  String userId;
-  String memberId;
+  String name = "";
+  String avatar = "";
+  String userId = "";
+  String memberId = "";
   String? startDate;
   String? endDate;
 
-  Member(
-      {name = "",
-      avatar = "",
-      memberId = "",
-      userId = "",
-      String? start,
-      String? end})
-      : this.name = name,
-        this.avatar = avatar,
-        this.memberId = memberId,
-        this.userId = userId,
-        this.startDate = start,
-        this.endDate = end;
+  Member({
+    required name,
+    required avatar,
+    memberId,
+    userId,
+    String? start,
+    String? end,
+  })  : startDate = start,
+        endDate = end;
 
   factory Member.fromJson(Map<String, dynamic> json) {
     final String? name = json["nickName"] ?? "";
@@ -45,9 +41,9 @@ class Member {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    if (!(other is Member)) return false;
+    if (other is! Member) return false;
 
-    return this.memberId == other.memberId;
+    return memberId == other.memberId;
   }
 
   @override

@@ -4,23 +4,27 @@ import 'package:shimmer/shimmer.dart';
 import '../../standapp_colors.dart';
 
 class LoadingHostWidget extends StatelessWidget {
+  const LoadingHostWidget() : super(key: const Key("LoadingHostWidget"));
+
   @override
   Widget build(final BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      if (constraints.maxWidth > 855) return WebLoadingHostWidget();
-      if (constraints.maxWidth > 585) return TabletLoadingHostWidget();
+      if (constraints.maxWidth > 855) return const WebLoadingHostWidget();
+      if (constraints.maxWidth > 585) return const TabletLoadingHostWidget();
 
-      return MobileLoadingHostWidget();
+      return const MobileLoadingHostWidget();
     });
   }
 }
 
 class WebLoadingHostWidget extends StatelessWidget {
+  const WebLoadingHostWidget() : super(key: const Key("WebLoadingHostWidget"));
+
   @override
   Widget build(final BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: AppColors.light_grey,
-      highlightColor: AppColors.weisser_als_weiss,
+      baseColor: AppColors.lightGrey,
+      highlightColor: AppColors.weisserAlsWeiss,
       child: Container(
         alignment: Alignment.center,
         child: SizedBox(
@@ -29,20 +33,18 @@ class WebLoadingHostWidget extends StatelessWidget {
           child: Column(
             children: [
               _header(),
-              Container(
-                child: Stack(
-                  alignment: Alignment.centerLeft,
-                  children: [
-                    _banner(),
-                    Container(
-                      width: 180,
-                      height: 180,
-                      child: CircleAvatar(
-                        backgroundColor: AppColors.light_grey,
-                      ),
+              Stack(
+                alignment: Alignment.centerLeft,
+                children: [
+                  _banner(),
+                  const SizedBox(
+                    width: 180,
+                    height: 180,
+                    child: CircleAvatar(
+                      backgroundColor: AppColors.lightGrey,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               _buttonBar(),
             ],
@@ -59,8 +61,8 @@ class WebLoadingHostWidget extends StatelessWidget {
       child: Container(
         width: 235,
         height: 39,
-        decoration: BoxDecoration(
-          color: AppColors.light_grey,
+        decoration: const BoxDecoration(
+          color: AppColors.lightGrey,
           borderRadius: BorderRadius.all(
             Radius.circular(10),
           ),
@@ -72,13 +74,13 @@ class WebLoadingHostWidget extends StatelessWidget {
   Widget _banner() {
     return Row(
       children: [
-        Container(
+        const SizedBox(
           width: 127,
           height: 180,
         ),
         Container(
           decoration: const BoxDecoration(
-            color: AppColors.light_grey,
+            color: AppColors.lightGrey,
             borderRadius: BorderRadius.all(
               Radius.circular(10),
             ),
@@ -99,7 +101,7 @@ class WebLoadingHostWidget extends StatelessWidget {
             width: 210,
             height: 56,
             decoration: const BoxDecoration(
-              color: AppColors.light_grey,
+              color: AppColors.lightGrey,
               borderRadius: BorderRadius.all(
                 Radius.circular(5),
               ),
@@ -112,11 +114,14 @@ class WebLoadingHostWidget extends StatelessWidget {
 }
 
 class TabletLoadingHostWidget extends StatelessWidget {
+  const TabletLoadingHostWidget()
+      : super(key: const Key("TabletLoadingHostWidget"));
+
   @override
   Widget build(final BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: AppColors.light_grey,
-      highlightColor: AppColors.weisser_als_weiss,
+      baseColor: AppColors.lightGrey,
+      highlightColor: AppColors.weisserAlsWeiss,
       child: Container(
         alignment: Alignment.center,
         child: SizedBox(
@@ -125,20 +130,18 @@ class TabletLoadingHostWidget extends StatelessWidget {
           child: Column(
             children: [
               _header(),
-              Container(
-                child: Stack(
-                  alignment: Alignment.centerLeft,
-                  children: [
-                    _banner(),
-                    Container(
-                      width: 180,
-                      height: 180,
-                      child: CircleAvatar(
-                        backgroundColor: AppColors.light_grey,
-                      ),
+              Stack(
+                alignment: Alignment.centerLeft,
+                children: [
+                  _banner(),
+                  const SizedBox(
+                    width: 180,
+                    height: 180,
+                    child: CircleAvatar(
+                      backgroundColor: AppColors.lightGrey,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               _buttonBar(),
             ],
@@ -155,8 +158,8 @@ class TabletLoadingHostWidget extends StatelessWidget {
       child: Container(
         width: 210,
         height: 39,
-        decoration: BoxDecoration(
-          color: AppColors.light_grey,
+        decoration: const BoxDecoration(
+          color: AppColors.lightGrey,
           borderRadius: BorderRadius.all(
             Radius.circular(10),
           ),
@@ -168,13 +171,13 @@ class TabletLoadingHostWidget extends StatelessWidget {
   Widget _banner() {
     return Row(
       children: [
-        Container(
+        const SizedBox(
           width: 90,
           height: 180,
         ),
         Container(
           decoration: const BoxDecoration(
-            color: AppColors.light_grey,
+            color: AppColors.lightGrey,
             borderRadius: BorderRadius.all(
               Radius.circular(10),
             ),
@@ -195,7 +198,7 @@ class TabletLoadingHostWidget extends StatelessWidget {
             width: 210,
             height: 56,
             decoration: const BoxDecoration(
-              color: AppColors.light_grey,
+              color: AppColors.lightGrey,
               borderRadius: BorderRadius.all(
                 Radius.circular(5),
               ),
@@ -208,11 +211,14 @@ class TabletLoadingHostWidget extends StatelessWidget {
 }
 
 class MobileLoadingHostWidget extends StatelessWidget {
+  const MobileLoadingHostWidget()
+      : super(key: const Key("MobileLoadingHostWidget"));
+
   @override
   Widget build(final BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: AppColors.light_grey,
-      highlightColor: AppColors.weisser_als_weiss,
+      baseColor: AppColors.lightGrey,
+      highlightColor: AppColors.weisserAlsWeiss,
       child: Container(
         alignment: Alignment.center,
         child: SizedBox(
@@ -220,11 +226,11 @@ class MobileLoadingHostWidget extends StatelessWidget {
           height: 808,
           child: Column(
             children: [
-              Container(
+              const SizedBox(
                 width: 150,
                 height: 150,
                 child: CircleAvatar(
-                  backgroundColor: AppColors.light_grey,
+                  backgroundColor: AppColors.lightGrey,
                 ),
               ),
               _header(),
@@ -238,7 +244,7 @@ class MobileLoadingHostWidget extends StatelessWidget {
   }
 
   Widget _header() {
-    return _template(235, 39, EdgeInsets.only(top: 16));
+    return _template(235, 39, const EdgeInsets.only(top: 16));
   }
 
   Widget _template(
@@ -249,8 +255,8 @@ class MobileLoadingHostWidget extends StatelessWidget {
       child: Container(
         width: width,
         height: height,
-        decoration: BoxDecoration(
-          color: AppColors.light_grey,
+        decoration: const BoxDecoration(
+          color: AppColors.lightGrey,
           borderRadius: BorderRadius.all(
             Radius.circular(10),
           ),
@@ -262,21 +268,21 @@ class MobileLoadingHostWidget extends StatelessWidget {
   Widget _banner() {
     return Column(
       children: [
-        _template(113, 19, EdgeInsets.only(top: 20)),
-        _template(218, 40, EdgeInsets.only(top: 16)),
-        _template(218, 40, EdgeInsets.only(top: 16)),
+        _template(113, 19, const EdgeInsets.only(top: 20)),
+        _template(218, 40, const EdgeInsets.only(top: 16)),
+        _template(218, 40, const EdgeInsets.only(top: 16)),
       ],
     );
   }
 
   Widget _buttonBar() {
     return Padding(
-      padding: EdgeInsets.only(top: 49),
+      padding: const EdgeInsets.only(top: 49),
       child: Column(
         children: [
-          _template(210, 56, EdgeInsets.only(top: 16)),
-          _template(210, 56, EdgeInsets.only(top: 16)),
-          _template(210, 56, EdgeInsets.only(top: 16)),
+          _template(210, 56, const EdgeInsets.only(top: 16)),
+          _template(210, 56, const EdgeInsets.only(top: 16)),
+          _template(210, 56, const EdgeInsets.only(top: 16)),
         ],
       ),
     );

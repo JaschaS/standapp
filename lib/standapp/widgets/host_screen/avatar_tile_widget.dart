@@ -19,7 +19,7 @@ class AvatarTile extends StatelessWidget {
   final Widget? secondary;
   final Widget? alternate;
 
-  AvatarTile({
+  const AvatarTile({
     this.start,
     this.end,
     this.title,
@@ -30,7 +30,8 @@ class AvatarTile extends StatelessWidget {
     this.primary,
     this.secondary,
     this.alternate,
-  }) : this.avatar = avatar ?? const Avatar();
+  })  : avatar = avatar ?? const Avatar(),
+        super(key: const Key("AvatarTile"));
 
   @override
   Widget build(final BuildContext context) {
@@ -43,98 +44,94 @@ class AvatarTile extends StatelessWidget {
   }
 
   Widget _createWeb() {
-    return Container(
+    return SizedBox(
       width: 826,
       height: 270,
       child: Column(
         children: [
           _AvatarTitle(
             height: 34,
-            title: this.title,
+            title: title,
           ),
           Stack(
             alignment: Alignment.bottomLeft,
             children: [
               _WebBanner(
-                description: this.description,
-                start: this.start,
-                end: this.end,
-                onStartChange: this.onStartChange,
-                onEndChange: this.onEndChange,
+                description: description,
+                start: start,
+                end: end,
+                onStartChange: onStartChange,
+                onEndChange: onEndChange,
               ),
-              this.avatar,
+              avatar,
             ],
           ),
-          _buttonBar(padding: EdgeInsets.only(left: 250)),
+          _buttonBar(padding: const EdgeInsets.only(left: 250)),
         ],
       ),
     );
   }
 
   Widget _createTablet() {
-    return Container(
+    return SizedBox(
       height: 346,
       width: 585,
       child: Column(
         children: [
           _AvatarTitle(
-            title: this.title,
+            title: title,
             height: 55,
           ),
           Stack(
             alignment: Alignment.bottomLeft,
             children: [
               _TabletBanner(
-                description: this.description,
-                start: this.start,
-                end: this.end,
-                onStartChange: this.onStartChange,
-                onEndChange: this.onEndChange,
+                description: description,
+                start: start,
+                end: end,
+                onStartChange: onStartChange,
+                onEndChange: onEndChange,
               ),
-              this.avatar,
+              avatar,
             ],
           ),
           _buttonBar(
-              padding: EdgeInsets.only(
-            top: 49,
-            left: 14,
-          )),
+            padding: const EdgeInsets.only(top: 49, left: 14),
+          ),
         ],
       ),
     );
   }
 
   Widget _createMobile() {
-    return Container(
-      child: Column(
-        children: [
-          this.avatar,
-          Padding(
-            padding: EdgeInsets.only(top: 16),
-            child: this.title,
-          ),
-          if (this.description == null) const SizedBox(height: 20),
-          _MobileBanner(
-            description: this.description,
-            start: this.start,
-            end: this.end,
-            onStartChange: this.onStartChange,
-            onEndChange: this.onEndChange,
-          ),
-          const SizedBox(
-            height: 49,
-          ),
-          if (this.primary != null) this.primary!,
-          const SizedBox(
-            height: 12,
-          ),
-          if (this.secondary != null) this.secondary!,
-          const SizedBox(
-            height: 12,
-          ),
-          if (this.alternate != null) this.alternate!,
-        ],
-      ),
+    return Column(
+      children: [
+        avatar,
+        Padding(
+          padding: const EdgeInsets.only(top: 16),
+          child: title,
+        ),
+        if (description == null) const SizedBox(height: 20),
+        _MobileBanner(
+          description: description,
+          start: start,
+          end: end,
+          onStartChange: onStartChange,
+          onEndChange: onEndChange,
+        ),
+        const SizedBox(
+          height: 49,
+        ),
+        if (primary != null) primary!,
+        const SizedBox(
+          height: 12,
+        ),
+        if (secondary != null) secondary!,
+        const SizedBox(
+          height: 12,
+        ),
+        if (alternate != null) alternate!,
+      ],
     );
   }
 
@@ -143,15 +140,15 @@ class AvatarTile extends StatelessWidget {
       padding: padding,
       child: Row(
         children: [
-          if (this.primary != null) this.primary!,
+          if (primary != null) primary!,
           const SizedBox(
             width: 12,
           ),
-          if (this.secondary != null) this.secondary!,
+          if (secondary != null) secondary!,
           const SizedBox(
             width: 12,
           ),
-          if (this.alternate != null) this.alternate!,
+          if (alternate != null) alternate!,
         ],
       ),
     );
@@ -165,26 +162,26 @@ class _MobileBanner extends StatelessWidget {
   final DateCallback? onStartChange;
   final DateCallback? onEndChange;
 
-  _MobileBanner({
+  const _MobileBanner({
     this.description,
     this.start,
     this.end,
     this.onStartChange,
     this.onEndChange,
-  });
+  }) : super(key: const Key("MobileBanner"));
 
   @override
   Widget build(final BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if (this.description != null)
+        if (description != null)
           Padding(
-            padding: EdgeInsets.only(
+            padding: const EdgeInsets.only(
               bottom: 16,
               top: 20,
             ),
-            child: this.description!,
+            child: description!,
           ),
         _from(),
         const SizedBox(height: 18),
@@ -205,8 +202,8 @@ class _MobileBanner extends StatelessWidget {
           width: 9,
         ),
         _DateButton(
-          date: this.start,
-          onDateChange: this.onStartChange,
+          date: start,
+          onDateChange: onStartChange,
         ),
       ],
     );
@@ -224,8 +221,8 @@ class _MobileBanner extends StatelessWidget {
           width: 9,
         ),
         _DateButton(
-          date: this.end,
-          onDateChange: this.onEndChange,
+          date: end,
+          onDateChange: onEndChange,
         ),
       ],
     );
@@ -236,18 +233,18 @@ class _AvatarTitle extends StatelessWidget {
   final Widget? title;
   final double height;
 
-  _AvatarTitle({
+  const _AvatarTitle({
     this.title,
     this.height = 214,
-  });
+  }) : super(key: const Key("AvatarTile"));
 
   @override
   Widget build(final BuildContext context) {
     return Container(
       alignment: Alignment.topLeft,
-      height: this.height,
-      padding: EdgeInsets.only(left: 251),
-      child: this.title,
+      height: height,
+      padding: const EdgeInsets.only(left: 251),
+      child: title,
     );
   }
 }
@@ -259,25 +256,25 @@ class _TabletBanner extends StatelessWidget {
   final DateCallback? onStartChange;
   final DateCallback? onEndChange;
 
-  _TabletBanner({
+  const _TabletBanner({
     this.description,
     this.start,
     this.end,
     this.onStartChange,
     this.onEndChange,
-  });
+  }) : super(key: const Key("TabletBanner"));
 
   @override
   Widget build(final BuildContext context) {
     return Row(
       children: [
-        Container(
+        const SizedBox(
           width: 90,
           height: 180,
         ),
         Container(
-          decoration: BoxDecoration(
-            color: AppColors.light_grey,
+          decoration: const BoxDecoration(
+            color: AppColors.lightGrey,
             borderRadius: BorderRadius.all(
               Radius.circular(10),
             ),
@@ -292,17 +289,17 @@ class _TabletBanner extends StatelessWidget {
 
   Widget _bannerContent() {
     return Padding(
-      padding: EdgeInsets.only(left: 163),
+      padding: const EdgeInsets.only(left: 163),
       child: Align(
         alignment: Alignment.centerLeft,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if (this.description != null)
+            if (description != null)
               Padding(
-                padding: EdgeInsets.only(bottom: 16),
-                child: this.description!,
+                padding: const EdgeInsets.only(bottom: 16),
+                child: description!,
               ),
             _from(),
             const SizedBox(height: 18),
@@ -324,8 +321,8 @@ class _TabletBanner extends StatelessWidget {
           width: 9,
         ),
         _DateButton(
-          date: this.start,
-          onDateChange: this.onStartChange,
+          date: start,
+          onDateChange: onStartChange,
         ),
       ],
     );
@@ -342,8 +339,8 @@ class _TabletBanner extends StatelessWidget {
           width: 9,
         ),
         _DateButton(
-          date: this.end,
-          onDateChange: this.onEndChange,
+          date: end,
+          onDateChange: onEndChange,
         ),
       ],
     );
@@ -357,25 +354,25 @@ class _WebBanner extends StatelessWidget {
   final DateCallback? onStartChange;
   final DateCallback? onEndChange;
 
-  _WebBanner({
+  const _WebBanner({
     this.description,
     this.start,
     this.end,
     this.onStartChange,
     this.onEndChange,
-  });
+  }) : super(key: const Key("WebBanner"));
 
   @override
   Widget build(final BuildContext context) {
     return Row(
       children: [
-        Container(
+        const SizedBox(
           width: 127,
           height: 180,
         ),
         Container(
-          decoration: BoxDecoration(
-            color: AppColors.light_grey,
+          decoration: const BoxDecoration(
+            color: AppColors.lightGrey,
             borderRadius: BorderRadius.all(
               Radius.circular(10),
             ),
@@ -399,18 +396,18 @@ class _WebBanner extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              const SizedBox(
                 width: 127,
                 height: 180,
               ),
-              Container(
+              SizedBox(
                 width: 560,
                 height: 69,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (this.description != null) this.description!,
+                    if (description != null) description!,
                     const SizedBox(
                       height: 10,
                     ),
@@ -436,8 +433,8 @@ class _WebBanner extends StatelessWidget {
           width: 9,
         ),
         _DateButton(
-          date: this.start,
-          onDateChange: this.onStartChange,
+          date: start,
+          onDateChange: onStartChange,
         ),
         const SizedBox(
           width: 18,
@@ -450,8 +447,8 @@ class _WebBanner extends StatelessWidget {
           width: 9,
         ),
         _DateButton(
-          date: this.end,
-          onDateChange: this.onEndChange,
+          date: end,
+          onDateChange: onEndChange,
         ),
       ],
     );
@@ -459,12 +456,14 @@ class _WebBanner extends StatelessWidget {
 }
 
 class _DateButton extends StatelessWidget {
-  final DateTime date;
+  final DateTime _date;
   final DateCallback? onDateChange;
   final DateFormat _formatter = DateFormat("MMMM d'th', y");
 
-  _DateButton({DateTime? date, this.onDateChange})
-      : this.date = date ?? DateTime.now();
+  _DateButton({
+    DateTime? date,
+    this.onDateChange,
+  }) : _date = date ?? DateTime.now();
 
   @override
   Widget build(final BuildContext context) {
@@ -475,15 +474,15 @@ class _DateButton extends StatelessWidget {
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.resolveWith<Color>(
             (Set<MaterialState> states) {
-              return AppColors.fifty_shades;
+              return AppColors.fiftyShades;
             },
           ),
           foregroundColor: MaterialStateProperty.resolveWith<Color>(
               (Set<MaterialState> states) {
             if (states.contains(MaterialState.disabled)) {
-              return AppColors.audi_grey;
+              return AppColors.audiGrey;
             }
-            return AppColors.standard_blue;
+            return AppColors.standardBlue;
           }),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
@@ -491,13 +490,13 @@ class _DateButton extends StatelessWidget {
             ),
           ),
         ),
-        onPressed: this.onDateChange != null ? () => _onPress(context) : null,
-        icon: Icon(
+        onPressed: onDateChange != null ? () => _onPress(context) : null,
+        icon: const Icon(
           Icons.date_range,
           size: 24,
         ),
         label: Text(
-          _formatter.format(this.date),
+          _formatter.format(_date),
           style: AppFonts.textStyleWithSize(AppFonts.h5),
         ),
       ),
@@ -509,7 +508,7 @@ class _DateButton extends StatelessWidget {
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: ColorScheme.light(
+            colorScheme: const ColorScheme.light(
               primary: AppColors.red,
               onPrimary: Colors.white,
               onSurface: Colors.black,
@@ -525,13 +524,13 @@ class _DateButton extends StatelessWidget {
         );
       },
       context: context,
-      initialDate: this.date,
+      initialDate: _date,
       firstDate: DateTime(2020),
       lastDate: DateTime(2030),
     );
 
-    if (newDate != null && this.onDateChange != null) {
-      this.onDateChange!(newDate);
+    if (newDate != null && onDateChange != null) {
+      onDateChange!(newDate);
     }
   }
 }

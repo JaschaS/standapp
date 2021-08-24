@@ -6,7 +6,8 @@ class PrimaryAppButton extends StatelessWidget {
   final VoidCallback? callback;
   final String? title;
 
-  PrimaryAppButton({this.callback, this.title});
+  const PrimaryAppButton({this.callback, this.title})
+      : super(key: const Key("PrimaryAppButton"));
 
   @override
   Widget build(final BuildContext context) {
@@ -16,17 +17,18 @@ class PrimaryAppButton extends StatelessWidget {
       child: ElevatedButton(
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
-            if (states.contains(MaterialState.disabled))
-              return AppColors.jascha_red_disable;
+            if (states.contains(MaterialState.disabled)) {
+              return AppColors.jaschaRedDisable;
+            }
 
-            return AppColors.jascha_red;
+            return AppColors.jaschaRed;
           }),
         ),
-        onPressed: this.callback,
+        onPressed: callback,
         child: Text(
-          this.title ?? "",
+          title ?? "",
           style: AppFonts.textStyleWithSize(AppFonts.h5,
-              color: AppColors.weisser_als_weiss),
+              color: AppColors.weisserAlsWeiss),
         ),
       ),
     );
@@ -37,7 +39,10 @@ class SecondaryAppButton extends StatelessWidget {
   final VoidCallback? callback;
   final String? title;
 
-  SecondaryAppButton({this.callback, this.title});
+  const SecondaryAppButton({
+    this.callback,
+    this.title,
+  }) : super(key: const Key("SecondaryAppButton"));
 
   @override
   Widget build(final BuildContext context) {
@@ -47,11 +52,12 @@ class SecondaryAppButton extends StatelessWidget {
       child: ElevatedButton(
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.resolveWith<Color>((states) {
-            return AppColors.fifty_shades;
+            return AppColors.fiftyShades;
           }),
           foregroundColor: MaterialStateProperty.resolveWith<Color>((states) {
-            if (states.contains(MaterialState.disabled))
-              return AppColors.weisser_als_weiss;
+            if (states.contains(MaterialState.disabled)) {
+              return AppColors.weisserAlsWeiss;
+            }
 
             return Colors.black;
           }),
@@ -59,10 +65,8 @@ class SecondaryAppButton extends StatelessWidget {
             return AppFonts.textStyleWithSize(AppFonts.h5);
           }),
         ),
-        onPressed: this.callback,
-        child: Text(
-          this.title ?? "",
-        ),
+        onPressed: callback,
+        child: Text(title ?? ""),
       ),
     );
   }
@@ -72,7 +76,10 @@ class TextAppButton extends StatelessWidget {
   final VoidCallback? callback;
   final String? title;
 
-  TextAppButton({this.callback, this.title});
+  const TextAppButton({
+    this.callback,
+    this.title,
+  }) : super(key: const Key("TextAppButton"));
 
   @override
   Widget build(final BuildContext context) {
@@ -81,9 +88,9 @@ class TextAppButton extends StatelessWidget {
       height: 56,
       child: TextButton(
         style: TextButton.styleFrom(primary: Colors.black),
-        onPressed: this.callback,
+        onPressed: callback,
         child: Text(
-          this.title ?? "",
+          title ?? "",
           style: AppFonts.textStyleWithSize(AppFonts.h5),
         ),
       ),

@@ -10,10 +10,12 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   configureApp();
-  runApp(StandApp());
+  runApp(const StandApp());
 }
 
 class StandApp extends StatefulWidget {
+  const StandApp() : super(key: const Key("StandApp"));
+
   @override
   State<StatefulWidget> createState() => _StandAppState();
 }
@@ -54,7 +56,7 @@ class _StandAppState extends State<StandApp> {
   }
 
   Widget _createBody() {
-    if (_user == null) return HomeScreenPage();
+    if (_user == null) return const HomeScreenPage();
 
     return HostPage(user: _user);
   }
@@ -64,7 +66,7 @@ class _StandAppState extends State<StandApp> {
 
     return Container(
       alignment: Alignment.centerLeft,
-      child: Image(
+      child: const Image(
         width: 60,
         height: 24,
         image: AssetImage("images/logo.png"),
@@ -77,12 +79,12 @@ class _StandAppState extends State<StandApp> {
 
     return [
       Padding(
-        padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+        padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
         child: TextButton(
             onPressed: () async {
               await _auth.signOut();
             },
-            child: Text("sign-out")),
+            child: const Text("sign-out")),
       )
     ];
   }

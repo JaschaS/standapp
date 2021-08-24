@@ -1,9 +1,13 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:standapp/standapp/widgets/background_widget.dart';
 import 'package:standapp/standapp/standapp_colors.dart';
 
 class EmailSignIn extends StatefulWidget {
+  const EmailSignIn() : super(key: const Key("EmailSignIn"));
+
   @override
   State<StatefulWidget> createState() => _EmailSignInState();
 }
@@ -38,7 +42,7 @@ class _EmailSignInState extends State<EmailSignIn> {
         password: password,
       );
     } on FirebaseAuthException catch (e) {
-      print(e.code);
+      log(e.code);
       if (e.code == 'invalid-email') {
         _setEmailAndPasswordError("Email must be a valid email address", null);
       } else if (e.code == 'wrong-password') {
@@ -50,7 +54,7 @@ class _EmailSignInState extends State<EmailSignIn> {
         _setEmailAndPasswordError("User not found", null);
       }
     } catch (e) {
-      print(e);
+      log("An error occured ${e.toString()}");
     }
   }
 
@@ -64,7 +68,7 @@ class _EmailSignInState extends State<EmailSignIn> {
   @override
   Widget build(final BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 150),
+      padding: const EdgeInsets.only(top: 150),
       child: BackgroundWidget(
         child: Center(
           child: SizedBox(
@@ -75,8 +79,8 @@ class _EmailSignInState extends State<EmailSignIn> {
                   decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.account_circle),
+                    border: const OutlineInputBorder(),
+                    prefixIcon: const Icon(Icons.account_circle),
                     hintText: 'Email',
                     errorText: _emailError,
                   ),
@@ -89,8 +93,8 @@ class _EmailSignInState extends State<EmailSignIn> {
                   decoration: InputDecoration(
                     fillColor: Colors.white,
                     filled: true,
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.lock),
+                    border: const OutlineInputBorder(),
+                    prefixIcon: const Icon(Icons.lock),
                     hintText: 'Password',
                     errorText: _passwordError,
                   ),
@@ -108,7 +112,7 @@ class _EmailSignInState extends State<EmailSignIn> {
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(primary: AppColors.red),
                       onPressed: _login,
-                      child: Text("login"),
+                      child: const Text("login"),
                     )
                   ],
                 )

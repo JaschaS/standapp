@@ -10,38 +10,39 @@ class WebBoardButton extends StatelessWidget {
   final VoidCallback? _onInfo;
   final VoidCallback? _onRemove;
 
-  WebBoardButton(this._text,
+  const WebBoardButton(this._text,
       {color = Colors.white,
       icon = Icons.person,
       VoidCallback? onInfo,
       VoidCallback? onRemove})
-      : this._color = color,
-        this._icon = icon,
-        this._onInfo = onInfo,
-        this._onRemove = onRemove;
+      : _color = color,
+        _icon = icon,
+        _onInfo = onInfo,
+        _onRemove = onRemove,
+        super(key: const Key("WebBoardButton"));
 
   @override
   Widget build(final BuildContext context) {
     return SizedBox(
       width: 259,
       child: Card(
-        color: this._color,
+        color: _color,
         child: ListTile(
           title: Row(
             children: [
               Icon(
-                this._icon,
+                _icon,
                 color: AppColors.darkGray,
               ),
               const SizedBox(
                 width: 7,
               ),
-              Text(this._text),
+              Text(_text),
             ],
           ),
           trailing: TextButton(
             onPressed: _onRemove,
-            child: Icon(
+            child: const Icon(
               Icons.close,
               size: 15,
               color: AppColors.darkGray,

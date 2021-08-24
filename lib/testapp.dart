@@ -3,13 +3,14 @@ import 'package:standapp/standapp/standapp_buttons.dart';
 import 'package:standapp/standapp/standapp_colors.dart';
 import 'package:standapp/standapp/standapp_fonts.dart';
 import 'package:standapp/standapp/widgets/host_screen/avatar_tile_widget.dart';
-import 'package:standapp/standapp/widgets/host_screen/select_host_widget.dart';
 
 void main() {
-  runApp(TestApp());
+  runApp(const TestApp());
 }
 
 class TestApp extends StatelessWidget {
+  const TestApp() : super(key: const Key("TestApp"));
+
   @override
   Widget build(final BuildContext context) {
     return MaterialApp(
@@ -50,13 +51,15 @@ class TestApp extends StatelessWidget {
       style: AppFonts.textStyleWithSize(
         AppFonts.h2,
         weight: FontWeight.bold,
-        color: AppColors.standard_blue,
+        color: AppColors.standardBlue,
       ),
     );
   }
 }
 
 class Calendar extends StatefulWidget {
+  const Calendar() : super(key: const Key("Calendar"));
+
   @override
   State<StatefulWidget> createState() => CalendarState();
 }
@@ -73,7 +76,7 @@ class CalendarState extends State<Calendar> {
         color: Colors.red,
         child: Column(
           children: [
-            _header(this._currentDate),
+            _header(_currentDate),
           ],
         ),
       ),
@@ -92,15 +95,15 @@ class CalendarState extends State<Calendar> {
         const Spacer(),
         TextButton(
           onPressed: _onPreviousMonth,
-          child: Icon(Icons.chevron_left),
+          child: const Icon(Icons.chevron_left),
         ),
         TextButton(
           onPressed: _onToday,
-          child: Text("Today"),
+          child: const Text("Today"),
         ),
         TextButton(
           onPressed: _onNextMonth,
-          child: Icon(Icons.chevron_right),
+          child: const Icon(Icons.chevron_right),
         )
       ],
     );
@@ -108,26 +111,26 @@ class CalendarState extends State<Calendar> {
 
   void _onToday() {
     setState(() {
-      this._currentDate = DateTime.now();
+      _currentDate = DateTime.now();
     });
   }
 
   void _onPreviousMonth() {
     setState(() {
-      this._currentDate = DateTime(
-        this._currentDate.year,
-        this._currentDate.month - 1,
-        this._currentDate.day,
+      _currentDate = DateTime(
+        _currentDate.year,
+        _currentDate.month - 1,
+        _currentDate.day,
       );
     });
   }
 
   void _onNextMonth() {
     setState(() {
-      this._currentDate = DateTime(
-        this._currentDate.year,
-        this._currentDate.month + 1,
-        this._currentDate.day,
+      _currentDate = DateTime(
+        _currentDate.year,
+        _currentDate.month + 1,
+        _currentDate.day,
       );
     });
   }

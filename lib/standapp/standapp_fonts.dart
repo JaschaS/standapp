@@ -19,7 +19,7 @@ class AppFonts {
       textStyle: TextStyle(
         fontSize: fontSize,
         fontWeight: weight,
-        color: color == null ? Colors.black : color,
+        color: color ?? Colors.black,
       ),
     );
   }

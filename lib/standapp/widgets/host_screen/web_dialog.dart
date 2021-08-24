@@ -10,10 +10,14 @@ class WebDialog extends StatefulWidget {
   final Member? _existingMember;
   final String _okText;
 
-  WebDialog({MemberCallback? callback, Member? existingMember, okText: ""})
-      : this._callback = callback,
-        this._existingMember = existingMember,
-        this._okText = okText;
+  const WebDialog({
+    MemberCallback? callback,
+    Member? existingMember,
+    okText = "",
+  })  : _callback = callback,
+        _existingMember = existingMember,
+        _okText = okText,
+        super(key: const Key("WebDialog"));
 
   @override
   State<StatefulWidget> createState() => _WebDialogState();
@@ -35,10 +39,11 @@ class _WebDialogState extends State<WebDialog> {
       final avatar = member.avatar;
 
       if (name.isNotEmpty) _controller.text = name;
-      if (avatar.isNotEmpty)
+      if (avatar.isNotEmpty) {
         _currentAvatar = avatar;
-      else
+      } else {
         _currentAvatar = AvatarsImages.randomAvatar();
+      }
     } else {
       _currentAvatar = AvatarsImages.randomAvatar();
     }
@@ -51,9 +56,9 @@ class _WebDialogState extends State<WebDialog> {
   }
 
   void _onCreate() {
-    if (this._controller.text.isEmpty) {
+    if (_controller.text.isEmpty) {
       setState(() {
-        this._validText = false;
+        _validText = false;
       });
     } else {
       final member = _createMember();
@@ -70,7 +75,7 @@ class _WebDialogState extends State<WebDialog> {
 
   Member _createMember() {
     return Member(
-      name: this._controller.text,
+      name: _controller.text,
       avatar: _currentAvatar,
     );
   }
@@ -87,19 +92,23 @@ class _WebDialogState extends State<WebDialog> {
           imageName: _currentAvatar,
         ),
         Padding(
-          padding: EdgeInsets.fromLTRB(25, 25, 25, 0),
+          padding: const EdgeInsets.fromLTRB(25, 25, 25, 0),
           child: TextField(
-            controller: this._controller,
+            controller: _controller,
             decoration: InputDecoration(
-              errorText: this._validText ? null : "Please enter a name",
+              errorText: _validText ? null : "Please enter a name",
               hintText: "enter new Member name",
-              contentPadding:
-                  EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+              contentPadding: const EdgeInsets.only(
+                left: 15,
+                bottom: 11,
+                top: 11,
+                right: 15,
+              ),
             ),
           ),
         ),
         Container(
-          padding: EdgeInsets.fromLTRB(0, 25, 0, 10),
+          padding: const EdgeInsets.fromLTRB(0, 25, 0, 10),
           alignment: Alignment.center,
           width: 225,
           height: 190,
@@ -125,9 +134,10 @@ class _WebDialogState extends State<WebDialog> {
     );
   }
 
+// TODO: remove padding
   Widget _buttonBar() {
     return Padding(
-      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -138,10 +148,10 @@ class _WebDialogState extends State<WebDialog> {
             child: const Text('cancel'),
           ),
           Container(
-            padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
+            padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
             child: const Text(
               "New Member",
-              style: const TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
           SimpleDialogOption(
@@ -160,7 +170,7 @@ class _Avatar extends StatelessWidget {
   final String _imageName;
   final VoidCallback? _callback;
 
-  _Avatar(
+  const _Avatar(
       {width = 125,
       height = 125,
       imageName = 'images/Avatar18.png',
@@ -172,7 +182,7 @@ class _Avatar extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    return Container(
+    return SizedBox(
       width: _width,
       height: _height,
       child: IconButton(

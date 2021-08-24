@@ -4,7 +4,7 @@ class AvatarsImages {
   AvatarsImages._();
 
   static const String anonymous = "images/Anonymous.png";
-  static const String ginger_freckles = "images/ginger_freckles.png";
+  static const String gingerFreckles = "images/ginger_freckles.png";
 
   static List<String> imagesColored = [
     for (var i = 0; i < 22; i += 1)

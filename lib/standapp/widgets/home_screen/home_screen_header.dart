@@ -3,17 +3,19 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:standapp/standapp/standapp_colors.dart';
 
 class HomeScreenHeader extends StatelessWidget {
+  const HomeScreenHeader() : super(key: const Key("HomeScreenHeader"));
+
   @override
   Widget build(final BuildContext context) {
     return Container(
-      color: AppColors.weisser_als_weiss,
+      color: AppColors.weisserAlsWeiss,
       child: Container(
-        margin: EdgeInsets.fromLTRB(0, 50, 0, 50),
+        margin: const EdgeInsets.fromLTRB(0, 50, 0, 50),
         child: Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: const [
                 Icon(
                   Icons.accessibility,
                   size: 50,
@@ -33,11 +35,16 @@ class HomeScreenHeader extends StatelessWidget {
             ),
             Align(
               alignment: Alignment.center,
-              child: Text("STANDUP-Host",
-                  style: GoogleFonts.bungee(
-                      textStyle:
-                          TextStyle(fontSize: 34, color: AppColors.darkGray))),
-            )
+              child: Text(
+                "STANDUP-Host",
+                style: GoogleFonts.bungee(
+                  textStyle: const TextStyle(
+                    fontSize: 34,
+                    color: AppColors.darkGray,
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

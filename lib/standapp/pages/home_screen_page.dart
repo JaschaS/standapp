@@ -4,6 +4,8 @@ import 'package:standapp/standapp/widgets/home_screen/email_signin.dart';
 import 'package:standapp/standapp/widgets/home_screen/home_screen_header.dart';
 
 class HomeScreenPage extends StatefulWidget {
+  const HomeScreenPage() : super(key: const Key("HomeScreenPage"));
+
   @override
   State<StatefulWidget> createState() => _HomeScreenState();
 }
@@ -14,8 +16,8 @@ class _HomeScreenState extends State<HomeScreenPage> {
     return BackgroundWidget(
       child: ListView(
         shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        children: [
+        physics: const NeverScrollableScrollPhysics(),
+        children: const [
           HomeScreenHeader(),
           EmailSignIn(),
         ],

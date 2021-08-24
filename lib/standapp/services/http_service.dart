@@ -6,13 +6,13 @@ import 'package:http/http.dart';
 import '../models/member_model.dart';
 
 class HttpService {
-  static const String APP_ID = "lob80zu3ng";
+  static const String appId = "lob80zu3ng";
 
   static Future<List<Member>> addMember(
       final User user, final Member member) async {
     final response = await post(
         Uri.parse(
-            'https://$APP_ID.execute-api.eu-west-1.amazonaws.com/dev/member'),
+            'https://$appId.execute-api.eu-west-1.amazonaws.com/dev/member'),
         headers: {
           "content-type": "application/json",
           "Authorization": "Bearer ${await user.getIdToken()}"
@@ -25,7 +25,7 @@ class HttpService {
   static Future<Member> getCurrentHost(final User user) async {
     final response = await get(
       Uri.parse(
-          'https://$APP_ID.execute-api.eu-west-1.amazonaws.com/dev/host/current'),
+          'https://$appId.execute-api.eu-west-1.amazonaws.com/dev/host/current'),
       headers: {"Authorization": "Bearer ${await user.getIdToken()}"},
     );
 
@@ -35,7 +35,7 @@ class HttpService {
   static Future<Member> getRecommendation(final User user) async {
     final response = await get(
         Uri.parse(
-            'https://$APP_ID.execute-api.eu-west-1.amazonaws.com/dev/host/find'),
+            'https://$appId.execute-api.eu-west-1.amazonaws.com/dev/host/find'),
         headers: {"Authorization": "Bearer ${await user.getIdToken()}"});
 
     return _evaluateMember(response);
@@ -45,7 +45,7 @@ class HttpService {
       final User user, final Member member) async {
     final response = await get(
         Uri.parse(
-            'https://$APP_ID.execute-api.eu-west-1.amazonaws.com/dev/host/find?memberId=${member.memberId}'),
+            'https://$appId.execute-api.eu-west-1.amazonaws.com/dev/host/find?memberId=${member.memberId}'),
         headers: {"Authorization": "Bearer ${await user.getIdToken()}"});
 
     return _evaluateMember(response);
@@ -54,7 +54,7 @@ class HttpService {
   static Future<List<Member>> getMembers(final User user) async {
     final response = await get(
         Uri.parse(
-            'https://$APP_ID.execute-api.eu-west-1.amazonaws.com/dev/member'),
+            'https://$appId.execute-api.eu-west-1.amazonaws.com/dev/member'),
         headers: {"Authorization": "Bearer ${await user.getIdToken()}"});
 
     return _evaluateMembers(response);
@@ -64,7 +64,7 @@ class HttpService {
       final User user, final Member member) async {
     final response = await delete(
       Uri.parse(
-          'https://$APP_ID.execute-api.eu-west-1.amazonaws.com/dev/member'),
+          'https://$appId.execute-api.eu-west-1.amazonaws.com/dev/member'),
       headers: {
         "content-type": "application/json",
         "Authorization": "Bearer ${await user.getIdToken()}"
@@ -78,7 +78,7 @@ class HttpService {
   static Future<void> postHost(final User user, final Member member) async {
     final response = await post(
         Uri.parse(
-            'https://$APP_ID.execute-api.eu-west-1.amazonaws.com/dev/host/save'),
+            'https://$appId.execute-api.eu-west-1.amazonaws.com/dev/host/save'),
         headers: {
           "content-type": "application/json",
           "Authorization": "Bearer ${await user.getIdToken()}"
@@ -99,14 +99,16 @@ class HttpService {
   static Future<List<Member>> patchMember(
       final User user, final Member oldMember, final Member newMember) async {
     final bodyMap = {};
-    if (oldMember.avatar != newMember.avatar)
+    if (oldMember.avatar != newMember.avatar) {
       bodyMap.putIfAbsent("image", () => newMember.avatar);
-    if (oldMember.name != newMember.name)
+    }
+    if (oldMember.name != newMember.name) {
       bodyMap.putIfAbsent("nickName", () => newMember.name);
+    }
 
     final response = await patch(
       Uri.parse(
-          'https://$APP_ID.execute-api.eu-west-1.amazonaws.com/dev/member/${oldMember.memberId}'),
+          'https://$appId.execute-api.eu-west-1.amazonaws.com/dev/member/${oldMember.memberId}'),
       headers: {
         "content-type": "application/json",
         "Authorization": "Bearer ${await user.getIdToken()}"

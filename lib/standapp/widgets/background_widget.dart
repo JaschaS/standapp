@@ -6,11 +6,14 @@ class BackgroundWidget extends StatelessWidget {
   final double _topWeight;
   final double _bottomWeight;
 
-  BackgroundWidget(
-      {Widget? child, double topWeight = 0.5, double bottomWeight = 0.75})
-      : this._child = child,
-        this._topWeight = topWeight,
-        this._bottomWeight = bottomWeight;
+  const BackgroundWidget({
+    Widget? child,
+    double topWeight = 0.5,
+    double bottomWeight = 0.75,
+  })  : _child = child,
+        _topWeight = topWeight,
+        _bottomWeight = bottomWeight,
+        super(key: const Key("BackgroundWidget"));
 
   @override
   Widget build(final BuildContext context) {
@@ -20,15 +23,15 @@ class BackgroundWidget extends StatelessWidget {
           alignment: Alignment.topCenter,
           child: Container(
               color: Colors.white,
-              height: MediaQuery.of(context).size.height * this._topWeight),
+              height: MediaQuery.of(context).size.height * _topWeight),
         ),
         Align(
           alignment: Alignment.bottomCenter,
           child: Container(
               color: AppColors.blue,
-              height: MediaQuery.of(context).size.height * this._bottomWeight),
+              height: MediaQuery.of(context).size.height * _bottomWeight),
         ),
-        if (this._child != null) this._child!
+        if (_child != null) _child!
       ],
     );
   }

@@ -13,7 +13,10 @@ class WebMemberWidget extends StatefulWidget {
   final User? user;
   final VoidCallback? updateCurrentHost;
 
-  WebMemberWidget({this.user, this.updateCurrentHost});
+  const WebMemberWidget({
+    this.user,
+    this.updateCurrentHost,
+  }) : super(key: const Key("WebMemberWidget"));
 
   @override
   State<StatefulWidget> createState() => _MemberState();
@@ -42,8 +45,9 @@ class _MemberState extends State<WebMemberWidget> {
               setState(() {
                 _members =
                     HttpService.patchMember(widget.user!, oldMember, newMember);
-                if (widget.updateCurrentHost != null)
+                if (widget.updateCurrentHost != null) {
                   widget.updateCurrentHost!();
+                }
               });
             }
           },
@@ -109,10 +113,10 @@ class _MemberState extends State<WebMemberWidget> {
   Widget _memberWidget(final List<Member>? members) {
     return ListView(
       shrinkWrap: true,
-      physics: ClampingScrollPhysics(),
+      physics: const ClampingScrollPhysics(),
       children: [
         Padding(
-          padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+          padding: const EdgeInsets.only(bottom: 10),
           child: MemberBar(
             addMember: _addMemberDialog,
           ),
@@ -121,7 +125,7 @@ class _MemberState extends State<WebMemberWidget> {
           height: 10,
         ),
         Center(
-          child: Container(
+          child: SizedBox(
             width: 797,
             child: Wrap(
               spacing: 10,
@@ -164,20 +168,20 @@ class _LoadingMemberWidget extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return Container(
-      color: AppColors.baby_blue,
+      color: AppColors.babyBlue,
       child: ListView(
         shrinkWrap: true,
-        physics: ClampingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         children: [
           Padding(
-            padding: EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.only(bottom: 10),
             child: _memberBar(),
           ),
           const SizedBox(
             height: 10,
           ),
           Center(
-            child: Container(
+            child: SizedBox(
               width: 797,
               child: Wrap(
                 spacing: 10,
@@ -202,7 +206,7 @@ class _LoadingMemberWidget extends StatelessWidget {
           width: 150,
           height: 24,
           decoration: const BoxDecoration(
-            color: AppColors.light_grey,
+            color: AppColors.lightGrey,
             borderRadius: BorderRadius.all(
               Radius.circular(5),
             ),
@@ -215,7 +219,7 @@ class _LoadingMemberWidget extends StatelessWidget {
           width: 55,
           height: 24,
           decoration: const BoxDecoration(
-            color: AppColors.light_grey,
+            color: AppColors.lightGrey,
             borderRadius: BorderRadius.all(
               Radius.circular(5),
             ),
@@ -230,13 +234,13 @@ class _LoadingMemberWidget extends StatelessWidget {
       9,
       (index) {
         return Shimmer.fromColors(
-          baseColor: AppColors.light_grey,
-          highlightColor: AppColors.weisser_als_weiss,
+          baseColor: AppColors.lightGrey,
+          highlightColor: AppColors.weisserAlsWeiss,
           child: Container(
             width: 259,
             height: 56,
             decoration: const BoxDecoration(
-              color: AppColors.light_grey,
+              color: AppColors.lightGrey,
               borderRadius: BorderRadius.all(
                 Radius.circular(5),
               ),

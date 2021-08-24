@@ -9,20 +9,23 @@ import 'avatar_tile_widget.dart';
 import 'avatar_widget.dart';
 import 'loading_host_widget.dart';
 
-enum _HostState { SELECT_DATE, SELECT_HOST, SHOW_HOST, LOADING_STATE }
+enum _HostState { selectDate, selectHost, showHost, loadingState }
 
 class HostWidget extends StatefulWidget {
   final User? user;
   final Future<Member>? currentHost;
 
-  HostWidget({this.user, this.currentHost});
+  const HostWidget({
+    this.user,
+    this.currentHost,
+  }) : super(key: const Key("HostWidget"));
 
   @override
   State<StatefulWidget> createState() => _HostWidgetState();
 }
 
 class _HostWidgetState extends State<HostWidget> {
-  _HostState _showState = _HostState.SHOW_HOST;
+  _HostState _showState = _HostState.showHost;
   late DateTime _start = DateTime.now();
   late DateTime _end = DateTime.now();
   late Future<Member> _suggestion;
@@ -39,44 +42,44 @@ class _HostWidgetState extends State<HostWidget> {
 
   void _selectHost() {
     setState(() {
-      this._showState = _HostState.SELECT_DATE;
+      _showState = _HostState.selectDate;
     });
   }
 
   void _goBackToShowHost() {
     setState(() {
-      this._showState = _HostState.SHOW_HOST;
+      _showState = _HostState.showHost;
     });
   }
 
   void _goBackToSelectDate() {
     setState(() {
-      this._showState = _HostState.SELECT_DATE;
+      _showState = _HostState.selectDate;
     });
   }
 
   void _onStartChange(final DateTime dateTime) {
     setState(() {
-      this._start = dateTime;
+      _start = dateTime;
     });
   }
 
   void _onEndChange(final DateTime dateTime) {
     setState(() {
-      this._end = dateTime;
+      _end = dateTime;
     });
   }
 
   void _nextSelectHost() {
     setState(() {
-      this._showState = _HostState.SELECT_HOST;
-      this._suggestion = HttpService.getRecommendation(widget.user!);
+      _showState = _HostState.selectHost;
+      _suggestion = HttpService.getRecommendation(widget.user!);
     });
   }
 
   void _searchAgain(final Member member) {
     setState(() {
-      this._suggestion =
+      _suggestion =
           HttpService.getRecommendationWithoutMember(widget.user!, member);
     });
   }
@@ -88,24 +91,24 @@ class _HostWidgetState extends State<HostWidget> {
     HttpService.postHost(widget.user!, newHost).then((value) {
       setState(() {
         _host = HttpService.getCurrentHost(widget.user!);
-        this._showState = _HostState.SHOW_HOST;
+        _showState = _HostState.showHost;
       });
     });
 
     setState(() {
-      this._showState = _HostState.LOADING_STATE;
+      _showState = _HostState.loadingState;
     });
   }
 
   @override
   Widget build(final BuildContext context) {
     return Container(
-      color: AppColors.weisser_als_weiss,
+      color: AppColors.weisserAlsWeiss,
       child: FutureBuilder<Member>(
         future: _host,
         builder: (context, currentHost) {
           if (currentHost.connectionState != ConnectionState.done) {
-            return Padding(
+            return const Padding(
               padding: EdgeInsets.only(bottom: 92),
               child: LoadingHostWidget(),
             );
@@ -113,7 +116,7 @@ class _HostWidgetState extends State<HostWidget> {
 
           if (currentHost.hasData) {
             return Padding(
-              padding: EdgeInsets.only(bottom: 92),
+              padding: const EdgeInsets.only(bottom: 92),
               child: Center(
                 child: _widgetForState(currentHost),
               ),
@@ -124,7 +127,7 @@ class _HostWidgetState extends State<HostWidget> {
             return _showError(currentHost);
           }
 
-          return Padding(
+          return const Padding(
             padding: EdgeInsets.only(bottom: 92),
             child: LoadingHostWidget(),
           );
@@ -134,22 +137,22 @@ class _HostWidgetState extends State<HostWidget> {
   }
 
   Widget _widgetForState(final AsyncSnapshot<Member> currentHost) {
-    switch (this._showState) {
-      case _HostState.SHOW_HOST:
+    switch (_showState) {
+      case _HostState.showHost:
         final hostData = currentHost.data!;
         if (hostData.isEmpty()) {
           return _noHostWidget();
         }
 
         return _currentHostWidget(hostData);
-      case _HostState.SELECT_DATE:
+      case _HostState.selectDate:
         return _selectDateWidget();
-      case _HostState.SELECT_HOST:
+      case _HostState.selectHost:
         return FutureBuilder<Member>(
-          future: this._suggestion,
+          future: _suggestion,
           builder: (context, suggestion) {
             if (suggestion.connectionState != ConnectionState.done) {
-              return LoadingHostWidget();
+              return const LoadingHostWidget();
             }
 
             if (suggestion.hasError) {
@@ -160,11 +163,11 @@ class _HostWidgetState extends State<HostWidget> {
               return _selectHostWidget(suggestion.data!);
             }
 
-            return LoadingHostWidget();
+            return const LoadingHostWidget();
           },
         );
-      case _HostState.LOADING_STATE:
-        return LoadingHostWidget();
+      case _HostState.loadingState:
+        return const LoadingHostWidget();
       default:
         return _noHostWidget();
     }
@@ -177,24 +180,24 @@ class _HostWidgetState extends State<HostWidget> {
       case DateTime.monday:
         return today;
       case DateTime.tuesday:
-        return today.add(Duration(days: 6));
+        return today.add(const Duration(days: 6));
       case DateTime.wednesday:
-        return today.add(Duration(days: 5));
+        return today.add(const Duration(days: 5));
       case DateTime.thursday:
-        return today.add(Duration(days: 4));
+        return today.add(const Duration(days: 4));
       case DateTime.friday:
-        return today.add(Duration(days: 3));
+        return today.add(const Duration(days: 3));
       case DateTime.saturday:
-        return today.add(Duration(days: 2));
+        return today.add(const Duration(days: 2));
       case DateTime.sunday:
-        return today.add(Duration(days: 1));
+        return today.add(const Duration(days: 1));
       default:
         return today;
     }
   }
 
   DateTime _calculateEndDate() {
-    return this._start.add(Duration(days: 4));
+    return _start.add(const Duration(days: 4));
   }
 
   Widget _showError(final AsyncSnapshot<Member?> snapshot) {
@@ -209,7 +212,7 @@ class _HostWidgetState extends State<HostWidget> {
       style: AppFonts.textStyleWithSize(
         AppFonts.h2,
         weight: FontWeight.bold,
-        color: AppColors.standard_blue,
+        color: AppColors.standardBlue,
       ),
     );
   }
@@ -231,7 +234,7 @@ class _HostWidgetState extends State<HostWidget> {
       avatar: const Avatar(),
       primary: PrimaryAppButton(
         title: "Find a Host",
-        callback: this._selectHost,
+        callback: _selectHost,
       ),
     );
   }
@@ -247,7 +250,7 @@ class _HostWidgetState extends State<HostWidget> {
       end: DateTime.parse(host.endDate!),
       primary: PrimaryAppButton(
         title: "Find new Host",
-        callback: this._selectHost,
+        callback: _selectHost,
       ),
     );
   }
@@ -259,14 +262,14 @@ class _HostWidgetState extends State<HostWidget> {
       avatar: const Avatar(),
       onStartChange: _onStartChange,
       onEndChange: _onEndChange,
-      start: this._start,
-      end: this._end,
+      start: _start,
+      end: _end,
       primary: PrimaryAppButton(
         title: "Continue",
-        callback: this._nextSelectHost,
+        callback: _nextSelectHost,
       ),
       alternate: TextAppButton(
-        callback: this._goBackToShowHost,
+        callback: _goBackToShowHost,
         title: "Cancel",
       ),
     );
@@ -279,8 +282,8 @@ class _HostWidgetState extends State<HostWidget> {
       avatar: Avatar(
         image: host.avatar,
       ),
-      start: this._start,
-      end: this._end,
+      start: _start,
+      end: _end,
       primary: PrimaryAppButton(
         title: "Confirm Host",
         callback: () => _saveHost(host),
@@ -290,7 +293,7 @@ class _HostWidgetState extends State<HostWidget> {
         callback: () => _searchAgain(host),
       ),
       alternate: TextAppButton(
-        callback: this._goBackToSelectDate,
+        callback: _goBackToSelectDate,
         title: "Cancel",
       ),
     );
