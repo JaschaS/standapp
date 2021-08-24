@@ -4,15 +4,16 @@ import 'package:standapp/standapp/standapp_colors.dart';
 typedef StringCallback = void Function(String);
 
 class WebBoardButton extends StatelessWidget {
-  final String _text;
+  final String text;
   final Color _color;
   final IconData _icon;
   final VoidCallback? _onInfo;
   final VoidCallback? _onRemove;
 
 // TODO: make this._text to optional part for naming
-  const WebBoardButton(this._text,
-      {Key key = const Key("WebBoardButton"),
+  const WebBoardButton(
+      {required this.text,
+      Key key = const Key("WebBoardButton"),
       color = Colors.white,
       icon = Icons.person,
       VoidCallback? onInfo,
@@ -39,7 +40,7 @@ class WebBoardButton extends StatelessWidget {
               const SizedBox(
                 width: 7,
               ),
-              Text(_text),
+              Text(text),
             ],
           ),
           trailing: TextButton(

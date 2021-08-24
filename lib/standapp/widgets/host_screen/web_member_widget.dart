@@ -145,7 +145,7 @@ class _MemberState extends State<WebMemberWidget> {
     return members!.where((element) => element.isNotEmpty()).map(
       (entry) {
         return WebBoardButton(
-          entry.name,
+          text: entry.name,
           key: Key("WebBoardButton-${entry.memberId}"),
           onInfo: () {
             _onMemberInfo(entry);
