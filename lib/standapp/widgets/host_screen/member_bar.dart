@@ -6,8 +6,12 @@ typedef ContextCallback = void Function(BuildContext);
 
 class MemberBar extends StatelessWidget {
   final VoidCallback? addMember;
+  final double width;
 
-  const MemberBar({this.addMember}) : super(key: const Key("MemberBar"));
+  const MemberBar({
+    required this.width,
+    this.addMember,
+  }) : super(key: const Key("MemberBar"));
 
   @override
   Widget build(final BuildContext context) {
@@ -18,8 +22,8 @@ class MemberBar extends StatelessWidget {
           "Team members",
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        const SizedBox(
-          width: 600,
+        SizedBox(
+          width: width,
         ),
         TextButton(
           onPressed: addMember,

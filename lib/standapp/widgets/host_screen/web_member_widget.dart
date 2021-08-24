@@ -91,13 +91,7 @@ class _MemberState extends State<WebMemberWidget> {
           }
 
           if (members.hasData) {
-            return Wrap(
-              spacing: 10,
-              runSpacing: 10,
-              children: [
-                _memberWidget(members.data),
-              ],
-            );
+            return _memberWidget(members.data);
           }
 
           if (members.hasError) {
@@ -111,41 +105,58 @@ class _MemberState extends State<WebMemberWidget> {
   }
 
   Widget _memberWidget(final List<Member>? members) {
-    return ListView(
-      shrinkWrap: true,
-      physics: const ClampingScrollPhysics(),
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: 10),
-          child: MemberBar(
-            addMember: _addMemberDialog,
+    return LayoutBuilder(builder: (context, constraints) {
+      double barWidth = 65;
+      double buttonWidth = 265;
+      int buttonsInRow = 1;
+      if (constraints.maxWidth > 830) {
+        barWidth = 620;
+        buttonWidth = 267;
+        buttonsInRow = 3;
+      } else if (constraints.maxWidth > 575) {
+        barWidth = 365;
+        buttonWidth = 280;
+        buttonsInRow = 2;
+      }
+
+      return Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: MemberBar(
+              width: barWidth,
+              addMember: _addMemberDialog,
+            ),
           ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Center(
-          child: SizedBox(
-            width: 797,
+          const SizedBox(
+            height: 10,
+          ),
+          SizedBox(
+            // button-width * how many buttons a row should have + spacing * (how many spacing exists)
+            width: buttonWidth * buttonsInRow + 10 * (buttonsInRow - 1),
             child: Wrap(
               spacing: 10,
               runSpacing: 10,
-              children: _generateMembers(members),
+              children: _generateMembers(members, buttonWidth),
             ),
           ),
-        ),
-        const SizedBox(
-          height: 150,
-        )
-      ],
-    );
+          const SizedBox(
+            height: 150,
+          )
+        ],
+      );
+    });
   }
 
-  List<Widget> _generateMembers(final List<Member>? members) {
+  List<Widget> _generateMembers(
+    final List<Member>? members,
+    final double width,
+  ) {
     return members!.where((element) => element.isNotEmpty()).map(
       (entry) {
         return WebBoardButton(
           text: entry.name,
+          buttonWidth: width,
           key: Key("WebBoardButton-${entry.memberId}"),
           onInfo: () {
             _onMemberInfo(entry);
@@ -168,38 +179,53 @@ class _MemberState extends State<WebMemberWidget> {
 class _LoadingMemberWidget extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
-    return Container(
-      color: AppColors.babyBlue,
-      child: ListView(
-        shrinkWrap: true,
-        physics: const ClampingScrollPhysics(),
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: _memberBar(),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Center(
-            child: SizedBox(
-              width: 797,
-              child: Wrap(
-                spacing: 10,
-                runSpacing: 10,
-                children: _loadingMembers(),
+    return LayoutBuilder(builder: (context, constraints) {
+      double barWidth = 65;
+      double buttonWidth = 265;
+      int buttonsInRow = 1;
+      if (constraints.maxWidth > 830) {
+        barWidth = 620;
+        buttonWidth = 267;
+        buttonsInRow = 3;
+      } else if (constraints.maxWidth > 575) {
+        barWidth = 363;
+        buttonWidth = 280;
+        buttonsInRow = 2;
+      }
+
+      return Container(
+        color: AppColors.babyBlue,
+        child: ListView(
+          shrinkWrap: true,
+          physics: const ClampingScrollPhysics(),
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: _memberBar(barWidth),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Center(
+              child: SizedBox(
+                width: buttonWidth * buttonsInRow + 10 * (buttonsInRow - 1),
+                child: Wrap(
+                  spacing: 10,
+                  runSpacing: 10,
+                  children: _loadingMembers(buttonWidth),
+                ),
               ),
             ),
-          ),
-          const SizedBox(
-            height: 150,
-          )
-        ],
-      ),
-    );
+            const SizedBox(
+              height: 150,
+            )
+          ],
+        ),
+      );
+    });
   }
 
-  Widget _memberBar() {
+  Widget _memberBar(final double width) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -213,8 +239,8 @@ class _LoadingMemberWidget extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(
-          width: 592,
+        SizedBox(
+          width: width,
         ),
         Container(
           width: 55,
@@ -230,7 +256,7 @@ class _LoadingMemberWidget extends StatelessWidget {
     );
   }
 
-  List<Widget> _loadingMembers() {
+  List<Widget> _loadingMembers(final double width) {
     return List.generate(
       9,
       (index) {
@@ -238,7 +264,7 @@ class _LoadingMemberWidget extends StatelessWidget {
           baseColor: AppColors.lightGrey,
           highlightColor: AppColors.weisserAlsWeiss,
           child: Container(
-            width: 259,
+            width: width,
             height: 56,
             decoration: const BoxDecoration(
               color: AppColors.lightGrey,

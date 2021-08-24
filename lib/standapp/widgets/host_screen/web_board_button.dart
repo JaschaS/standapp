@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:standapp/standapp/standapp_colors.dart';
 
@@ -5,6 +7,7 @@ typedef StringCallback = void Function(String);
 
 class WebBoardButton extends StatelessWidget {
   final String text;
+  final double buttonWidth;
   final Color _color;
   final IconData _icon;
   final VoidCallback? _onInfo;
@@ -12,6 +15,7 @@ class WebBoardButton extends StatelessWidget {
 
   const WebBoardButton(
       {required this.text,
+      required this.buttonWidth,
       Key key = const Key("WebBoardButton"),
       color = Colors.white,
       icon = Icons.person,
@@ -26,7 +30,7 @@ class WebBoardButton extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return SizedBox(
-      width: 259,
+      width: buttonWidth,
       child: Card(
         color: _color,
         child: ListTile(

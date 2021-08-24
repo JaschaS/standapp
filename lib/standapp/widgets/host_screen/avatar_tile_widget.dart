@@ -36,8 +36,8 @@ class AvatarTile extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      if (constraints.maxWidth > 855) return _createWeb();
-      if (constraints.maxWidth > 585) return _createTablet();
+      if (constraints.maxWidth > 870) return _createWeb();
+      if (constraints.maxWidth > 615) return _createTablet();
 
       return _createMobile();
     });
