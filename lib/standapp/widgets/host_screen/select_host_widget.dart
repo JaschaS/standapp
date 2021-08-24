@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:standapp/standapp/services/http_service.dart';
 import 'package:standapp/standapp/standapp_buttons.dart';
 import 'package:standapp/standapp/standapp_colors.dart';
@@ -115,7 +114,9 @@ class _HostWidgetState extends State<HostWidget> {
           if (currentHost.hasData) {
             return Padding(
               padding: EdgeInsets.only(bottom: 92),
-              child: _widgetForState(currentHost),
+              child: Center(
+                child: _widgetForState(currentHost),
+              ),
             );
           }
 
@@ -137,27 +138,12 @@ class _HostWidgetState extends State<HostWidget> {
       case _HostState.SHOW_HOST:
         final hostData = currentHost.data!;
         if (hostData.isEmpty()) {
-          return _NoHostWidget();
+          return _noHostWidget();
         }
 
-        return _CurrentHostWidget(
-          title: "Hi, I am ${hostData.name}",
-          avatar: Avatar(
-            image: hostData.avatar,
-          ),
-          start: DateTime.parse(hostData.startDate!),
-          end: DateTime.parse(hostData.endDate!),
-          callback: _selectHost,
-        );
+        return _currentHostWidget(hostData);
       case _HostState.SELECT_DATE:
-        return _SelectDateWidget(
-          cancel: _goBackToShowHost,
-          onStartChange: _onStartChange,
-          onEndChange: _onEndChange,
-          next: _nextSelectHost,
-          start: _start,
-          end: _end,
-        );
+        return _selectDateWidget();
       case _HostState.SELECT_HOST:
         return FutureBuilder<Member>(
           future: this._suggestion,
@@ -171,19 +157,7 @@ class _HostWidgetState extends State<HostWidget> {
             }
 
             if (suggestion.hasData) {
-              final suggestionData = suggestion.data!;
-
-              return _SelectHostWidget(
-                title: "It is ${suggestionData.name}!",
-                avatar: Avatar(
-                  image: suggestionData.avatar,
-                ),
-                start: _start,
-                end: _end,
-                cancel: _goBackToSelectDate,
-                searchAgain: () => _searchAgain(suggestionData),
-                confirm: () => _saveHost(suggestionData),
-              );
+              return _selectHostWidget(suggestion.data!);
             }
 
             return LoadingHostWidget();
@@ -192,7 +166,7 @@ class _HostWidgetState extends State<HostWidget> {
       case _HostState.LOADING_STATE:
         return LoadingHostWidget();
       default:
-        return _NoHostWidget();
+        return _noHostWidget();
     }
   }
 
@@ -228,12 +202,105 @@ class _HostWidgetState extends State<HostWidget> {
       child: Text("${snapshot.error}"),
     );
   }
+
+  Widget _createTitle(final String title) {
+    return Text(
+      title,
+      style: AppFonts.textStyleWithSize(
+        AppFonts.h2,
+        weight: FontWeight.bold,
+        color: AppColors.standard_blue,
+      ),
+    );
+  }
+
+  Widget _createDescription(final String text) {
+    return Text(
+      text,
+      style: AppFonts.textStyleWithSize(
+        AppFonts.h5,
+        weight: FontWeight.bold,
+      ),
+    );
+  }
+
+  Widget _noHostWidget() {
+    return AvatarTile(
+      title: _createTitle("No host"),
+      description: _createDescription("You don't have a host"),
+      avatar: const Avatar(),
+      primary: PrimaryAppButton(
+        title: "Find a Host",
+        callback: this._selectHost,
+      ),
+    );
+  }
+
+  Widget _currentHostWidget(final Member host) {
+    return AvatarTile(
+      title: _createTitle("Hi, I am ${host.name}"),
+      description: _createDescription("I am your host"),
+      avatar: Avatar(
+        image: host.avatar,
+      ),
+      start: DateTime.parse(host.startDate!),
+      end: DateTime.parse(host.endDate!),
+      primary: PrimaryAppButton(
+        title: "Find new Host",
+        callback: this._selectHost,
+      ),
+    );
+  }
+
+  Widget _selectDateWidget() {
+    return AvatarTile(
+      title: _createTitle("Find a host"),
+      description: _createDescription("select a time range"),
+      avatar: const Avatar(),
+      onStartChange: _onStartChange,
+      onEndChange: _onEndChange,
+      start: this._start,
+      end: this._end,
+      primary: PrimaryAppButton(
+        title: "Continue",
+        callback: this._nextSelectHost,
+      ),
+      alternate: TextAppButton(
+        callback: this._goBackToShowHost,
+        title: "Cancel",
+      ),
+    );
+  }
+
+  Widget _selectHostWidget(final Member host) {
+    return AvatarTile(
+      title: _createTitle("It is ${host.name}!"),
+      description: _createDescription("Suggested host"),
+      avatar: Avatar(
+        image: host.avatar,
+      ),
+      start: this._start,
+      end: this._end,
+      primary: PrimaryAppButton(
+        title: "Confirm Host",
+        callback: () => _saveHost(host),
+      ),
+      secondary: SecondaryAppButton(
+        title: "Search again",
+        callback: () => _searchAgain(host),
+      ),
+      alternate: TextAppButton(
+        callback: this._goBackToSelectDate,
+        title: "Cancel",
+      ),
+    );
+  }
 }
 
-class _NoHostWidget extends _BaseSelectWidget {
+class NoHostWidget extends _BaseSelectWidget {
   final VoidCallback? callback;
 
-  _NoHostWidget({
+  NoHostWidget({
     DateTime? start,
     DateTime? end,
     VoidCallback? callback,
@@ -247,9 +314,9 @@ class _NoHostWidget extends _BaseSelectWidget {
         );
 
   @override
-  Widget _buttonBar() {
+  Widget _buttonBar({double left = 250}) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(250, 0, 0, 0),
+      padding: EdgeInsets.only(left: left),
       child: Row(
         children: [
           PrimaryAppButton(
@@ -281,9 +348,9 @@ class _CurrentHostWidget extends _BaseSelectWidget {
         );
 
   @override
-  Widget _buttonBar() {
+  Widget _buttonBar({final double left = 250}) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(250, 0, 0, 0),
+      padding: EdgeInsets.only(left: left),
       child: Row(
         children: [
           PrimaryAppButton(
@@ -318,9 +385,9 @@ class _SelectDateWidget extends _BaseSelectWidget {
         );
 
   @override
-  Widget _buttonBar() {
+  Widget _buttonBar({final double left = 250}) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(250, 0, 0, 0),
+      padding: EdgeInsets.only(left: left),
       child: Row(
         children: [
           PrimaryAppButton(
@@ -365,9 +432,9 @@ class _SelectHostWidget extends _BaseSelectWidget {
         );
 
   @override
-  Widget _buttonBar() {
+  Widget _buttonBar({final double left = 250}) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(250, 0, 0, 0),
+      padding: EdgeInsets.only(left: left),
       child: Row(
         children: [
           PrimaryAppButton(
@@ -415,21 +482,37 @@ abstract class _BaseSelectWidget extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
+    return LayoutBuilder(builder: (context, constraints) {
+      if (constraints.maxWidth > 855) return _createWebBase();
+      if (constraints.maxWidth > 585) return _createTabletBase();
+
+      return _createWebBase();
+    });
+  }
+
+  Widget _createWebBase() {
     return Container(
       alignment: Alignment.center,
       child: SizedBox(
         width: 867,
-        height: 275,
+        height: 320,
         child: Column(
           children: [
-            _header(),
             AvatarTile(
+              title: Text(
+                this.title ?? "",
+                style: AppFonts.textStyleWithSize(
+                  AppFonts.h2,
+                  weight: FontWeight.bold,
+                  color: AppColors.standard_blue,
+                ),
+              ),
               avatar: this.avatar,
               start: this.start,
               end: this.end,
               onStartChange: this.onStartChange,
               onEndChange: this.onEndChange,
-              title: _avatarTitle(),
+              description: _avatarDescription(),
             ),
             _buttonBar()
           ],
@@ -438,7 +521,38 @@ abstract class _BaseSelectWidget extends StatelessWidget {
     );
   }
 
-  Widget _avatarTitle() {
+  Widget _createTabletBase() {
+    return Container(
+      alignment: Alignment.center,
+      color: Colors.green,
+      child: SizedBox(
+        height: 344,
+        child: Column(
+          children: [
+            AvatarTile(
+              title: Text(
+                this.title ?? "",
+                style: AppFonts.textStyleWithSize(
+                  AppFonts.h2,
+                  weight: FontWeight.bold,
+                  color: AppColors.standard_blue,
+                ),
+              ),
+              avatar: this.avatar,
+              start: this.start,
+              end: this.end,
+              onStartChange: this.onStartChange,
+              onEndChange: this.onEndChange,
+              description: _avatarDescription(),
+            ),
+            _buttonBar(left: 180)
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _avatarDescription() {
     return Text(
       this.avatarTitle ?? "Select time",
       style: const TextStyle(
@@ -449,20 +563,5 @@ abstract class _BaseSelectWidget extends StatelessWidget {
     );
   }
 
-  Widget _header() {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(250, 0, 0, 0),
-      alignment: Alignment.centerLeft,
-      child: Text(
-        this.title ?? "",
-        style: AppFonts.textStyleWithSize(
-          AppFonts.h2,
-          weight: FontWeight.bold,
-          color: AppColors.standard_blue,
-        ),
-      ),
-    );
-  }
-
-  Widget _buttonBar();
+  Widget _buttonBar({final double left});
 }
