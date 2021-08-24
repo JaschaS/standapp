@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:standapp/standapp/services/http_service.dart';
+import 'package:standapp/standapp/clients/backend_client.dart';
 import 'package:standapp/standapp/standapp_buttons.dart';
 import 'package:standapp/standapp/standapp_colors.dart';
 import 'package:standapp/standapp/standapp_fonts.dart';
@@ -35,7 +35,7 @@ class _HostWidgetState extends State<HostWidget> {
   void initState() {
     super.initState();
 
-    _host = widget.currentHost ?? HttpService.getCurrentHost(widget.user!);
+    _host = widget.currentHost ?? BackendClient.getCurrentHost(widget.user!);
     _start = _calculateStartDate();
     _end = _calculateEndDate();
   }
@@ -73,14 +73,14 @@ class _HostWidgetState extends State<HostWidget> {
   void _nextSelectHost() {
     setState(() {
       _showState = _HostState.selectHost;
-      _suggestion = HttpService.getRecommendation(widget.user!);
+      _suggestion = BackendClient.getRecommendation(widget.user!);
     });
   }
 
   void _searchAgain(final Member member) {
     setState(() {
       _suggestion =
-          HttpService.getRecommendationWithoutMember(widget.user!, member);
+          BackendClient.getRecommendationWithoutMember(widget.user!, member);
     });
   }
 
@@ -88,9 +88,9 @@ class _HostWidgetState extends State<HostWidget> {
     newHost.startDate = _start.toIso8601String();
     newHost.endDate = _end.toIso8601String();
 
-    HttpService.postHost(widget.user!, newHost).then((value) {
+    BackendClient.postHost(widget.user!, newHost).then((value) {
       setState(() {
-        _host = HttpService.getCurrentHost(widget.user!);
+        _host = BackendClient.getCurrentHost(widget.user!);
         _showState = _HostState.showHost;
       });
     });

@@ -5,7 +5,7 @@ import 'package:http/http.dart';
 
 import '../models/member_model.dart';
 
-class HttpService {
+class BackendClient {
   static const String appId = "lob80zu3ng";
 
   static Future<List<Member>> addMember(

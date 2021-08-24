@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:standapp/standapp/widgets/background_widget.dart';
-import 'package:standapp/standapp/services/http_service.dart';
+import 'package:standapp/standapp/clients/backend_client.dart';
 import 'package:standapp/standapp/models/member_model.dart';
 import 'package:standapp/standapp/widgets/host_screen/select_host_widget.dart';
 import 'package:standapp/standapp/widgets/host_screen/member_widget.dart';
@@ -20,7 +20,7 @@ class _HostPageState extends State<HostPage> {
 
   void _updateCurrentHost() {
     setState(() {
-      _currentHost = HttpService.getCurrentHost(widget.user!);
+      _currentHost = BackendClient.getCurrentHost(widget.user!);
     });
   }
 

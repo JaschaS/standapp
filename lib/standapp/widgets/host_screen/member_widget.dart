@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:standapp/standapp/models/member_model.dart';
-import 'package:standapp/standapp/services/http_service.dart';
+import 'package:standapp/standapp/clients/backend_client.dart';
 import 'package:standapp/standapp/widgets/host_screen/board_button.dart';
 import 'package:standapp/standapp/widgets/host_screen/member_dialog.dart';
 
@@ -29,7 +29,7 @@ class _MemberState extends State<MemberWidget> {
   void initState() {
     super.initState();
 
-    _members = HttpService.getMembers(widget.user!);
+    _members = BackendClient.getMembers(widget.user!);
   }
 
   void _onMemberInfo(final Member member) {
@@ -43,8 +43,8 @@ class _MemberState extends State<MemberWidget> {
             if (oldMember == null) return;
             if (oldMember != newMember) {
               setState(() {
-                _members =
-                    HttpService.patchMember(widget.user!, oldMember, newMember);
+                _members = BackendClient.patchMember(
+                    widget.user!, oldMember, newMember);
                 if (widget.updateCurrentHost != null) {
                   widget.updateCurrentHost!();
                 }
@@ -63,7 +63,7 @@ class _MemberState extends State<MemberWidget> {
         return MemberDialog(
           callback: (_, member) {
             setState(() {
-              _members = HttpService.addMember(widget.user!, member);
+              _members = BackendClient.addMember(widget.user!, member);
             });
           },
           okText: "  add ",
@@ -74,7 +74,7 @@ class _MemberState extends State<MemberWidget> {
 
   void _onRemove(final Member member) async {
     setState(() {
-      _members = HttpService.deleteMember(widget.user!, member);
+      _members = BackendClient.deleteMember(widget.user!, member);
     });
   }
 
