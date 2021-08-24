@@ -9,8 +9,8 @@ class Member {
   Member({
     required this.name,
     required this.avatar,
-    memberId,
-    userId,
+    this.memberId,
+    this.userId,
     String? start,
     String? end,
   })  : startDate = start,
