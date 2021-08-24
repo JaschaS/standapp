@@ -142,7 +142,7 @@ class _MemberState extends State<WebMemberWidget> {
   }
 
   List<Widget> _generateMembers(final List<Member>? members) {
-    return members!.map(
+    return members!.where((element) => element.isNotEmpty()).map(
       (entry) {
         return WebBoardButton(
           entry.name,
