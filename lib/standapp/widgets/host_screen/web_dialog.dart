@@ -134,32 +134,28 @@ class _WebDialogState extends State<WebDialog> {
     );
   }
 
-// TODO: remove padding
   Widget _buttonBar() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          SimpleDialogOption(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('cancel'),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        SimpleDialogOption(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('cancel'),
+        ),
+        Container(
+          padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+          child: const Text(
+            "New Member",
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          Container(
-            padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-            child: const Text(
-              "New Member",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-          SimpleDialogOption(
-            onPressed: _onCreate,
-            child: Text(widget._okText),
-          ),
-        ],
-      ),
+        ),
+        SimpleDialogOption(
+          onPressed: _onCreate,
+          child: Text(widget._okText),
+        ),
+      ],
     );
   }
 }
