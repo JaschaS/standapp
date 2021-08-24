@@ -10,7 +10,6 @@ class WebBoardButton extends StatelessWidget {
   final VoidCallback? _onInfo;
   final VoidCallback? _onRemove;
 
-// TODO: make this._text to optional part for naming
   const WebBoardButton(
       {required this.text,
       Key key = const Key("WebBoardButton"),
