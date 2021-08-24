@@ -146,6 +146,7 @@ class _MemberState extends State<WebMemberWidget> {
       (entry) {
         return WebBoardButton(
           entry.name,
+          key: Key("WebBoardButton-${entry.memberId}"),
           onInfo: () {
             _onMemberInfo(entry);
           },

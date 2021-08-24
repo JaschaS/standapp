@@ -10,8 +10,10 @@ class WebBoardButton extends StatelessWidget {
   final VoidCallback? _onInfo;
   final VoidCallback? _onRemove;
 
+// TODO: make this._text to optional part for naming
   const WebBoardButton(this._text,
-      {color = Colors.white,
+      {Key key = const Key("WebBoardButton"),
+      color = Colors.white,
       icon = Icons.person,
       VoidCallback? onInfo,
       VoidCallback? onRemove})
@@ -19,7 +21,7 @@ class WebBoardButton extends StatelessWidget {
         _icon = icon,
         _onInfo = onInfo,
         _onRemove = onRemove,
-        super(key: const Key("WebBoardButton"));
+        super(key: key);
 
   @override
   Widget build(final BuildContext context) {
