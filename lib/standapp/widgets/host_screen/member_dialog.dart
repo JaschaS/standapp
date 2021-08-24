@@ -5,12 +5,12 @@ import '../../models/member_model.dart';
 
 typedef MemberCallback = void Function(Member?, Member);
 
-class WebDialog extends StatefulWidget {
+class MemberDialog extends StatefulWidget {
   final MemberCallback? _callback;
   final Member? _existingMember;
   final String _okText;
 
-  const WebDialog({
+  const MemberDialog({
     MemberCallback? callback,
     Member? existingMember,
     okText = "",
@@ -20,10 +20,10 @@ class WebDialog extends StatefulWidget {
         super(key: const Key("WebDialog"));
 
   @override
-  State<StatefulWidget> createState() => _WebDialogState();
+  State<StatefulWidget> createState() => _MemberDialogState();
 }
 
-class _WebDialogState extends State<WebDialog> {
+class _MemberDialogState extends State<MemberDialog> {
   late TextEditingController _controller;
   bool _validText = true;
   String _currentAvatar = "";

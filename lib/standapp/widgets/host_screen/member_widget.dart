@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:standapp/standapp/models/member_model.dart';
 import 'package:standapp/standapp/services/http_service.dart';
-import 'package:standapp/standapp/widgets/host_screen/web_board_button.dart';
-import 'package:standapp/standapp/widgets/host_screen/web_dialog.dart';
+import 'package:standapp/standapp/widgets/host_screen/board_button.dart';
+import 'package:standapp/standapp/widgets/host_screen/member_dialog.dart';
 
 import '../../standapp_colors.dart';
 import 'member_bar.dart';
 
-class WebMemberWidget extends StatefulWidget {
+class MemberWidget extends StatefulWidget {
   final User? user;
   final VoidCallback? updateCurrentHost;
 
-  const WebMemberWidget({
+  const MemberWidget({
     this.user,
     this.updateCurrentHost,
   }) : super(key: const Key("WebMemberWidget"));
@@ -22,7 +22,7 @@ class WebMemberWidget extends StatefulWidget {
   State<StatefulWidget> createState() => _MemberState();
 }
 
-class _MemberState extends State<WebMemberWidget> {
+class _MemberState extends State<MemberWidget> {
   late Future<List<Member>> _members;
 
   @override
@@ -36,7 +36,7 @@ class _MemberState extends State<WebMemberWidget> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return WebDialog(
+        return MemberDialog(
           okText: "save",
           existingMember: member,
           callback: (final Member? oldMember, final Member newMember) {
@@ -60,7 +60,7 @@ class _MemberState extends State<WebMemberWidget> {
     showDialog(
       context: context,
       builder: (context) {
-        return WebDialog(
+        return MemberDialog(
           callback: (_, member) {
             setState(() {
               _members = HttpService.addMember(widget.user!, member);
@@ -154,7 +154,7 @@ class _MemberState extends State<WebMemberWidget> {
   ) {
     return members!.where((element) => element.isNotEmpty()).map(
       (entry) {
-        return WebBoardButton(
+        return BoardButton(
           text: entry.name,
           buttonWidth: width,
           key: Key("WebBoardButton-${entry.memberId}"),

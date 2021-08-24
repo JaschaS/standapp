@@ -5,7 +5,7 @@ import 'package:standapp/standapp/standapp_colors.dart';
 
 typedef StringCallback = void Function(String);
 
-class WebBoardButton extends StatelessWidget {
+class BoardButton extends StatelessWidget {
   final String text;
   final double buttonWidth;
   final Color _color;
@@ -13,7 +13,7 @@ class WebBoardButton extends StatelessWidget {
   final VoidCallback? _onInfo;
   final VoidCallback? _onRemove;
 
-  const WebBoardButton(
+  const BoardButton(
       {required this.text,
       required this.buttonWidth,
       Key key = const Key("WebBoardButton"),
