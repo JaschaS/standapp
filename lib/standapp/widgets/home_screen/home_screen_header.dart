@@ -7,46 +7,76 @@ class HomeScreenHeader extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
+    return LayoutBuilder(builder: (context, constraints) {
+      if (constraints.maxWidth > 585) {
+        return const _Header(
+          height: 248,
+          fontSize: 34,
+          iconSize: 52,
+        );
+      }
+
+      return const _Header(
+        height: 148,
+        fontSize: 24,
+        iconSize: 42,
+      );
+    });
+  }
+}
+
+class _Header extends StatelessWidget {
+  final double height;
+  final double fontSize;
+  final double iconSize;
+
+  const _Header({
+    required this.height,
+    required this.fontSize,
+    required this.iconSize,
+  });
+
+  @override
+  Widget build(final BuildContext context) {
     return Container(
       color: AppColors.weisserAlsWeiss,
-      child: Container(
-        margin: const EdgeInsets.fromLTRB(0, 50, 0, 50),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(
-                  Icons.accessibility,
-                  size: 50,
-                  color: AppColors.darkBlue,
-                ),
-                Icon(
-                  Icons.accessibility,
-                  size: 50,
-                  color: AppColors.red,
-                ),
-                Icon(
-                  Icons.accessibility,
-                  size: 50,
-                  color: AppColors.lightGray,
-                )
-              ],
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                "STANDUP-Host",
-                style: GoogleFonts.bungee(
-                  textStyle: const TextStyle(
-                    fontSize: 34,
-                    color: AppColors.darkGray,
-                  ),
+      height: height,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.accessibility,
+                size: iconSize,
+                color: AppColors.darkBlue,
+              ),
+              Icon(
+                Icons.accessibility,
+                size: iconSize,
+                color: AppColors.red,
+              ),
+              Icon(
+                Icons.accessibility,
+                size: iconSize,
+                color: AppColors.lightGray,
+              )
+            ],
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Text(
+              "STANDUP-Host",
+              style: GoogleFonts.bungee(
+                textStyle: TextStyle(
+                  fontSize: fontSize,
+                  color: AppColors.darkGray,
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -8,7 +8,7 @@ class BackgroundWidget extends StatelessWidget {
 
   const BackgroundWidget({
     Widget? child,
-    double topWeight = 0.5,
+    double topWeight = 0.25,
     double bottomWeight = 0.75,
   })  : _child = child,
         _topWeight = topWeight,
@@ -22,14 +22,16 @@ class BackgroundWidget extends StatelessWidget {
         Align(
           alignment: Alignment.topCenter,
           child: Container(
-              color: Colors.white,
-              height: MediaQuery.of(context).size.height * _topWeight),
+            color: Colors.white,
+            height: MediaQuery.of(context).size.height * _topWeight,
+          ),
         ),
         Align(
           alignment: Alignment.bottomCenter,
           child: Container(
-              color: AppColors.blue,
-              height: MediaQuery.of(context).size.height * _bottomWeight),
+            color: AppColors.blue,
+            height: MediaQuery.of(context).size.height * _bottomWeight,
+          ),
         ),
         if (_child != null) _child!
       ],

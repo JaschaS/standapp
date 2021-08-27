@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:standapp/standapp/standapp_buttons.dart';
 import 'package:standapp/standapp/widgets/background_widget.dart';
 import 'package:standapp/standapp/standapp_colors.dart';
 
@@ -67,57 +68,50 @@ class _EmailSignInState extends State<EmailSignIn> {
 
   @override
   Widget build(final BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 150),
-      child: BackgroundWidget(
-        child: Center(
-          child: SizedBox(
-            width: 250,
-            child: Column(
-              children: [
-                TextField(
-                  decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    filled: true,
-                    border: const OutlineInputBorder(),
-                    prefixIcon: const Icon(Icons.account_circle),
-                    hintText: 'Email',
-                    errorText: _emailError,
-                  ),
-                  controller: _userNameController,
+    return Container(
+      color: AppColors.babyBlue,
+      padding: const EdgeInsets.only(top: 72),
+      child: Center(
+        child: SizedBox(
+          width: 210,
+          child: Column(
+            children: [
+              TextField(
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.account_circle),
+                  hintText: 'Email',
+                  errorText: _emailError,
                 ),
-                const SizedBox(
-                  height: 10,
+                controller: _userNameController,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextField(
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.lock),
+                  hintText: 'Password',
+                  errorText: _passwordError,
                 ),
-                TextField(
-                  decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    filled: true,
-                    border: const OutlineInputBorder(),
-                    prefixIcon: const Icon(Icons.lock),
-                    hintText: 'Password',
-                    errorText: _passwordError,
-                  ),
-                  controller: _passwordController,
-                  obscureText: true,
-                  enableSuggestions: false,
-                  autocorrect: false,
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(primary: AppColors.red),
-                      onPressed: _login,
-                      child: const Text("login"),
-                    )
-                  ],
-                )
-              ],
-            ),
+                controller: _passwordController,
+                obscureText: true,
+                enableSuggestions: false,
+                autocorrect: false,
+              ),
+              const SizedBox(
+                height: 35,
+              ),
+              PrimaryAppButton(
+                title: "login",
+                callback: _login,
+              ),
+            ],
           ),
         ),
       ),

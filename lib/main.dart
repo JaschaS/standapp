@@ -10,11 +10,11 @@ import 'standapp/pages/host_page.dart';
 // DateButton overlow when using Month september or aboive
 // Datebutton align text left not centered
 // MemberDialog has an overflow on mobile
-// mobile login screen will be coverd by the keyboard
-// mobile login button ist no visible on small screens
+// + mobile login screen will be coverd by the keyboard
+// + mobile login button ist no visible on small screens
 // member widget - add button overflow on small screen
 // weird scrolling behavior
-// appbar should not be transparent
+// + appbar should not be transparent
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,13 +56,19 @@ class _StandAppState extends State<StandApp> {
           centerTitle: false,
           leadingWidth: 0,
           elevation: 0,
-          backgroundColor: AppColors.weisserAlsWeiss,
+          backgroundColor: _appBarColor(),
           title: _createHeaderTitle(),
           actions: _createActions(),
         ),
         body: _createBody(),
       ),
     );
+  }
+
+  Color _appBarColor() {
+    if (_user == null) return Colors.transparent;
+
+    return AppColors.weisserAlsWeiss;
   }
 
   Widget _createBody() {

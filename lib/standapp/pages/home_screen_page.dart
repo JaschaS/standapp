@@ -14,9 +14,7 @@ class _HomeScreenState extends State<HomeScreenPage> {
   @override
   Widget build(final BuildContext context) {
     return BackgroundWidget(
-      child: ListView(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
+      child: Column(
         children: const [
           HomeScreenHeader(),
           EmailSignIn(),
