@@ -14,7 +14,7 @@ class _HomeScreenState extends State<HomeScreenPage> {
   @override
   Widget build(final BuildContext context) {
     return BackgroundWidget(
-      child: Column(
+      child: ListView(
         children: const [
           HomeScreenHeader(),
           EmailSignIn(),

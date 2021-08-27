@@ -56,19 +56,13 @@ class _StandAppState extends State<StandApp> {
           centerTitle: false,
           leadingWidth: 0,
           elevation: 0,
-          backgroundColor: _appBarColor(),
+          backgroundColor: AppColors.weisserAlsWeiss,
           title: _createHeaderTitle(),
           actions: _createActions(),
         ),
         body: _createBody(),
       ),
     );
-  }
-
-  Color _appBarColor() {
-    if (_user == null) return Colors.transparent;
-
-    return AppColors.weisserAlsWeiss;
   }
 
   Widget _createBody() {
