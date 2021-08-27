@@ -6,6 +6,9 @@ import 'package:standapp/standapp/pages/home_screen_page.dart';
 import 'configure_nonweb.dart' if (dart.library.html) 'configure_web.dart';
 import 'standapp/pages/host_page.dart';
 
+// DateButton overlow when using Month september or aboive
+// MemberDialog has an overflow on mobile
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
