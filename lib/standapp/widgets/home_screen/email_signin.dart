@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:standapp/standapp/standapp_buttons.dart';
-import 'package:standapp/standapp/widgets/background_widget.dart';
 import 'package:standapp/standapp/standapp_colors.dart';
 
 class EmailSignIn extends StatefulWidget {
@@ -77,6 +76,7 @@ class _EmailSignInState extends State<EmailSignIn> {
           child: Column(
             children: [
               TextField(
+                keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   fillColor: Colors.white,
                   filled: true,
@@ -91,6 +91,7 @@ class _EmailSignInState extends State<EmailSignIn> {
                 height: 10,
               ),
               TextField(
+                textInputAction: TextInputAction.go,
                 decoration: InputDecoration(
                   fillColor: Colors.white,
                   filled: true,
@@ -99,6 +100,9 @@ class _EmailSignInState extends State<EmailSignIn> {
                   hintText: 'Password',
                   errorText: _passwordError,
                 ),
+                onSubmitted: (value) {
+                  _login();
+                },
                 controller: _passwordController,
                 obscureText: true,
                 enableSuggestions: false,
