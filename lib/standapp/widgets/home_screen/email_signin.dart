@@ -77,6 +77,7 @@ class _EmailSignInState extends State<EmailSignIn> {
             children: [
               TextField(
                 keyboardType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
                   fillColor: Colors.white,
                   filled: true,
