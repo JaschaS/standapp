@@ -45,7 +45,7 @@ class AvatarTile extends StatelessWidget {
 
   Widget _createWeb() {
     return SizedBox(
-      width: 826,
+      width: 832,
       height: 270,
       child: Column(
         children: [
@@ -377,7 +377,7 @@ class _WebBanner extends StatelessWidget {
               Radius.circular(10),
             ),
           ),
-          width: 699,
+          width: 705,
           height: 133,
           child: _bannerContent(),
         )
@@ -401,7 +401,7 @@ class _WebBanner extends StatelessWidget {
                 height: 180,
               ),
               SizedBox(
-                width: 560,
+                width: 565,
                 height: 69,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -468,7 +468,7 @@ class _DateButton extends StatelessWidget {
   @override
   Widget build(final BuildContext context) {
     return SizedBox(
-      width: 225,
+      width: 230,
       height: 40,
       child: ElevatedButton.icon(
         style: ButtonStyle(
