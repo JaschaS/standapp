@@ -13,7 +13,7 @@ import 'standapp/pages/host_page.dart';
 // + mobile login screen will be coverd by the keyboard
 // + mobile login button ist no visible on small screens
 // member widget - add button overflow on small screen
-// weird scrolling behavior
+// + weird scrolling behavior
 // + appbar should not be transparent
 
 Future<void> main() async {
@@ -51,7 +51,6 @@ class _StandAppState extends State<StandApp> {
     return MaterialApp(
       title: "StandUp-Host",
       home: Scaffold(
-        extendBodyBehindAppBar: true,
         appBar: AppBar(
           centerTitle: false,
           leadingWidth: 0,

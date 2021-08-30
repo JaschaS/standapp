@@ -29,17 +29,22 @@ class _HostPageState extends State<HostPage> {
     return BackgroundWidget(
       topWeight: 0.5,
       bottomWeight: 0.5,
-      child: ListView(
-        children: [
-          HostWidget(
-            user: widget.user,
-            currentHost: _currentHost,
-          ),
-          MemberWidget(
-            user: widget.user,
-            updateCurrentHost: _updateCurrentHost,
-          ),
-        ],
+      // using here single child scroll view and column instead of listview
+      // because the listview caused weird scrollbehaviour where the scrolling
+      // got stock
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            HostWidget(
+              user: widget.user,
+              currentHost: _currentHost,
+            ),
+            MemberWidget(
+              user: widget.user,
+              updateCurrentHost: _updateCurrentHost,
+            ),
+          ],
+        ),
       ),
     );
   }
