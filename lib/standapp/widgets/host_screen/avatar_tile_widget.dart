@@ -472,6 +472,7 @@ class _DateButton extends StatelessWidget {
       height: 40,
       child: ElevatedButton.icon(
         style: ButtonStyle(
+          alignment: Alignment.centerLeft,
           backgroundColor: MaterialStateProperty.resolveWith<Color>(
             (Set<MaterialState> states) {
               return AppColors.fiftyShades;
