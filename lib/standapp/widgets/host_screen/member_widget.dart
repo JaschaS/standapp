@@ -33,27 +33,54 @@ class _MemberState extends State<MemberWidget> {
   }
 
   void _onMemberInfo(final Member member) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return MemberDialog(
-          okText: "save",
-          existingMember: member,
-          callback: (final Member? oldMember, final Member newMember) {
-            if (oldMember == null) return;
-            if (oldMember != newMember) {
-              setState(() {
-                _members = BackendClient.patchMember(
-                    widget.user!, oldMember, newMember);
-                if (widget.updateCurrentHost != null) {
-                  widget.updateCurrentHost!();
-                }
-              });
-            }
-          },
-        );
-      },
-    );
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    if (screenWidth > 615) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return MemberDialog(
+            okText: "save",
+            existingMember: member,
+            callback: (final Member? oldMember, final Member newMember) {
+              if (oldMember == null) return;
+              if (oldMember != newMember) {
+                setState(() {
+                  _members = BackendClient.patchMember(
+                      widget.user!, oldMember, newMember);
+                  if (widget.updateCurrentHost != null) {
+                    widget.updateCurrentHost!();
+                  }
+                });
+              }
+            },
+          );
+        },
+      );
+    } else {
+      showModalBottomSheet<void>(
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return MemberBottomSheet(
+            callback: (final Member? oldMember, final Member newMember) {
+              if (oldMember == null) return;
+              if (oldMember != newMember) {
+                setState(() {
+                  _members = BackendClient.patchMember(
+                      widget.user!, oldMember, newMember);
+                  if (widget.updateCurrentHost != null) {
+                    widget.updateCurrentHost!();
+                  }
+                });
+              }
+            },
+            existingMember: member,
+            okText: "save",
+          );
+        },
+      );
+    }
   }
 
   void _addMemberDialog() {
