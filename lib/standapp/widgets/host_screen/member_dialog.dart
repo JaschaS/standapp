@@ -239,11 +239,12 @@ class _MemberBottomSheetState extends State<MemberBottomSheet> {
   @override
   Widget build(final BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
+    final double sheetHeight = screenHeight * 0.666;
     final avatars = [];
     avatars.addAll(AvatarsImages.imagesColored);
 
     return SizedBox(
-      height: screenHeight * 0.666,
+      height: sheetHeight,
       child: Padding(
         padding: const EdgeInsets.only(top: 15),
         child: Column(
@@ -256,115 +257,68 @@ class _MemberBottomSheetState extends State<MemberBottomSheet> {
               imageName: _currentAvatar,
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(50, 25, 50, 10),
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
               child: TextField(
                 controller: _controller,
                 decoration: InputDecoration(
                   errorText: _validText ? null : "Please enter a name",
                   hintText: "enter new Member name",
                   contentPadding: const EdgeInsets.only(
-                    left: 15,
+                    left: 10,
                     bottom: 11,
                     top: 11,
-                    right: 15,
+                    right: 10,
                   ),
                 ),
               ),
             ),
             Container(
               padding: const EdgeInsets.only(
-                top: 25,
+                top: 13,
                 left: 10,
                 right: 10,
               ),
-              height: 150,
-              child: SingleChildScrollView(
-                child: Wrap(
-                  alignment: WrapAlignment.start,
-                  spacing: 5,
-                  runSpacing: 5,
-                  children: List.generate(avatars.length, (index) {
-                    return _Avatar(
-                      width: 65,
-                      height: 65,
-                      imageName: avatars[index],
-                      callback: () {
-                        _onAvatarChange(avatars[index]);
-                      },
-                    );
-                  }),
-                ),
+              // prevent bottom overflow when error text from textfield is present
+              height: sheetHeight - (_validText ? 241 : 263),
+              child: GridView.count(
+                crossAxisCount: 4,
+                children: List.generate(avatars.length, (index) {
+                  return _Avatar(
+                    width: 65,
+                    height: 65,
+                    imageName: avatars[index],
+                    callback: () {
+                      _onAvatarChange(avatars[index]);
+                    },
+                  );
+                }),
               ),
             ),
           ],
         ),
       ),
     );
-
-    return SimpleDialog(
-      title: _buttonBar(),
-      children: [
-        _Avatar(
-          imageName: _currentAvatar,
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(25, 25, 25, 0),
-          child: TextField(
-            controller: _controller,
-            decoration: InputDecoration(
-              errorText: _validText ? null : "Please enter a name",
-              hintText: "enter new Member name",
-              contentPadding: const EdgeInsets.only(
-                left: 15,
-                bottom: 11,
-                top: 11,
-                right: 15,
-              ),
-            ),
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.fromLTRB(0, 25, 0, 10),
-          alignment: Alignment.center,
-          width: 225,
-          height: 190,
-          child: SingleChildScrollView(
-            child: Wrap(
-              alignment: WrapAlignment.start,
-              spacing: 5,
-              runSpacing: 5,
-              children: List.generate(avatars.length, (index) {
-                return _Avatar(
-                  width: 65,
-                  height: 65,
-                  imageName: avatars[index],
-                  callback: () {
-                    _onAvatarChange(avatars[index]);
-                  },
-                );
-              }),
-            ),
-          ),
-        ),
-      ],
-    );
   }
 
   Widget _buttonBar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Stack(
       children: [
-        TextButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text(
-            'cancel',
-            style: AppFonts.textStyleWithSize(AppFonts.h4),
+        Container(
+          padding: const EdgeInsets.only(left: 15),
+          alignment: Alignment.topLeft,
+          child: TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+              'cancel',
+              style: AppFonts.textStyleWithSize(AppFonts.h4),
+            ),
           ),
         ),
         Container(
-          padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+          padding: const EdgeInsets.only(top: 2),
+          alignment: Alignment.topCenter,
           child: Text(
             "New Member",
             style: AppFonts.textStyleWithSize(
@@ -373,11 +327,15 @@ class _MemberBottomSheetState extends State<MemberBottomSheet> {
             ),
           ),
         ),
-        TextButton(
-          onPressed: _onCreate,
-          child: Text(
-            widget._okText,
-            style: AppFonts.textStyleWithSize(AppFonts.h4),
+        Container(
+          padding: const EdgeInsets.only(right: 5),
+          alignment: Alignment.topRight,
+          child: TextButton(
+            onPressed: _onCreate,
+            child: Text(
+              widget._okText,
+              style: AppFonts.textStyleWithSize(AppFonts.h4),
+            ),
           ),
         ),
       ],
