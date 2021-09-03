@@ -57,19 +57,38 @@ class _MemberState extends State<MemberWidget> {
   }
 
   void _addMemberDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return MemberDialog(
-          callback: (_, member) {
-            setState(() {
-              _members = BackendClient.addMember(widget.user!, member);
-            });
-          },
-          okText: "  add ",
-        );
-      },
-    );
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    if (screenWidth > 615) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return MemberDialog(
+            callback: (_, member) {
+              setState(() {
+                _members = BackendClient.addMember(widget.user!, member);
+              });
+            },
+            okText: "  add ",
+          );
+        },
+      );
+    } else {
+      showModalBottomSheet<void>(
+        isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return MemberBottomSheet(
+            callback: (_, member) {
+              setState(() {
+                _members = BackendClient.addMember(widget.user!, member);
+              });
+            },
+            okText: "add",
+          );
+        },
+      );
+    }
   }
 
   void _onRemove(final Member member) async {
