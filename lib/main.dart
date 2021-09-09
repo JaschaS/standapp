@@ -7,15 +7,6 @@ import 'package:standapp/standapp/standapp_colors.dart';
 import 'configure_nonweb.dart' if (dart.library.html) 'configure_web.dart';
 import 'standapp/pages/host_page.dart';
 
-// + DateButton overlow when using Month september or aboive
-// + Datebutton align text left not centered
-// MemberDialog has an overflow on mobile
-// + mobile login screen will be coverd by the keyboard
-// + mobile login button ist no visible on small screens
-// member widget - add button overflow on small screen
-// + weird scrolling behavior
-// + appbar should not be transparent
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

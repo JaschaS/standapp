@@ -280,18 +280,19 @@ class _MemberBottomSheetState extends State<MemberBottomSheet> {
               ),
               // prevent bottom overflow when error text from textfield is present
               height: sheetHeight - (_validText ? 241 : 263),
-              child: GridView.count(
-                crossAxisCount: 4,
-                children: List.generate(avatars.length, (index) {
-                  return _Avatar(
-                    width: 65,
-                    height: 65,
-                    imageName: avatars[index],
-                    callback: () {
-                      _onAvatarChange(avatars[index]);
-                    },
-                  );
-                }),
+              child: SingleChildScrollView(
+                child: Wrap(
+                  children: List.generate(avatars.length, (index) {
+                    return _Avatar(
+                      width: 65,
+                      height: 65,
+                      imageName: avatars[index],
+                      callback: () {
+                        _onAvatarChange(avatars[index]);
+                      },
+                    );
+                  }),
+                ),
               ),
             ),
           ],
