@@ -72,7 +72,7 @@ class _EmailSignInState extends State<EmailSignIn> {
       padding: const EdgeInsets.only(top: 72),
       child: Center(
         child: SizedBox(
-          width: 210,
+          width: 250,
           child: Column(
             children: [
               TextField(
