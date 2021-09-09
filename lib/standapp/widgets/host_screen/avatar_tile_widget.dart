@@ -46,11 +46,11 @@ class AvatarTile extends StatelessWidget {
   Widget _createWeb() {
     return SizedBox(
       width: 832,
-      height: 270,
+      height: 280,
       child: Column(
         children: [
           _AvatarTitle(
-            height: 34,
+            height: 42,
             title: title,
           ),
           Stack(
