@@ -33,8 +33,8 @@ class _EmailSignInState extends State<EmailSignIn> {
   }
 
   void _login() async {
-    final userName = _userNameController.text;
-    final password = _passwordController.text;
+    final userName = _userNameController.text.trim();
+    final password = _passwordController.text.trim();
 
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
